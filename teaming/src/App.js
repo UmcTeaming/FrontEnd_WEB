@@ -7,6 +7,7 @@ import FindPW from "./pages/FindPW";
 import NewProject from "./pages/NewProject";
 import Mypage from "./pages/Mypage";
 import ChangePw from "./pages/ChangePw";
+import PortfolioList from "./pages/portfolioList";
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
           <Route path="/newProject" element={<NewProject />} />
           <Route path="/mypage" element={<Mypage />} />
           <Route path="/mypage/*" element={<ChangePw />} />
+          {/* 포트폴리오 */}
+          <Route path="/portfolio" element={<PortfolioList/>} />
         </Routes>
       </BrowserRouter>
     </div>
