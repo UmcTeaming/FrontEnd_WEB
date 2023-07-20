@@ -11,6 +11,8 @@ import PortfolioList from "./pages/portfolioList";
 import Project from "./pages/Project";
 import FileDetail from "./pages/FileDetail";
 import End from "./pages/End";
+import {Home} from "./pages/Home";
+
 
 function App() {
   return (
@@ -25,6 +27,10 @@ function App() {
           <Route path="/newProject" element={<NewProject />} />
           <Route path="/mypage" element={<Mypage />} />
           <Route path="/mypage/*" element={<ChangePw />} />
+
+          <Route path='/home' element={<Home />} />   {/* 원래 경로는 / 이지만 확인을 위해 임의로 /home으로 작성했습니다  */}
+          {/* <Route path='/calendar' element={<Calendar/>}/> */}
+
           {/* 포트폴리오 */}
           <Route path="/portfolio" element={<PortfolioList />} />
           <Route path="/:id/project-files" element={<Project />} />
