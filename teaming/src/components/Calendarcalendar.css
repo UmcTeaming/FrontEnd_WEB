@@ -1,0 +1,19 @@
+.CalendarApp{
+  background-image: url('../../public/img/backgroundImgs/web_bg1.png')
+}
+.CalendarApp .Calendartxt{
+  padding-top: 40px;
+  margin-left: 30%;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.CalendarApp .content{
+  width: 420px;
+  height: 420px;
+  border-radius: 10px;
+  margin-top: 15px;
+  margin-left: 30%;
+  background-color: white;
+}
