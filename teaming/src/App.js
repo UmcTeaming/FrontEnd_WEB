@@ -8,6 +8,9 @@ import NewProject from "./pages/NewProject";
 import Mypage from "./pages/Mypage";
 import ChangePw from "./pages/ChangePw";
 import PortfolioList from "./pages/portfolioList";
+import Project from "./pages/Project";
+import FileDetail from "./pages/FileDetail";
+import End from "./pages/End";
 
 function App() {
   return (
@@ -23,7 +26,11 @@ function App() {
           <Route path="/mypage" element={<Mypage />} />
           <Route path="/mypage/*" element={<ChangePw />} />
           {/* 포트폴리오 */}
-          <Route path="/portfolio" element={<PortfolioList/>} />
+          <Route path="/portfolio" element={<PortfolioList />} />
+          <Route path="/:id/project-files" element={<Project />} />
+          <Route path="/:id/final-files" element={<Project />} />
+          <Route path="/:id/files/:fileId" element={<FileDetail />} />
+          <Route path="/:id/End" element={<End />} />
         </Routes>
       </BrowserRouter>
     </div>
