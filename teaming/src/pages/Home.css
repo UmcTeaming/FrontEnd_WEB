@@ -1,0 +1,11 @@
+.homecontainer .bodysection{
+  display: flex;
+}
+
+.homecontainer .bodysection .homeproject{
+  width: 60%;
+}
+
+.homecontainer .bodysection .homecalendar{
+  width: 40%;
+}
