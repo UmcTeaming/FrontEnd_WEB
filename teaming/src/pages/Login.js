@@ -18,7 +18,7 @@ const Login = () => {
   return (
     <div className=" flex justify-center lg:justify-between ">
       <div className="space-y-2 ">
-        <div className="absolute left-56 top-56 hidden lg:block space-y-2">
+        <div className="absolute left-56 top-56 hidden lg:block space-y-2 z-10">
           <div className=" font-bold text-3xl space-y-5 ">
             <div>
               <span className="text-mainDeepColor">티밍</span>에서 효율적인 팀
