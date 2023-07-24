@@ -41,15 +41,15 @@
 }
 
 .OngoingProjContent .content .contenttitle{
-  text-align: center;
+  text-align: left;
   margin-top: 20px;
   font-size: 13px;
+  margin-left: 5px;
 }
 
-
-.OngoingProjContent .content .contentdescription{
-  text-align: center;
-  margin-top: 10px;
+.OngoingProjContent .content .contentsubtitle{
+  text-align: left;
+  margin-left: 5px;
   font-size: 9px;
   color: #808080;
 }
