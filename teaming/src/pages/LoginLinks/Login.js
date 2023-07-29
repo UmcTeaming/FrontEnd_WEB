@@ -1,5 +1,5 @@
 import React from "react";
-import Bar from "../components/Bar";
+import Bar from "../../components/Bar";
 import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
 import { Link } from "react-router-dom";
