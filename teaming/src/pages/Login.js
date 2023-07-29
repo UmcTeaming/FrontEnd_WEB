@@ -45,8 +45,7 @@ const Login = () => {
         <Input placeholder="password" {...register("password")} />
         <div>
           <div className="text-center text-mainDeepColor mt-4 mb-8 text-sm ">
-            <FormSpan>아이디 찾기</FormSpan>
-            <FormSpan className="border-l border-r border-mainDeepColor">
+            <FormSpan className="border-r border-mainDeepColor">
               <Link to="/findPW">비밀번호 찾기</Link>
             </FormSpan>
             <FormSpan>

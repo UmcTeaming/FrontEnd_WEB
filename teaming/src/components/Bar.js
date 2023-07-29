@@ -20,9 +20,15 @@ const Bar = () => {
           </Link>
 
           <div className="space-x-7 text-xs text-gray-400">
-            <span className="cursor-pointer">진행중 프로젝트</span>
-            <span className="cursor-pointer">포트폴리오</span>
-            <span className="cursor-pointer">일정달력</span>
+            <Link to="/ongoingProject">
+              <span className="cursor-pointer">진행중 프로젝트</span>
+            </Link>
+            <Link to="/portfolio">
+              <span className="cursor-pointer">포트폴리오</span>
+            </Link>
+            <Link to="/calendar">
+              <span className="cursor-pointer">일정달력</span>
+            </Link>
           </div>
         </div>
         <div className="flex items-center space-x-3">
