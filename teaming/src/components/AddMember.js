@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useSetRecoilState } from "recoil";
 import { isAddingMemberAtom } from "../atom";
+import { useState } from "react";
 
 const Wrapper = styled.div`
   display: flex;
@@ -30,7 +31,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.span`
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: #194ac2;
   margin-right: 338px;
@@ -87,8 +88,19 @@ const Member = styled.span`
 `;
 
 const AddMember = () => {
+  const [inputValue, setInputValue] = useState("");
   const setAddingMemberAtom = useSetRecoilState(isAddingMemberAtom);
   const toggleAddingMemberAtom = () => setAddingMemberAtom(false);
+
+  const AddMember = (event) => {
+    event.preventDefault();
+    localStorage.setItem(inputValue, inputValue);
+    setInputValue("");
+  };
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
 
   return (
     <Wrapper>
@@ -114,13 +126,15 @@ const AddMember = () => {
         <Title>팀원 추가</Title>
         <Form>
           <Label>
-            <Input />
-            <Button>추가</Button>
+            <Input
+              type="email"
+              value={inputValue}
+              onChange={handleInputChange}
+            />
+            <Button onClick={AddMember}>추가</Button>
           </Label>
         </Form>
         <Members>
-          <Member>givemecoke013@naver.com</Member>
-          <Member>givemecoke013@naver.com</Member>
           <Member>givemecoke013@naver.com</Member>
         </Members>
       </Container>

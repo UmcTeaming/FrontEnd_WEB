@@ -21,7 +21,7 @@ const Delete = styled.button`
   background-color: transparent;
   border: none;
   margin-top: 3px;
-  margin-left: 145px;
+  margin-left: 143px;
   padding: 0;
   cursor: pointer;
 `;
@@ -37,15 +37,15 @@ const FileContent = styled.div`
 `;
 
 const FileImg = styled.img`
-  width: 127px;
-  height: 135px;
+  width: 117px;
+  height: 127px;
   margin-bottom: 12px;
 `;
 
 const FileTitle = styled.h1`
   width: 123px;
   font-size: 14px;
-  margin-bottom: 10px;
+  margin-bottom: 3px;
 `;
 
 const Col = styled.div`
@@ -63,8 +63,8 @@ const Comment = styled.span`
 `;
 
 const Download = styled.button`
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   background-color: #527ff5;
   border: none;
   border-radius: 8px;
@@ -89,12 +89,9 @@ const CardFile = () => {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
-          viewBox="0 0 24 24"
+          viewBox="0 0 20 20"
           stroke-width="2"
           stroke="#bcbcbc"
-          class="w-6 h-6"
-          width="20px"
-          height="20px"
         >
           <path
             stroke-linecap="round"
@@ -105,7 +102,7 @@ const CardFile = () => {
       </Delete>
       <Link to="/:id/files/fileId">
         <FileContent>
-          <FileImg src="../img/project_file.png" />
+          <FileImg src="../img/fileImg/file_img.png" />
           <FileTitle>OO교양 조별과제 ppt</FileTitle>
         </FileContent>
       </Link>
@@ -113,24 +110,7 @@ const CardFile = () => {
         <Comment>
           comment <span>3</span>
         </Comment>
-        <Download>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="white"
-            class="w-6 h-6"
-            width="10px"
-            height="10px"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
-            />
-          </svg>
-        </Download>
+        <Download></Download>
       </Col>
     </File>
   );

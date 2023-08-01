@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
-import { isAddingMemberAtom } from "../atom";
+import { Link, useMatch } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isAddingMemberAtom, isOngoingAtom } from "../atom";
+import { useState } from "react";
 
 const Wrapper = styled.div`
   display: flex;
@@ -14,32 +15,44 @@ const Wrapper = styled.div`
   font-family: "GmarketSans";
 `;
 
+const ImgContainer = styled.div`
+  width: 356px;
+  height: 200px;
+  margin-right: 20px;
+  margin-left: 29px;
+  position: relative;
+`;
+
+const Circle = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+`;
+
 const Img = styled.img`
   width: 356px;
   height: 200px;
   border: solid 1.5px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
-  margin-right: 20px;
-  margin-left: 29px;
 `;
 
 const Details = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 15px;
+  padding-top: 11px;
 `;
 
 const Title = styled.h1`
   font-size: 20px;
   font-weight: 700;
-  margin-bottom: 22px;
+  margin-bottom: 15px;
 `;
 
 const Description = styled.div`
   color: rgba(0, 0, 0, 0.8);
   margin-bottom: 4px;
   & p {
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     font-size: 14px;
   }
 `;
@@ -102,17 +115,30 @@ const Close = styled.button`
 `;
 
 const Setting = styled.div`
-  padding-bottom: 210px;
-  padding-left: 12px;
+  padding-bottom: 220px;
+  padding-left: 16px;
 `;
 
 const ProjectInfo = () => {
+  const isOngoing = useRecoilValue(isOngoingAtom);
   const setAddingMemberAtom = useSetRecoilState(isAddingMemberAtom);
   const toggleAddingMemberAtom = () => setAddingMemberAtom(true);
 
   return (
     <Wrapper>
-      <Img src="../img/project_img.jpg" />
+      <ImgContainer>
+        <Circle>
+          <svg width="15px" height="15px">
+            <circle
+              cx="7"
+              cy="7"
+              r="7"
+              fill={isOngoing ? "#527ff5" : "#ffd008"}
+            />
+          </svg>
+        </Circle>
+        <Img src="../img/projectImg/project_img.jpg" />
+      </ImgContainer>
       <Details>
         <Description>
           <Title>OO교양 조별 과제</Title>
@@ -128,10 +154,9 @@ const ProjectInfo = () => {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
-              viewBox="0 0 24 24"
+              viewBox="0 0 25 25"
               stroke-width="2"
               stroke="currentColor"
-              class="w-6 h-6"
             >
               <path
                 stroke-linecap="round"
@@ -158,7 +183,6 @@ const ProjectInfo = () => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="rgba(17, 24, 39, 0.2)"
-            class="w-6 h-6"
             width="18px"
             height="18px"
           >

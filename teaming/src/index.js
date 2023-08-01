@@ -4,14 +4,20 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { RecoilRoot } from "recoil";
+import { QueryClientProvider, QueryClient } from "react-query";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
+const client = new QueryClient();
+
 root.render(
-  <RecoilRoot>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </RecoilRoot>
+  <React.StrictMode>
+    <QueryClientProvider client={client}>
+      <RecoilRoot>
+        <App />
+      </RecoilRoot>
+    </QueryClientProvider>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

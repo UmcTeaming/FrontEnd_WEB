@@ -23,8 +23,7 @@ const Path = styled.div`
   svg {
     margin-right: 3px;
   }
-  margin-left: 380px;
-  margin-bottom: 45px;
+  padding-left: 17rem;
 `;
 
 const Col = styled.div`
@@ -72,6 +71,8 @@ const Date = styled.div`
   text-align: center;
   color: white;
   font-size: 15px;
+  text-decoration: underline;
+  text-underline-position: under;
   padding-bottom: 3px;
   margin-bottom: 11px;
 `;
@@ -128,14 +129,13 @@ const End = () => {
       <Main>
         <Path>
           <svg
+            width="12px"
+            height="12px"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="2"
             stroke="currentColor"
-            class="w-6 h-6"
-            width="12px"
-            height="12px"
           >
             <path
               stroke-linecap="round"
@@ -143,7 +143,7 @@ const End = () => {
               d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
             />
           </svg>
-          &gt;진행중인 프로젝트&gt; OO교양 조별과제
+          &gt;진행중인 프로젝트&gt; OO교양 조별과제 &gt;
         </Path>
         <Col>
           <Illust>
@@ -151,7 +151,7 @@ const End = () => {
             <Description>
               종료된 프로젝트는 포트폴리오에 저장됩니다.
             </Description>
-            <Img src="../img/close.png" />
+            <Img src="../img/finalImg/final_img.png" />
           </Illust>
           <Container>
             <Calendars>

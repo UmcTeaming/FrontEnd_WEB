@@ -74,7 +74,7 @@ const ListFile = () => {
   return (
     <File>
       <Link to="/:id/files/fileId">
-        <FileImg src="../img/project_file.png" />
+        <FileImg src="../img/fileImg/file_img.png" />
       </Link>
       <Link to="/:id/files/fileId">
         <Content>

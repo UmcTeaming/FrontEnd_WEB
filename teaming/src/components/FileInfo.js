@@ -1,5 +1,6 @@
+import { useQuery } from "react-query";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { getFile, getFileInfo } from "../api";
 
 const Wrapper = styled.div`
   display: flex;
@@ -48,6 +49,7 @@ const Col = styled.div`
 `;
 
 const Format = styled.div`
+  display: flex;
   font-size: 10px;
 `;
 
@@ -63,26 +65,35 @@ const Download = styled.button`
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
-  a {
-    text-decoration: none;
-    color: white;
-  }
+  text-decoration: none;
+  color: white;
 `;
 
 function FileInfo() {
+  const { data: file } = useQuery(["fileInfo"], getFileInfo);
+  const { data: download } = useQuery(["download"], getFile);
+  const formattedDate = file?.upload_date.split(" ")[0].replace(/-/g, ".");
+
   return (
     <Wrapper>
-      <Img src="../img/project_file.png" />
+      <Img src="../img/fileImg/file_img.png" />
       <Details>
-        <Title>OO교양 조별 과제 자료조사</Title>
-        <Uploader>카리나님이 업로드</Uploader>
+        <Title>{file?.file_name}</Title>
+        <Uploader>{file?.uploader}님이 업로드</Uploader>
         <Description>
-          프로젝트 명: OO교양 조별과제 <br /> 2023. 06. 20
+          프로젝트 명: OO교양 조별과제 <br /> {formattedDate}
         </Description>
         <Col>
-          <Format>docx</Format>
+          <Format>
+            <svg width="15px" height="15px">
+              <circle cx="5" cy="5" r="5" fill="#527ff5" />
+            </svg>
+            {file?.file_type}
+          </Format>
           <Download>
-            <Link to="/">파일 다운로드</Link>
+            <a href={download?.download_link} download>
+              파일 다운로드
+            </a>
           </Download>
         </Col>
       </Details>

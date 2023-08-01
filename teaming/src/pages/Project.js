@@ -106,6 +106,7 @@ const ListBtn = styled.div`
 `;
 
 const Container = styled.div`
+  z-index: 99;
   position: fixed;
   top: 0;
   left: 0;
@@ -127,19 +128,20 @@ const Project = () => {
         <Container>
           <AddMember />
         </Container>
-      ) : null}
+      ) : (
+        <></>
+      )}
       <Main>
         <InfoCotainer>
           <Path>
             <svg
+              width="12px"
+              height="12px"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="2"
               stroke="currentColor"
-              class="w-6 h-6"
-              width="12px"
-              height="12px"
             >
               <path
                 stroke-linecap="round"
