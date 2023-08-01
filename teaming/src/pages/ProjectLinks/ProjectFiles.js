@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import CardFile from "../../components/CardFile";
-import ListFile from "../../components/ListFile";
+import CardFile from "../../components/Project/CardFile";
+import ListFile from "../../components/Project/ListFile";
 
 const Wrapper = styled.div`
   display: flex;
