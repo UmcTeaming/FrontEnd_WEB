@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { Link, useMatch } from "react-router-dom";
-import ProjectInfo from "../components/ProjectInfo";
-import Upload from "../components/Upload";
-import AddMember from "../components/AddMember";
+import ProjectInfo from "../../components/ProjectInfo";
+import Upload from "../../components/Upload";
+import AddMember from "../../components/AddMember";
 import { useState } from "react";
 import ProjectFiles from "./ProjectFiles";
 import FinalFiles from "./FinalFiles";
 import { useRecoilValue } from "recoil";
-import { isAddingMemberAtom } from "../atom";
+import { isAddingMemberAtom } from "../../atom";
 
 const Wrapper = styled.div`
   font-family: "GmarketSans";

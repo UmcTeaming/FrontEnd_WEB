@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { getComments } from "../api";
+import { getComments } from "../../api";
 import axios from "axios";
 
 const Wrapper = styled.div`
