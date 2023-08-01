@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link, useMatch } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { isAddingMemberAtom, isOngoingAtom } from "../atom";
+import { isAddingMemberAtom, isOngoingAtom } from "../../atom";
 import { useState } from "react";
 
 const Wrapper = styled.div`

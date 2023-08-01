@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useSetRecoilState } from "recoil";
-import { isAddingMemberAtom } from "../atom";
+import { isAddingMemberAtom } from "../../atom";
 import { useState } from "react";
 
 const Wrapper = styled.div`

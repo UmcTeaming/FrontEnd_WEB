@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { getFile, getFileInfo } from "../api";
+import { getFile, getFileInfo } from "../../api";
 
 const Wrapper = styled.div`
   display: flex;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import FileInfo from "../components/FileInfo";
-import FileViewer from "../components/FileViewer";
-import Comment from "../components/Comment";
+import FileInfo from "../../components/File/FileInfo";
+import FileViewer from "../../components/File/FileViewer";
+import Comment from "../../components/File/Comment";
 
 const Wrapper = styled.div`
   font-family: "GmarketSans";

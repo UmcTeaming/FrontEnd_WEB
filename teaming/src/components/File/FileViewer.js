@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import { useQuery } from "react-query";
-import { getFileView, getFileInfo } from "../api";
+import { getFileView, getFileInfo } from "../../api";
 
 const Wrapper = styled.div`
   width: 670px;

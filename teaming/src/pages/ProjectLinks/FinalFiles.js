@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import CardFile from "../components/CardFile";
-import ListFile from "../components/ListFile";
+import CardFile from "../../components/Project/CardFile";
+import ListFile from "../../components/Project/ListFile";
 
 const Wrapper = styled.div`
   display: flex;
@@ -33,7 +33,7 @@ const CardFiles = styled.div`
   margin-bottom: 40px;
 `;
 
-const ProjectFiles = (props) => {
+function FinalFiles(props) {
   const { isCard } = props;
   return (
     <Wrapper>
@@ -57,5 +57,5 @@ const ProjectFiles = (props) => {
       </Container>
     </Wrapper>
   );
-};
-export default ProjectFiles;
+}
+export default FinalFiles;
