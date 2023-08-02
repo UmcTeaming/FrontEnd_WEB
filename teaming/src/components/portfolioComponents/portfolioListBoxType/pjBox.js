@@ -1,5 +1,5 @@
 import React from 'react';
-import "../../../pages/portfolioList.css"
+import "../../../pages/PortfolioLinks/portfolioList.css"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";

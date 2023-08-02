@@ -6,7 +6,7 @@ import Signup from "./pages/LoginLinks/Signup";
 import NewProject from "./pages/NewProject";
 import Mypage from "./pages/MypageLinks/Mypage";
 import ChangePw from "./pages/MypageLinks/ChangePw";
-import PortfolioList from "./pages/portfolioList";
+import PortfolioList from "./pages/PortfolioLinks/portfolioList";
 import Project from "./pages/ProjectLinks/Project";
 import FileDetail from "./pages/FileLinks/FileDetail";
 import End from "./pages/EndLinks/End";

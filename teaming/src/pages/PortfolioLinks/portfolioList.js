@@ -14,8 +14,8 @@ import { faBorderAll } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
 
-import PjBoxTemplate from '../components/portfolioComponents/portfolioListBoxType/pjBoxes.js';
-import PjLineTemplate from '../components/portfolioComponents/portfolioListLineType/pjLines.js';
+import PjBoxTemplate from '../../components/portfolioComponents/portfolioListBoxType/pjBoxes.js';
+import PjLineTemplate from '../../components/portfolioComponents/portfolioListLineType/pjLines.js';
 
 
 const  PortfolioList = () => {
@@ -34,10 +34,6 @@ const  PortfolioList = () => {
 
   return (
     <>
-
-
-      
-
       {/* main */}
       <div className="main">
         <div className="temp">
