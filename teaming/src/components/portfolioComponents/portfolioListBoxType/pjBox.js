@@ -10,7 +10,8 @@ const  PjBox = () => {
       
         <div className="box">
           <div className="thumbNail">
-            <span className="progressing">
+            <img className="thumbNailPic" src="/img/logo/loginMLogo.png"/>
+            <span className="progressing">     
               <span className="circle"><FontAwesomeIcon icon={faCircle} /></span>
             </span>
           </div>
