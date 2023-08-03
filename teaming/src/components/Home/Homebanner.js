@@ -13,10 +13,11 @@ export const Homebanner = () => {
     <div className='BannerContent'>
       <div className='content'>
       <span className='contentprogress'>진행중 <FontAwesomeIcon icon={faCircle} /></span>
-        <img className='contentimg'
+      <div className='contentimgs'></div>
+        {/* <img className='contentimg'
           alt="프로젝트 이미지"
           src='/images/m_logo_img.png'
-        />
+        /> */}
         <div className='contenttitle'>
           프로젝트 이름을 적어주세요
         </div>
@@ -30,7 +31,46 @@ export const Homebanner = () => {
         </div>
       </div>
 
+      <div className='content'>
+      <span className='contentprogress'>진행중 <FontAwesomeIcon icon={faCircle} /></span>
+      <div className='contentimgs'></div>
+        {/* <img className='contentimg'
+          alt="프로젝트 이미지"
+          src='/images/m_logo_img.png'
+        /> */}
+        <div className='contenttitle'>
+          프로젝트 이름을 적어주세요
+        </div>
+        <div className='contentsubtitle'>
+          수업 명을 적어주세요
+        </div>
+        <div className='contentdescription'>
+          프로젝트 진행 날짜를 적어주세요
+          <br/>
+          팀원 정보를 알려주세요
+        </div>
+      </div>
+
+      <div className='content'>
+      <span className='contentprogress'>진행중 <FontAwesomeIcon icon={faCircle} /></span>
+      <div className='contentimgs'></div>
+        {/* <img className='contentimg'
+          alt="프로젝트 이미지"
+          src='/images/m_logo_img.png'
+        /> */}
+        <div className='contenttitle'>
+          프로젝트 이름을 적어주세요
+        </div>
+        <div className='contentsubtitle'>
+          수업 명을 적어주세요
+        </div>
+        <div className='contentdescription'>
+          프로젝트 진행 날짜를 적어주세요
+          <br/>
+          팀원 정보를 알려주세요
+        </div>
+      </div>
+      </div>
     </div>
-  </div>
   )
 }

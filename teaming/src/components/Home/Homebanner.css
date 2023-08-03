@@ -22,12 +22,14 @@
 
 .BannerContent {
   display: flex;
+  margin-left: 410px;
+
 }
 
 .BannerContent .content {
   margin-top: 30px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 10px;
+  margin-right: 10px;
   width: 343px;
   height: 343px;
   background-color: #fff;
@@ -46,6 +48,15 @@
 .BannerContent .content .contentimg {
   width: 300.24px;
   height: 179.51px;
+}
+
+.BannerContent .content .contentimgs{
+  background-image: url('../../../public/img/projectImg/project_img.jpg');
+  background-size: cover;
+  width: 300.24px;
+  height: 179.51px;
+  margin-top: 20px;
+
 }
 
 .BannerContent .content .contenttitle {
