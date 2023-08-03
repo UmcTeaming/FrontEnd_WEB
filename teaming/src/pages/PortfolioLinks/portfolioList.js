@@ -13,7 +13,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faBorderAll } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
-
+import { Link } from "react-router-dom";
 import PjBoxTemplate from '../../components/portfolioComponents/portfolioListBoxType/pjBoxes.js';
 import PjLineTemplate from '../../components/portfolioComponents/portfolioListLineType/pjLines.js';
 
@@ -40,7 +40,9 @@ const  PortfolioList = () => {
           <div className="component">
             <div className="route">
               <span>
-                <FontAwesomeIcon icon={faHouse} />
+                <Link to="/home">
+                  <FontAwesomeIcon icon={faHouse} />
+                </Link>           
                 <FontAwesomeIcon icon={faChevronRight} />
                 포트폴리오
               </span>

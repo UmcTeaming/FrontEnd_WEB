@@ -85,8 +85,6 @@ button:focus {
       padding-top: 50px;
       color: white;
       font-size: var(--font-small);
-      > span{
-      }
     }
     .Name{
       .userName{
