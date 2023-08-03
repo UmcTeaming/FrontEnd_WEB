@@ -23,32 +23,32 @@ export const Calendarcalendar = () => {
           </LocalizationProvider>
         </div>
         <div className='dailylist'>
-          <div className='dailylisttitle'>2023.06.21</div>
+          <div className='dailylisttitle'>2023.08.03</div>
           <div className='dailycontent'>
             <div className='colorbar'></div>
             <div className='contenttitle'>티밍 전체 대면회의 - 중구 퇴계로</div>
-            <div className='contentdateperiod'>2023.06.23~2023.06.28</div>
+            <div className='contentdateperiod'>2023.08.03~2023.08.28</div>
             <div className='contentdescription'>oo교양 조별과제</div>
             <div className='contenttimeperiod'>11:00 ~ 13:00</div>
           </div>
           <div className='dailycontent'>
             <div className='colorbar'></div>
             <div className='contenttitle'>티밍 전체 대면회의 - 중구 퇴계로</div>
-            <div className='contentdateperiod'>2023.06.23~2023.06.28</div>
+            <div className='contentdateperiod'>2023.08.03~2023.08.28</div>
             <div className='contentdescription'>oo교양 조별과제</div>
             <div className='contenttimeperiod'>11:00 ~ 13:00</div>
           </div>
           <div className='dailycontent'>
             <div className='colorbar'></div>
             <div className='contenttitle'>티밍 전체 대면회의 - 중구 퇴계로</div>
-            <div className='contentdateperiod'>2023.06.23~2023.06.28</div>
+            <div className='contentdateperiod'>2023.08.03~2023.08.28</div>
             <div className='contentdescription'>oo교양 조별과제</div>
             <div className='contenttimeperiod'>11:00 ~ 13:00</div>
           </div>
           <div className='dailycontent'>
             <div className='colorbar'></div>
             <div className='contenttitle'>티밍 전체 대면회의 - 중구 퇴계로</div>
-            <div className='contentdateperiod'>2023.06.23~2023.06.28</div>
+            <div className='contentdateperiod'>2023.08.03~2023.08.28</div>
             <div className='contentdescription'>oo교양 조별과제</div>
             <div className='contenttimeperiod'>11:00 ~ 13:00</div>
           </div>
