@@ -36,9 +36,26 @@
   padding-right: 20px;
 }
 
+.Portfoliocontent .content .progressicon{
+  font-size: 9px;
+  color:#FFD008;
+  float: right;
+  margin-left: 10px;
+}
+
+
 .Portfoliocontent .content .contentimg{
   width: 221px;
   height: 123px;
+}
+
+.Portfoliocontent .content .contentimgs{
+  background-image: url('../../../public/img/projectImg/project_img.jpg');
+  background-size: cover;
+  width: 260px;
+  height: 123px;
+  margin-top: 12px;
+
 }
 
 .Portfoliocontent .content .contenttitle{

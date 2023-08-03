@@ -10,10 +10,12 @@ export const Homeportfolio = () => {
       <div className='Portfoliosubtitle'>000님의 프로젝트를 한눈에 모아보세요!</div>
       <div className='Portfoliocontent'>
         <div className='content'>
-          <span className='contentprogress'>마감 <FontAwesomeIcon icon={faCircle} /></span>
-          <img className='contentimg'
+          <span className='contentprogress'>마감 <FontAwesomeIcon className="progressicon" icon={faCircle} /></span>
+          <div className='contentimgs'></div>
+          {/* <img className='contentimg'
             alt="프로젝트 이미지"
-            src='../../public/img/logo/mLogo.png' />
+            src='/images/m_logo_img.png'
+          /> */}
           <div className='contenttitle'>
             프로젝트 이름을 적어주세요
           </div>
@@ -24,11 +26,12 @@ export const Homeportfolio = () => {
           </div>
         </div>
         <div className='content'>
-          <span className='contentprogress'>마감 <FontAwesomeIcon icon={faCircle} /></span>
-          <img className='contentimg'
+          <span className='contentprogress'>마감 <FontAwesomeIcon className="progressicon" icon={faCircle} /></span>
+          <div className='contentimgs'></div>
+          {/* <img className='contentimg'
             alt="프로젝트 이미지"
             src='/images/m_logo_img.png'
-          />
+          /> */}
           <div className='contenttitle'>
             프로젝트 이름을 적어주세요
           </div>
@@ -39,11 +42,12 @@ export const Homeportfolio = () => {
           </div>
         </div>
         <div className='content'>
-          <span className='contentprogress'>마감 <FontAwesomeIcon icon={faCircle} /></span>
-          <img className='contentimg'
+          <span className='contentprogress'>마감 <FontAwesomeIcon className="progressicon" icon={faCircle} /></span>
+          <div className='contentimgs'></div>
+          {/* <img className='contentimg'
             alt="프로젝트 이미지"
             src='/images/m_logo_img.png'
-          />
+          /> */}
           <div className='contenttitle'>
             프로젝트 이름을 적어주세요
           </div>
@@ -54,11 +58,12 @@ export const Homeportfolio = () => {
           </div>
         </div>
         <div className='content'>
-          <span className='contentprogress'>마감 <FontAwesomeIcon icon={faCircle} /></span>
-          <img className='contentimg'
+          <span className='contentprogress'>마감 <FontAwesomeIcon className="progressicon" icon={faCircle} /></span>
+          <div className='contentimgs'></div>
+          {/* <img className='contentimg'
             alt="프로젝트 이미지"
             src='/images/m_logo_img.png'
-          />
+          /> */}
           <div className='contenttitle'>
             프로젝트 이름을 적어주세요
           </div>
@@ -69,11 +74,12 @@ export const Homeportfolio = () => {
           </div>
         </div>
         <div className='content'>
-          <span className='contentprogress'>마감 <FontAwesomeIcon icon={faCircle} /></span>
-          <img className='contentimg'
+          <span className='contentprogress'>마감 <FontAwesomeIcon className="progressicon" icon={faCircle} /></span>
+          <div className='contentimgs'></div>
+          {/* <img className='contentimg'
             alt="프로젝트 이미지"
             src='/images/m_logo_img.png'
-          />
+          /> */}
           <div className='contenttitle'>
             프로젝트 이름을 적어주세요
           </div>
@@ -84,11 +90,12 @@ export const Homeportfolio = () => {
           </div>
         </div>
         <div className='content'>
-          <span className='contentprogress'>마감 <FontAwesomeIcon icon={faCircle} /></span>
-          <img className='contentimg'
+          <span className='contentprogress'>마감 <FontAwesomeIcon className="progressicon" icon={faCircle} /></span>
+          <div className='contentimgs'></div>
+          {/* <img className='contentimg'
             alt="프로젝트 이미지"
             src='/images/m_logo_img.png'
-          />
+          /> */}
           <div className='contenttitle'>
             프로젝트 이름을 적어주세요
           </div>
@@ -99,11 +106,12 @@ export const Homeportfolio = () => {
           </div>
         </div>
         <div className='content'>
-          <span className='contentprogress'>마감 <FontAwesomeIcon icon={faCircle} /></span>
-          <img className='contentimg'
+          <span className='contentprogress'>마감 <FontAwesomeIcon className="progressicon" icon={faCircle} /></span>
+          <div className='contentimgs'></div>
+          {/* <img className='contentimg'
             alt="프로젝트 이미지"
             src='/images/m_logo_img.png'
-          />
+          /> */}
           <div className='contenttitle'>
             프로젝트 이름을 적어주세요
           </div>
@@ -114,11 +122,12 @@ export const Homeportfolio = () => {
           </div>
         </div>
         <div className='content'>
-          <span className='contentprogress'>마감 <FontAwesomeIcon icon={faCircle} /></span>
-          <img className='contentimg'
+          <span className='contentprogress'>마감 <FontAwesomeIcon className="progressicon" icon={faCircle} /></span>
+          <div className='contentimgs'></div>
+          {/* <img className='contentimg'
             alt="프로젝트 이미지"
             src='/images/m_logo_img.png'
-          />
+          /> */}
           <div className='contenttitle'>
             프로젝트 이름을 적어주세요
           </div>
