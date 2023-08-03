@@ -10,8 +10,8 @@ import PortfolioList from "./pages/PortfolioLinks/portfolioList";
 import Project from "./pages/ProjectLinks/Project";
 import FileDetail from "./pages/FileLinks/FileDetail";
 import End from "./pages/EndLinks/End";
-import { Home } from "./pages/Home";
 import { Calendar } from "./pages/Calendar";
+import {Home}  from "./pages/Home/Home.js";
 import { OngoingProject } from "./pages/OngoingProject";
 import FindPW from "./pages/LoginLinks/FindPW";
 
