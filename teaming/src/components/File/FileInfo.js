@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { getFile, getFileInfo } from "../../api";
+import { getFile, getFileInfo, getProject } from "../../api";
+import { MdUpload } from "react-icons/md";
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,11 +14,24 @@ const Wrapper = styled.div`
   font-family: "GmarketSans";
 `;
 
+const ImgContainer = styled.div`
+  position: relative;
+`;
+
 const Img = styled.img`
   width: 174px;
-  height: 210px;
   margin-right: 35px;
   margin-left: 38px;
+`;
+
+const FileType = styled.span`
+  position: absolute;
+  color: rgba(0, 0, 0, 0.3);
+  font-weight: 700;
+  font-size: 20px;
+  bottom: 20%;
+  left: 50%;
+  transform: translate(-50%, 0);
 `;
 
 const Details = styled.div`
@@ -67,21 +81,31 @@ const Download = styled.button`
   cursor: pointer;
   text-decoration: none;
   color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    margin-right: 5px;
+  }
 `;
 
 function FileInfo() {
+  const { data: project } = useQuery(["project"], getProject);
   const { data: file } = useQuery(["fileInfo"], getFileInfo);
   const { data: download } = useQuery(["download"], getFile);
   const formattedDate = file?.upload_date.split(" ")[0].replace(/-/g, ".");
 
   return (
     <Wrapper>
-      <Img src="../img/fileImg/file_img.png" />
+      <ImgContainer>
+        <Img src="../../img/fileImg/file_img.png" />
+        <FileType>{file?.file_type}</FileType>
+      </ImgContainer>
       <Details>
         <Title>{file?.file_name}</Title>
         <Uploader>{file?.uploader}님이 업로드</Uploader>
         <Description>
-          프로젝트 명: OO교양 조별과제 <br /> {formattedDate}
+          프로젝트 명: {project?.project_name} <br /> {formattedDate}
         </Description>
         <Col>
           <Format>
@@ -90,11 +114,12 @@ function FileInfo() {
             </svg>
             {file?.file_type}
           </Format>
-          <Download>
-            <a href={download?.download_link} download>
-              파일 다운로드
-            </a>
-          </Download>
+          <a href={download?.download_link} download>
+            <Download>
+              <MdUpload size="15" color="white" transform="rotate(180)" />
+              <span>파일 다운로드</span>
+            </Download>
+          </a>
         </Col>
       </Details>
     </Wrapper>

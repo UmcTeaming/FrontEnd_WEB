@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
+import { getProject } from "../../api";
 
 const File = styled.div`
   display: flex;
@@ -14,11 +16,23 @@ const File = styled.div`
   }
 `;
 
+const ImgContainer = styled.div`
+  position: relative;
+`;
+
 const FileImg = styled.img`
   width: 90px;
-  height: 104px;
   margin-left: 12px;
   margin-right: 21px;
+`;
+
+const FileType = styled.span`
+  position: absolute;
+  color: rgba(0, 0, 0, 0.3);
+  font-weight: 700;
+  font-size: 11px;
+  bottom: 18%;
+  left: 36%;
 `;
 
 const Content = styled.div`
@@ -44,7 +58,7 @@ const Comment = styled.span`
 const Buttons = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 42px;
+  gap: 50px;
 `;
 
 const Delete = styled.button`
@@ -68,44 +82,71 @@ const Download = styled.button`
   font-weight: 700;
   font-family: "GmarketSans";
   cursor: pointer;
+  margin-bottom: 5px;
 `;
 
-const ListFile = () => {
+const ListFile = (data) => {
+  const { data: project } = useQuery(["project"], getProject);
+  const { file } = data;
+
+  const onDelete = (e) => {
+    e.preventDefault();
+
+    if (
+      window.confirm(
+        "삭제한 파일은 되돌릴 수 없습니다. 그래도 삭제하시겠습니까? "
+      )
+    ) {
+      // axios.delete(`/projects/${memberId}/${projectId}/files/${fileId}`);
+      console.log("삭제되었습니다.");
+    } else {
+      console.log("취소되었습니다.");
+    }
+    return;
+  };
+
+  const onDownload = (e) => {
+    e.preventDefault();
+    console.log("download...");
+  };
+
   return (
-    <File>
-      <Link to="/:id/files/fileId">
-        <FileImg src="../img/fileImg/file_img.png" />
-      </Link>
-      <Link to="/:id/files/fileId">
+    <Link to={`/${project?.project_id}/files/${file.file_id}`}>
+      <File>
+        <ImgContainer>
+          <FileImg src="../img/fileImg/file_img.png" />
+          <FileType>PDF</FileType>
+        </ImgContainer>
         <Content>
-          <FileTitle>기말 최종 발표</FileTitle>
+          <FileTitle>{file.files_name}</FileTitle>
           <Comment>
-            comment <span>3</span>
+            comment <span>{file.comment_num}</span>
           </Comment>
         </Content>
-      </Link>
-      <Buttons>
-        <Delete>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="#bcbcbc"
-            class="w-6 h-6"
-            width="20px"
-            height="20px"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </Delete>
-        <Download>다운로드</Download>
-      </Buttons>
-    </File>
+
+        <Buttons>
+          <Delete onClick={onDelete}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="#bcbcbc"
+              class="w-6 h-6"
+              width="20px"
+              height="20px"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </Delete>
+          <Download onClick={onDownload}>다운로드</Download>
+        </Buttons>
+      </File>
+    </Link>
   );
 };
 export default ListFile;

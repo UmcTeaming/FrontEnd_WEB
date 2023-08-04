@@ -2,6 +2,9 @@ import styled from "styled-components";
 import { useSetRecoilState } from "recoil";
 import { isAddingMemberAtom } from "../../atom";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { getProject } from "../../api";
+import axios from "axios";
 
 const Wrapper = styled.div`
   display: flex;
@@ -9,7 +12,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   position: absolute;
   width: 558px;
-  height: 252px;
+  min-height: 252px;
   background-color: white;
   top: 200px;
   left: 50%;
@@ -28,6 +31,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 60px;
 `;
 
 const Title = styled.span`
@@ -49,7 +53,7 @@ const Label = styled.label`
 const Input = styled.input`
   border: none;
   border-bottom: solid 1px #527ff5;
-  width: 380px;
+  width: 400px;
   height: 30px;
   outline: none;
 `;
@@ -88,18 +92,17 @@ const Member = styled.span`
 `;
 
 const AddMember = () => {
-  const [inputValue, setInputValue] = useState("");
   const setAddingMemberAtom = useSetRecoilState(isAddingMemberAtom);
   const toggleAddingMemberAtom = () => setAddingMemberAtom(false);
 
-  const AddMember = (event) => {
-    event.preventDefault();
-    localStorage.setItem(inputValue, inputValue);
-    setInputValue("");
+  const { register, handleSubmit, reset } = useForm();
+  const onSubmit = async (email) => {
+    console.log(email);
+    // axios.post(`/projects/${memberId}/${projectId}/invitations`, email);
   };
-
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+  const onValid = (data) => {
+    onSubmit(data);
+    reset();
   };
 
   return (
@@ -124,14 +127,10 @@ const AddMember = () => {
       </Delete>
       <Container>
         <Title>팀원 추가</Title>
-        <Form>
+        <Form onSubmit={handleSubmit(onValid)}>
           <Label>
-            <Input
-              type="email"
-              value={inputValue}
-              onChange={handleInputChange}
-            />
-            <Button onClick={AddMember}>추가</Button>
+            <Input type="email" {...register("email")} />
+            <Button>추가</Button>
           </Label>
         </Form>
         <Members>

@@ -3,6 +3,8 @@ import { Link, useMatch } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isAddingMemberAtom, isOngoingAtom } from "../../atom";
 import { useState } from "react";
+import { getProject } from "../../api";
+import { useQuery } from "react-query";
 
 const Wrapper = styled.div`
   display: flex;
@@ -57,17 +59,45 @@ const Description = styled.div`
   }
 `;
 
+const UserContainer = styled.div`
+  display: flex;
+`;
+
 const Users = styled.div`
   display: flex;
-  margin-bottom: 20px;
+  gap: 13px;
+  max-width: 192px;
+  margin-bottom: 15px;
+  margin-right: 13px;
+  flex-wrap: nowrap;
+  padding-bottom: 5px;
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 1);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 1);
+    border-radius: 3px;
+  }
+  &:hover {
+    &::-webkit-scrollbar {
+      background: rgba(255, 255, 255, 0.4);
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.3);
+    }
+  }
 `;
 
 const User = styled.img`
+  flex: 0 0 auto;
   width: 37px;
   height: 37px;
   background-color: #d9d9d9;
   border-radius: 18px;
-  margin-right: 13px;
 `;
 
 const AddUser = styled.button`
@@ -123,6 +153,14 @@ const ProjectInfo = () => {
   const isOngoing = useRecoilValue(isOngoingAtom);
   const setAddingMemberAtom = useSetRecoilState(isAddingMemberAtom);
   const toggleAddingMemberAtom = () => setAddingMemberAtom(true);
+  const { data: project } = useQuery(["project"], getProject);
+  const formatDate = (date) => {
+    if (date === undefined) {
+      return "";
+    } else {
+      return date.split(" ")[0].replace(/-/g, ".");
+    }
+  };
 
   return (
     <Wrapper>
@@ -141,15 +179,29 @@ const ProjectInfo = () => {
       </ImgContainer>
       <Details>
         <Description>
-          <Title>OO교양 조별 과제</Title>
-          <p>진행 기간: 2023. 06. 23 ~ 2023. 07. 31</p>
+          <Title>{project?.project_name}</Title>
+          <p>
+            진행 기간: {formatDate(project?.start_date)} ~
+            {formatDate(project?.end_date)}
+          </p>
           <p>상태: 진행중</p>
         </Description>
-        <Users>
-          <User />
-          <User />
-          <User />
-          <User />
+        <UserContainer>
+          <Users>
+            {project?.members.map((member) => (
+              <User
+                src={
+                  member?.profile_image === null
+                    ? "기본이미지"
+                    : member?.profile_image
+                }
+              />
+            ))}
+            <User />
+            <User />
+            <User />
+            <User />
+          </Users>
           <AddUser onClick={toggleAddingMemberAtom}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -165,12 +217,12 @@ const ProjectInfo = () => {
               />
             </svg>
           </AddUser>
-        </Users>
+        </UserContainer>
         <Buttons>
-          <Link to="/">
+          <Link to="/calendar">
             <Check>팀플 일정 확인하기</Check>
           </Link>
-          <Link to="/:id/end">
+          <Link to={`/${project?.project_id}/end`}>
             <Close>프로젝트 마감하기</Close>
           </Link>
         </Buttons>
