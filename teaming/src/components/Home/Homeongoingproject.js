@@ -102,7 +102,8 @@ export const Homeongoingproject = () => {
           </div>
         </div>
         <div className='content'>
-          <span className='contentprogress'>마감 <FontAwesomeIcon className="progressicon" icon={faCircle} /></span>
+
+          <span className='contentprogress'>마감! <FontAwesomeIcon className="progressicon" icon={faCircle} /></span>
           <div className='contentimgs'></div>
           {/* <img className='contentimg'
             alt="프로젝트 이미지"
