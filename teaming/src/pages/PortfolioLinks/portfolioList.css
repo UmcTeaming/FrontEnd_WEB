@@ -1,0 +1,217 @@
+:root{
+  /*Color*/
+  --white-color:#fff;
+  --black-color:#140a00;
+  --blue-color:#2B67F6;
+  --red-color:#ff0000;
+  --grey-dark-color:#909090;
+  --grey-light-color:#e0e0e0;
+
+  /*Size*/
+  --padding-small:5px;
+  --padding-medium:10px;
+  --padding-large:20px;
+  --padding-ultra:100px;
+
+  /*Font Size*/
+  --font-large:30px;
+  --font-medium:15px;
+  --font-small:13px;
+  --font-micro:8px;
+
+  --radius: 3px;
+}
+
+*{
+  padding:0;
+  margin:0;
+  box-sizing: border-box;
+}
+
+/* 버튼 기본 값 없애기 */
+button, 
+button:focus {
+    border: none;
+    cursor: pointer;
+    outline: none;
+    background-color:transparent;
+}
+
+/* 메인 로고 */
+.mainLogo{
+  float: left;
+  margin-top: 5px;
+}
+
+/* header */
+.header{
+  display: flex;
+  padding: var(--padding-large);
+  justify-content: space-between; 
+  .menu {
+    margin-right: var(--padding-large);
+    color:gray;
+  }
+  .logout{
+    color: gray;
+  }
+  .Logout{
+    margin-right: var(--padding-large);
+    color: gray;
+  }
+  .newPj{
+    margin-left: var(--padding-large);
+    background-color: var(--blue-color);
+    color: white;
+    font-weight: bold;
+    padding: var(--padding-small);
+    border-radius: 15px;
+    padding-left: var(--padding-medium);
+    padding-right: var(--padding-medium);
+  }
+}
+
+/* main */
+.main {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(
+    #0A3BB9,#527FF5 97%,#FFFFFF 46%);
+
+  /* component */
+  .component{
+    .route {
+      padding: var(--padding-large);
+      padding-top: 50px;
+      color: white;
+      font-size: var(--font-small);
+    }
+    .Name{
+      .userName{
+        font-size: var(--font-large);
+        color: white;
+      }
+      .ment{
+        font-size: var(--font-small);
+        color: white;
+      }
+    }
+  }
+  
+  /* element */
+  .element{
+    display: grid;
+    margin-bottom: 100px;
+    .howToView {
+      width: 835px;
+      text-align: right;
+      padding-bottom: var(--padding-large);
+      > select{
+        background-color: transparent;
+        border: none;
+        color: rgb(255,255,255,0.5);
+        margin-right: var(--padding-large);
+      }
+      > select option{
+        background: var(--blue-color);
+        color: rgb(255,255,255,0.5);
+      }
+      .boxBtn, .lineBtn {
+        color: rgb(255,255,255,0.5);
+        margin-right: var(--padding-large);
+       font-size: 16px;
+      }
+    }
+    .list{
+      /* 요소들 창 크기에 상관없이 가운데 정렬 */
+      place-items: center;
+      display: grid;
+      .line {
+        display: flex;
+        flex-flow: row wrap;
+        width: 850px;
+        .box{
+          border: 1px solid white;
+          border-top: white;
+          border-radius: 10px;
+          width: 230px;
+          margin-right: var(--padding-medium);
+          margin-left: var(--padding-medium);
+          margin-bottom: 20px;
+          background-color: white;
+          box-shadow: 0px 5px 8px #0000004D;
+          width: 186px;
+          word-break:break-all;
+        }
+      }
+      .thumbNail{
+        position: relative;
+        .thumbNailPic{
+          width: 185px;
+          height: 100px;
+          border-radius: 15px;
+          padding: 8px;
+        }
+        .progressing {
+          position: absolute;
+          right: 7%;
+          top: 3%;
+          transform: translate(0%, 100%);
+          color: #FFD008;
+          font-size: var(--font-micro);
+          margin-left: var(--padding-small);
+        }
+      }
+      .projectInfo{
+        padding: var(--padding-medium);
+        padding-top: 0px;
+        .h4{
+          font-size: var(--font-medium);
+          color: #000000CC;
+        }
+        .p{
+          color: #0000004D;
+          font-size: var(--font-micro);
+        }
+      }
+    }
+  }
+  /* elementLineView */
+  .elementLineView{
+    /* 요소들 창 크기에 상관없이 가운데 정렬 */
+    display: grid;
+    width: 850px;
+    .lineElement{
+      display: flex;
+      justify-content: space-between;
+      padding:18px;
+      margin-bottom: 15px;
+      padding-left: 24px;
+      padding-right: 24px;
+      background-color: white;
+      border-radius: 16px;
+      width: 820px;
+      word-break:break-all;
+      .titleNdate{
+        .title{
+          color: black;
+        }
+        .date{
+          margin-left: var(--padding-medium);
+          color: gray;
+        }
+        
+      }
+      .starNcircle{
+        .star{
+          color: gray;
+        }
+        .circle2{
+          margin-left: var(--padding-medium);
+          color: #FFD008;
+        }
+      }
+    }
+  }
+}
+

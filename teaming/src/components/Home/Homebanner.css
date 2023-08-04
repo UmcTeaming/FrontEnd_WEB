@@ -1,0 +1,83 @@
+.BannerApp {
+  background-image: url('../../../public/img/backgroundImgs/web_bg2.png');
+  height: 488px;
+}
+
+.Bannertxt {
+  text-align: center;
+  padding-top: 20px;
+}
+
+.Bannertxt .Bannertitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.Bannertxt .Bannersubtitle {
+  margin-top: 5px;
+  font-size: 15px;
+  color: #fff;
+}
+
+.BannerContent {
+  display: flex;
+  margin-left: 410px;
+
+}
+
+.BannerContent .content {
+  margin-top: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 343px;
+  height: 343px;
+  background-color: #fff;
+  box-shadow: 1px 4px 1px rgba(0, 0, 0, .2);
+  border-radius: 10px;
+}
+
+.BannerContent .content span{
+  font-size: 13px;
+  margin-top: 10px;
+  color:#5f5f5f;
+  float: right;
+  padding-right: 20px;
+}
+
+.BannerContent .content .contentimg {
+  width: 300.24px;
+  height: 179.51px;
+}
+
+.BannerContent .content .contentimgs{
+  background-image: url('../../../public/img/projectImg/project_img.jpg');
+  background-size: cover;
+  width: 300.24px;
+  height: 179.51px;
+  margin-top: 20px;
+
+}
+
+.BannerContent .content .contenttitle {
+  text-align: left;
+  margin-left: 30px;
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+.BannerContent .content .contentsubtitle {
+  text-align: left;
+  margin-left: 30px;
+  font-size: 13px;
+  color: #5f5f5f;
+
+}
+
+.BannerContent .content .contentdescription {
+  text-align: left;
+  margin-left: 30px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #808080;
+}
