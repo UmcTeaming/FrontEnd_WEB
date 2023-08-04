@@ -90,7 +90,6 @@ button:focus {
       .userName{
         font-size: var(--font-large);
         color: white;
-        font-weight: bold;
       }
       .ment{
         font-size: var(--font-small);
@@ -185,7 +184,7 @@ button:focus {
     .lineElement{
       display: flex;
       justify-content: space-between;
-      padding:13px;
+      padding:18px;
       margin-bottom: 15px;
       padding-left: 24px;
       padding-right: 24px;
@@ -196,13 +195,10 @@ button:focus {
       .titleNdate{
         .title{
           color: black;
-          font-weight: bold;
-          font-size: 14px;
         }
         .date{
           margin-left: var(--padding-medium);
           color: gray;
-          font-size: 12px;
         }
         
       }

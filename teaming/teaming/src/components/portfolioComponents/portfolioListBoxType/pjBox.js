@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const  PjBox = () => {
     return (
-      <Link to="/:id/project-files">
+      
         <div className="box">
           <div className="thumbNail">
             <img className="thumbNailPic" src="/img/logo/loginMLogo.png"/>
@@ -21,7 +21,7 @@ const  PjBox = () => {
             <p className='p'>2023.07.01~2023.08.29</p>
           </div>
         </div>
-      </Link>
+
         
     );
 };
