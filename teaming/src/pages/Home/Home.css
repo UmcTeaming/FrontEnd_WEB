@@ -1,4 +1,16 @@
-.homecontainer .bodysection{
+.homecontainer{
+  display: flex;
+  flex-direction: column;  
+  justify-content: center;
+  align-items: center;
+}
+
+.homecontainer .homebanner{
+  background-image: linear-gradient(#184ACE, #fff);
+   width: 100%; 
+ }
+
+ .homecontainer .bodysection{
   display: flex;
 }
 
