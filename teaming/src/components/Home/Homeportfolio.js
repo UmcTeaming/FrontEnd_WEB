@@ -6,7 +6,7 @@ import { faCircle } from "@fortawesome/free-solid-svg-icons";
 export const Homeportfolio = () => {
   return (
     <div className='PortfolioApp'>
-      <div className='Portfoliotitle'>포트폴리오 &#62;</div>
+      <div className='Portfoliotitle'><a href='/portfolio'>포트폴리오 &#62;</a></div>
       <div className='Portfoliosubtitle'>000님의 프로젝트를 한눈에 모아보세요!</div>
       <div className='Portfoliocontent'>
         <div className='content'>
