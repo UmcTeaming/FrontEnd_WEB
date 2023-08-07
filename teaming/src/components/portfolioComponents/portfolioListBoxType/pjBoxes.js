@@ -20,6 +20,32 @@ const  PjBoxes = () => {
                 <PjBoxTemplate/>
                 <PjBoxTemplate/>
                 <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
+                <PjBoxTemplate/>
               </div>
         
     );
