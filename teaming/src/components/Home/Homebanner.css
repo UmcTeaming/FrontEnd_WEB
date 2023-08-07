@@ -1,5 +1,4 @@
 .BannerApp {
-  /* background-image: url('../../../public/img/backgroundImgs/web_bg2.png'); */
   height: 488px;
   width: 100%;
   display: flex;
@@ -27,14 +26,10 @@
 
 .BannerContent {
   display: flex;
-  margin-left: 410px;
-
 }
 
 .BannerContent .content {
   margin-top: 30px;
-  /* margin-left: 10px;
-  margin-right: 10px; */
   width: 343px;
   height: 343px;
   background-color: #fff;
