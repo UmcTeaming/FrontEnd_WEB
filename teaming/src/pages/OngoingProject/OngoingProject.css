@@ -1,0 +1,35 @@
+.main {
+  display: flex;
+  flex-direction: column;  
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(#fff, #184ace);
+  width: 100%;
+}
+
+.main .temp .component .route {
+  color: #033fff;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.main .temp .component .Name {
+  margin-top: -32px;
+}
+
+.main .temp .component .Name .userName {
+  color: #527ff5;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.main .temp .component .Name .ment {
+  color: #527ff5;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
