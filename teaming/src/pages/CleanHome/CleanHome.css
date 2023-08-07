@@ -1,19 +1,11 @@
-.homecontainer{
+.cleanhomecontainer{
   display: flex;
   flex-direction: column;  
   justify-content: center;
   align-items: center;
 }
 
-.homecontainer .homebanner{
+.cleanhomecontainer .homebanner{
   background-image: linear-gradient(#184ACE, #fff);
    width: 100%; 
  }
-
-.homecontainer .bodysection .homeproject{
-  width: 60%;
-}
-
-.homecontainer .bodysection .homecalendar{
-  width: 40%;
-}

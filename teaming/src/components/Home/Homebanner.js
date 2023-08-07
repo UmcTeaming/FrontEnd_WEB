@@ -70,6 +70,7 @@ export const Homebanner = () => {
           팀원 정보를 알려주세요
         </div>
       </div>
+      
       </div>
     </div>
   )
