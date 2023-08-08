@@ -28,10 +28,10 @@ export const OngoingProject = () => {
   return (
     <>
       {/* main */}
-      <div className="main">
+      <div className="main bg">
         <div className="temp">
           <div className="component">
-            <div className="route">
+            <div className="route oproute">
               <span>
                 <FontAwesomeIcon icon={faHouse} />
                 <FontAwesomeIcon icon={faChevronRight} />
@@ -39,12 +39,12 @@ export const OngoingProject = () => {
               </span>
             </div>
 
-            <div className="Name">
+            <div className="Name opname">
               <br />
               <br />
-              <span className="userName">카리나님의 팀 프로젝트 </span>
+              <span className="userName opusername">카리나님의 팀 프로젝트 </span>
               <br />
-              <span className="ment">
+              <span className="ment opment">
                 현재 진행 중인 프로젝트를 한 눈에 모아보세요!
               </span>
             </div>
@@ -62,8 +62,8 @@ export const OngoingProject = () => {
                     }
                   }}
                   style={{
-                    color: active2 ? "#FAFAFA80" : "#FFD008",
-                    color: active ? "#FFD008" : "#FAFAFA80",
+                    color: active2 ? "#808080" : "#FFD008",
+                    color: active ? "#FFD008" : "#808080",
                   }}
                 >
                   <FontAwesomeIcon icon={faBars} />
@@ -77,8 +77,8 @@ export const OngoingProject = () => {
                     }
                   }}
                   style={{
-                    color: active2 ? "#FFD008" : "#FAFAFA80",
-                    color: active ? "#FAFAFA80" : "#FFD008",
+                    color: active2 ? "#FFD008" : "#808080",
+                    color: active ? "#808080" : "#FFD008",
                   }}
                 >
                   <FontAwesomeIcon icon={faBorderAll} />
