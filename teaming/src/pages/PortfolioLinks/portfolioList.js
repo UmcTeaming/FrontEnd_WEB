@@ -1,7 +1,5 @@
 import React from 'react';
 import "./portfolioList.css";
-// import 'PortfolioComponents/portfolioList/portfolioList.css';
-// import "PortfolioComponents/fonts/font.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
@@ -25,7 +23,7 @@ const CardBtn = styled.div`
   margin: 0;
   padding: 0;
   svg {
-    fill: ${(props) => (props.isActive ? "#ffd008" : "rgba(0, 0, 0, 0.3)")};
+    fill: ${(props) => (props.isActive ? "rgb(255, 208, 8)" : "rgba(250, 250, 250, 0.5)")};
   }
 `;
 
@@ -36,22 +34,24 @@ const ListBtn = styled.div`
   margin: 0;
   padding: 0;
   svg {
-    stroke: ${(props) => (props.isActive ? "#ffd008" : "rgba(0, 0, 0, 0.3)")};
+    stroke: ${(props) => (props.isActive ? "rgb(255, 208, 8)" : "rgba(250, 250, 250, 0.5)")};
   }
 `;
+
+
 
 const  PortfolioList = () => {
   const [viewBox, setViewBox] = useState(true)
 
-  const [active, setActive] = useState(false);
-  const [active2, setActive2] = useState(false);
+  const [active, setActive] = useState(true);
+  const [active2, setActive2] = useState(true);
   const handleClick = () => {
     setActive(!active);
-    setActive2(active2);
+    //setActive2(active2);
   };
   const handleClick2 = () => {
-    setActive(!active);
-    setActive2(active2);
+    //setActive(active);
+    setActive2(!active2);
   };
 
   return (
@@ -83,43 +83,78 @@ const  PortfolioList = () => {
             <div className="list">
               <div className="howToView">
               
-                  <button className='lineBtn'
-                onClick = {() => {setViewBox(false); {handleClick()};}}
-                  style={{ stroke: active ? "red" : "green", stroke: active2 ? "green" : "red"}}
-                  >                   
-                    <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  // stroke={active2 ? "#FAFAFA80" : "#FFD008"}
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  width="23px"
-                  height="23px"
-                >
+                  {/* 
+                  onClick = {() => {setViewBox(false); {handleClick()};}}
+                              
+                  style={{ stroke: active ? "red" : "green"}}
+                  >          
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    // stroke={active ? "#FFD008" : "#FAFAFA80"}
+                    viewBox="0 0 21 21"
+                    stroke-width="2"
+                    width="21px"
+                    height="23px"
+                  >
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
                   />
                 </svg>
-              </button>
-              <button className='boxBtn'
+              </button> */}
+              <button className='lineBtn'>
+              <ListBtn onClick={() => setViewBox(false)} isActive={!viewBox}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 22 20"
+              stroke-width="2"
+              class="w-6 h-6"
+              width="17px"
+              height="15px"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </ListBtn></button>
+              {/* 
                   onClick={() => {setViewBox(true); {handleClick2()};}}
-                    style={{ fill: active ? "#FFD008" : "#FFD008", fill: active2 ? "#FAFAFA80" : "#FFD008"}}
+                    style={{ fill: active2 ? "pink" : "blue"}}
                     >                
                     <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    width="20px"
-                    height="20px"
-                    // fill={active ? "#FFD008" : "#FAFAFA80"}
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      width="20px"
+                      height="20px"
+                      // fill={active ? "#FFD008" : "#FAFAFA80"}
                     >
-                  <path
-                    fillRule="evenodd"
-                    d="M4.25 2A2.25 2.25 0 002 4.25v2.5A2.25 2.25 0 004.25 9h2.5A2.25 2.25 0 009 6.75v-2.5A2.25 2.25 0 006.75 2h-2.5zm0 9A2.25 2.25 0 002 13.25v2.5A2.25 2.25 0 004.25 18h2.5A2.25 2.25 0 009 15.75v-2.5A2.25 2.25 0 006.75 11h-2.5zm9-9A2.25 2.25 0 0011 4.25v2.5A2.25 2.25 0 0013.25 9h2.5A2.25 2.25 0 0018 6.75v-2.5A2.25 2.25 0 0015.75 2h-2.5zm0 9A2.25 2.25 0 0011 13.25v2.5A2.25 2.25 0 0013.25 18h2.5A2.25 2.25 0 0018 15.75v-2.5A2.25 2.25 0 0015.75 11h-2.5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </button>
+                    <path
+                      fillRule="evenodd"
+                      d="M4.25 2A2.25 2.25 0 002 4.25v2.5A2.25 2.25 0 004.25 9h2.5A2.25 2.25 0 009 6.75v-2.5A2.25 2.25 0 006.75 2h-2.5zm0 9A2.25 2.25 0 002 13.25v2.5A2.25 2.25 0 004.25 18h2.5A2.25 2.25 0 009 15.75v-2.5A2.25 2.25 0 006.75 11h-2.5zm9-9A2.25 2.25 0 0011 4.25v2.5A2.25 2.25 0 0013.25 9h2.5A2.25 2.25 0 0018 6.75v-2.5A2.25 2.25 0 0015.75 2h-2.5zm0 9A2.25 2.25 0 0011 13.25v2.5A2.25 2.25 0 0013.25 18h2.5A2.25 2.25 0 0018 15.75v-2.5A2.25 2.25 0 0015.75 11h-2.5z"
+                      clipRule="evenodd"
+                    />
+                    </svg>
+              </button> */}
+              <button className='boxBtn'>
+              <CardBtn onClick={() => setViewBox(true)} isActive={viewBox}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              className="w-5 h-5"
+              width="15px"
+              height="15px"
+            >
+              <path
+                fillRule="evenodd"
+                d="M4.25 2A2.25 2.25 0 002 4.25v2.5A2.25 2.25 0 004.25 9h2.5A2.25 2.25 0 009 6.75v-2.5A2.25 2.25 0 006.75 2h-2.5zm0 9A2.25 2.25 0 002 13.25v2.5A2.25 2.25 0 004.25 18h2.5A2.25 2.25 0 009 15.75v-2.5A2.25 2.25 0 006.75 11h-2.5zm9-9A2.25 2.25 0 0011 4.25v2.5A2.25 2.25 0 0013.25 9h2.5A2.25 2.25 0 0018 6.75v-2.5A2.25 2.25 0 0015.75 2h-2.5zm0 9A2.25 2.25 0 0011 13.25v2.5A2.25 2.25 0 0013.25 18h2.5A2.25 2.25 0 0018 15.75v-2.5A2.25 2.25 0 0015.75 11h-2.5z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </CardBtn></button>
               </div>
               { viewBox ? <PjBoxTemplate/> : <PjLineTemplate/> }
             </div>
