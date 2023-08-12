@@ -1,0 +1,11 @@
+.cleanhomecontainer{
+  display: flex;
+  flex-direction: column;  
+  justify-content: center;
+  align-items: center;
+}
+
+.cleanhomecontainer .homebanner{
+  background-image: linear-gradient(#184ACE, #fff);
+   width: 100%; 
+ }

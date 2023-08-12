@@ -7,10 +7,11 @@ import { Link } from "react-router-dom";
 
 const  PjBox = () => {
     return (
-      
+      <Link to="/:id/project-files">
         <div className="box">
           <div className="thumbNail">
-            <span className="progressing">
+            <img className="thumbNailPic" src="/img/logo/loginMLogo.png"/>
+            <span className="progressing">     
               <span className="circle"><FontAwesomeIcon icon={faCircle} /></span>
             </span>
           </div>
@@ -20,7 +21,7 @@ const  PjBox = () => {
             <p className='p'>2023.07.01~2023.08.29</p>
           </div>
         </div>
-
+      </Link>
         
     );
 };

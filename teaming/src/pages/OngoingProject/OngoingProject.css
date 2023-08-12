@@ -1,0 +1,35 @@
+.bg {
+  display: flex;
+  flex-direction: column;  
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(#fff, #184ace);
+  width: 100%;
+}
+
+.main .temp .component .oproute {
+  color: #033fff;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.main .temp .component .opname {
+  margin-top: -32px;
+}
+
+.main .temp .component .opname .opusername {
+  color: #527ff5;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.main .temp .component .opname .opment {
+  color: #527ff5;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

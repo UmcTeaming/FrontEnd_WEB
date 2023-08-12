@@ -10,10 +10,11 @@ import PortfolioList from "./pages/PortfolioLinks/portfolioList";
 import Project from "./pages/ProjectLinks/Project";
 import FileDetail from "./pages/FileLinks/FileDetail";
 import End from "./pages/EndLinks/End";
-import { Home } from "./pages/Home";
 import { Calendar } from "./pages/Calendar";
-import { OngoingProject } from "./pages/OngoingProject";
+import {Home}  from "./pages/Home/Home.js";
 import FindPW from "./pages/LoginLinks/FindPW";
+import CleanHome from "./pages/CleanHome/CleanHome";
+import { OngoingProject } from "./pages/OngoingProject/OngoingProject";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/mypage/*" element={<ChangePw />} />
           <Route path="/home" element={<Home />} />{" "}
           {/* 원래 경로는 / 이지만 확인을 위해 임의로 /home으로 작성했습니다  */}
+          <Route path="/cleanhome" element={<CleanHome/>}/>
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/ongoingProject" element={<OngoingProject />} />
           {/* 포트폴리오 */}

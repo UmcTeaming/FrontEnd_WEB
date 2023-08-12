@@ -1,5 +1,9 @@
 import styled from "styled-components";
+import { MdUpload } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
+import { getProject } from "../../api";
+import axios from "axios";
 
 const File = styled.div`
   display: flex;
@@ -36,10 +40,24 @@ const FileContent = styled.div`
   }
 `;
 
+const ImgContainer = styled.div`
+  position: relative;
+`;
+
 const FileImg = styled.img`
   width: 117px;
   height: 127px;
   margin-bottom: 12px;
+`;
+
+const FileType = styled.span`
+  position: absolute;
+  color: rgba(0, 0, 0, 0.3);
+  font-weight: 700;
+  font-size: 12px;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, 0);
 `;
 
 const FileTitle = styled.h1`
@@ -71,48 +89,71 @@ const Download = styled.button`
   margin: 0;
   padding: 0;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-const CardFile = () => {
-  const Deletefile = () => {
+const CardFile = (data) => {
+  const { data: project } = useQuery(["project"], getProject);
+  const { file } = data;
+
+  const onDelete = (e) => {
+    e.preventDefault();
+
     if (
-      !window.confirm(
+      window.confirm(
         "삭제한 파일은 되돌릴 수 없습니다. 그래도 삭제하시겠습니까? "
       )
-    )
-      return false;
+    ) {
+      // axios.delete(`/projects/${memberId}/${projectId}/files/${fileId}`);
+      console.log("삭제되었습니다.");
+    } else {
+      console.log("취소되었습니다.");
+    }
+    return;
+  };
+
+  const onDownload = (e) => {
+    e.preventDefault();
+    console.log("download...");
   };
 
   return (
-    <File>
-      <Delete onClick={Deletefile}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 20 20"
-          stroke-width="2"
-          stroke="#bcbcbc"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </Delete>
-      <Link to="/:id/files/fileId">
+    <Link to={`/${project?.project_id}/files/${file.file_id}`}>
+      <File>
+        <Delete onClick={onDelete}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 20 20"
+            stroke-width="2"
+            stroke="#bcbcbc"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </Delete>
         <FileContent>
-          <FileImg src="../img/fileImg/file_img.png" />
-          <FileTitle>OO교양 조별과제 ppt</FileTitle>
+          <ImgContainer>
+            <FileImg src="../img/fileImg/file_img.png" />
+            <FileType>PDF</FileType>
+          </ImgContainer>
+          <FileTitle>{file.files_name}</FileTitle>
         </FileContent>
-      </Link>
-      <Col>
-        <Comment>
-          comment <span>3</span>
-        </Comment>
-        <Download></Download>
-      </Col>
-    </File>
+        <Col>
+          <Comment>
+            comment <span>{file.comment_num}</span>
+          </Comment>
+          <Download onClick={onDownload}>
+            <MdUpload size="13" color="white" transform="rotate(180)" />
+          </Download>
+        </Col>
+      </File>
+    </Link>
   );
 };
 export default CardFile;

@@ -75,9 +75,8 @@ button:focus {
 .main {
   display: grid;
   place-items: center;
-  background: linear-gradient(
-    #0A3BB9,#527FF5 97%,#FFFFFF 46%);
-
+  background-image:url("../../../public/img/backgroundImgs/web_bg3.png");
+  background-repeat: repeat-x;
   /* component */
   .component{
     .route {
@@ -85,13 +84,12 @@ button:focus {
       padding-top: 50px;
       color: white;
       font-size: var(--font-small);
-      > span{
-      }
     }
     .Name{
       .userName{
         font-size: var(--font-large);
         color: white;
+        font-weight: bold;
       }
       .ment{
         font-size: var(--font-small);
@@ -119,9 +117,7 @@ button:focus {
         color: rgb(255,255,255,0.5);
       }
       .boxBtn, .lineBtn {
-        color: rgb(255,255,255,0.5);
-        margin-right: var(--padding-large);
-       font-size: 16px;
+        margin-right: 20px;
       }
     }
     .list{
@@ -143,7 +139,7 @@ button:focus {
           background-color: white;
           box-shadow: 0px 5px 8px #0000004D;
           width: 186px;
-          word-break:break-all;
+          word-break: break-all;
         }
       }
       .thumbNail{
@@ -186,7 +182,7 @@ button:focus {
     .lineElement{
       display: flex;
       justify-content: space-between;
-      padding:18px;
+      padding:13px;
       margin-bottom: 15px;
       padding-left: 24px;
       padding-right: 24px;
@@ -197,10 +193,13 @@ button:focus {
       .titleNdate{
         .title{
           color: black;
+          font-weight: bold;
+          font-size: 14px;
         }
         .date{
           margin-left: var(--padding-medium);
           color: gray;
+          font-size: 12px;
         }
         
       }
