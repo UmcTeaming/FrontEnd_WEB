@@ -1,19 +1,170 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
+import moment from "moment";
+import { cls } from "../libs/utils";
 
 const Span = tw.span`
 text-mainMoreDeepColor font-bold
 `;
+
+const dayOfWeek = ["S", "M", "T", "W", "T", "F", "S"];
+const months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "June",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
 const NewProject = () => {
   const [previewImg, setPreviewImg] = useState();
   const [emails, setEmails] = useState();
+
+  const [date1, setDate1] = useState(moment());
+  const [date2, setDate2] = useState(moment());
+  const [selectedDay1, setSelectedDay1] = useState(date1.clone());
+  const [selectedDay2, setSelectedDay2] = useState(date2.clone());
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+
+  const handleMonth = (x, num) => {
+    x
+      ? num === 1
+        ? setDate1(date1.clone().add(1, "month"))
+        : setDate2(date2.clone().add(1, "month"))
+      : num === 1
+      ? setDate1(date1.clone().subtract(1, "month"))
+      : setDate1(date2.clone().subtract(1, "month"));
+  };
+
+  const onClickDay = (current, num) => {
+    if (num === 1) {
+      setSelectedDay1(current.clone());
+      setSelectedDay2(current.clone());
+    } else {
+      if (selectedDay1.diff(current.clone()) < 0)
+        setSelectedDay2(current.clone());
+      else alert("시작날 보다 이전일 수 없습니다");
+    }
+  };
+  const buildCalendar = (num) => {
+    const date = num === 1 ? date1 : date2;
+    const dateStartWeek = date.clone().startOf("month").week();
+
+    const dateEndWeek =
+      date.clone().endOf("month").week() === 1
+        ? 53
+        : date.clone().endOf("month").week();
+
+    let calendar = [];
+
+    calendar.push(
+      <div className="flex justify-between items-center">
+        <div onClick={() => handleMonth(0, num)}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="2"
+            stroke="currentColor"
+            className="w-4 h-4"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 19.5L8.25 12l7.5-7.5"
+            />
+          </svg>
+        </div>
+        <div className="space-x-2">
+          <span>
+            {num === 1
+              ? months[Number(selectedDay1.format("MM")) - 1]
+              : months[Number(selectedDay2.format("MM")) - 1]}
+          </span>
+          <span>
+            {num === 1
+              ? selectedDay1.format("YYYY")
+              : selectedDay2.format("YYYY")}
+          </span>
+        </div>
+        <div onClick={() => handleMonth(1, num)}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="2"
+            stroke="currentColor"
+            className="w-4 h-4"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M8.25 4.5l7.5 7.5-7.5 7.5"
+            />
+          </svg>
+        </div>
+      </div>
+    );
+    calendar.push(
+      <div className="grid grid-cols-7 items-center justify-items-center gap-1 text-xs bg-[#F5F7FA] py-2">
+        {dayOfWeek.map((d, i) => (
+          <span key={i}>{d}</span>
+        ))}
+      </div>
+    );
+
+    for (let week = dateStartWeek; week <= dateEndWeek; week++) {
+      calendar.push(
+        <div
+          key={week}
+          className="grid grid-cols-7 items-center justify-items-center gap-1 text-xs "
+        >
+          {[
+            Array(7)
+              .fill(0)
+              .map((n, i) => {
+                let current = date
+                  .clone()
+                  .week(week)
+                  .startOf("week")
+                  .add(i, "day");
+
+                const isMonth =
+                  current.clone().format("MM") !== date.format("MM");
+
+                return (
+                  <div key={i} className="py-1">
+                    <span
+                      className={cls(
+                        "text-center hover:font-extrabold cursor-pointer",
+                        isMonth ? "text-gray-200" : ""
+                      )}
+                      onClick={() => onClickDay(current, num)}
+                    >
+                      {current.format("D")}
+                    </span>
+                  </div>
+                );
+              }),
+          ]}
+        </div>
+      );
+    }
+    return calendar;
+  };
 
   const insertImg = (e) => {
     const file = e.target.files[0];
@@ -104,10 +255,20 @@ const NewProject = () => {
                 프로젝트의 예상 진행 날짜를 입력해주세요.
               </span>
             </div>
-            <div className="flex justify-center space-x-2 ">
-              <input type="date" />
-              <span className="text-mainMoreDeepColor font-bold">~</span>
-              <input type="date" />
+            <div className="space-y-2">
+              <div className="flex justify-center items-center text-gray-400">
+                <span className="px-3 py-1 border-b border-mainColor">
+                  {selectedDay1.format("YYYY-MM-DD")}
+                </span>
+                <span className="font-bold text-mainDeepColor">~</span>
+                <span className="px-3 py-1 border-b border-mainColor">
+                  {selectedDay2.format("YYYY-MM-DD")}
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div>{buildCalendar(1)}</div>
+                <div>{buildCalendar(2)}</div>
+              </div>
             </div>
           </div>
           <div className="ml-3 space-y-8 ">

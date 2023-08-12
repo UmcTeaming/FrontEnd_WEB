@@ -53,7 +53,7 @@ const Login = () => {
             </FormSpan>
           </div>
         </div>
-        <button className="bg-mainColor w-full text-white py-3 rounded-full font-bold text-lg">
+        <button className="bg-mainColor w-full text-white py-3 rounded-full font-bold text-lg focus:bg-mainColor">
           로그인
         </button>
       </form>
