@@ -48,6 +48,11 @@ const Signup = () => {
       setError("pw2", { message: "비밀전호가 앞서 입력한 내용과 다릅니다" });
       return;
     }
+    if (data.checkbox === false)
+      setError("checkbox", {
+        message: "필수 약관 동의가 체크되어 있지 않습니다",
+      });
+    console.log(data);
   };
   const onClickIsSend = () => {
     setIsSend((prev) => !prev);
@@ -203,6 +208,21 @@ const Signup = () => {
             </div>
             <ErrorSpan>{errors.pw2?.message}</ErrorSpan>
           </InputDiv>
+
+          <div className="flex flex-col items-center justify-center mb-10">
+            <div className="space-x-3 flex items-center">
+              <input type="checkbox" {...register("checkbox")} />
+              <span className="text-gray-400">
+                [필수] 이용약관 및 개인정보 수집 동의
+              </span>
+              <span className="text-mainColor underline text-sm cursor-pointer">
+                내용보기
+              </span>
+            </div>
+            <div className="h-8">
+              <ErrorSpan>{errors.checkbox?.message}</ErrorSpan>
+            </div>
+          </div>
           <div className="flex justify-center bg-mainColor cursor-pointer mx-20 py-3 rounded-full">
             <button className=" text-white font-bold  h-full w-full  text-center text-xl">
               회원가입
