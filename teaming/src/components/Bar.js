@@ -38,7 +38,6 @@ const Bar = () => {
           </div>
         </div>
         <div className="flex items-center space-x-3">
-          <span className="text-xs text-gray-400 cursor-pointer">로그아웃</span>
           <Link to="/mypage">
             <HiOutlineUser color="gray" className="cursor-pointer" />
           </Link>
