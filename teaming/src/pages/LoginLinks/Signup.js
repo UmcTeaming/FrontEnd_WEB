@@ -27,6 +27,7 @@ pt-1
 `;
 const Signup = () => {
   const [isSend, setIsSend] = useState(false);
+  const [isCheck, setIsCheck] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [isSame, setIsSame] = useState(false);
   const [isShow, setIsShow] = useState(false);
@@ -52,6 +53,10 @@ const Signup = () => {
     setIsSend((prev) => !prev);
   };
 
+  const onClickCheck = () => {
+    console.log(watch("checkNum"));
+    setIsCheck((prev) => !prev);
+  };
   const onClickIsEye1 = () => {
     setIsEyeClick1((prev) => !prev);
   };
@@ -121,6 +126,24 @@ const Signup = () => {
               </InputAddiSpan>
             ) : (
               <ErrorSpan>{errors.email?.message}</ErrorSpan>
+            )}
+          </InputDiv>
+          <InputDiv className="relative">
+            <InputNameSpan>인증번호 입력</InputNameSpan>
+            <Input
+              placeholder="이메일로 전송된 인증 번호 6자리를 입력해주세요."
+              {...register("checkNum")}
+            />
+            <div
+              className="absolute px-4 cursor-pointer right-0 top-4 rounded-full  py-1 pt-2 text-sm bg-mainColor text-white"
+              onClick={onClickCheck}
+            >
+              확인
+            </div>
+            {isCheck ? (
+              <InputAddiSpan>인증되었습니다</InputAddiSpan>
+            ) : (
+              <ErrorSpan>인증 번호가 맞지 않습니다</ErrorSpan>
             )}
           </InputDiv>
           <InputDiv className="relative">
