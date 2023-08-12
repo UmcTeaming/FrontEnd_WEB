@@ -21,13 +21,19 @@ const Bar = () => {
 
           <div className="space-x-7 text-xs text-gray-400">
             <Link to="/ongoingProject">
-              <span className="cursor-pointer">진행중 프로젝트</span>
+              <span className="cursor-pointer hover:text-mainColor">
+                진행중 프로젝트
+              </span>
             </Link>
             <Link to="/portfolio">
-              <span className="cursor-pointer">포트폴리오</span>
+              <span className="cursor-pointer hover:text-mainColor">
+                포트폴리오
+              </span>
             </Link>
             <Link to="/calendar">
-              <span className="cursor-pointer">일정달력</span>
+              <span className="cursor-pointer hover:text-mainColor">
+                일정달력
+              </span>
             </Link>
           </div>
         </div>
