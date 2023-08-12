@@ -7,10 +7,8 @@ import { useState } from "react";
 import ProjectFiles from "./ProjectFiles";
 import FinalFiles from "./FinalFiles";
 import { useRecoilValue } from "recoil";
-import { isAddingMemberAtom } from "../../atom";
 import { useQuery } from "react-query";
 import { getProject } from "../../api";
-import { motion } from "framer-motion";
 
 const Wrapper = styled.div`
   font-family: "GmarketSans";
@@ -118,17 +116,24 @@ const Container = styled.div`
 const Project = () => {
   const matchProjectTab = useMatch("/:id/project-files");
   const matchFinalTab = useMatch("/:id/final-files");
-  const [isCard, setCard] = useState(true);
-  const [isFinal, setFinal] = useState(false);
-  const isAddingMember = useRecoilValue(isAddingMemberAtom);
+  const [currentView, setCurrentView] = useState("grid");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: project } = useQuery(["project"], getProject);
   const projectId = 1;
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <Wrapper>
-      {isAddingMember ? (
+      {isModalOpen ? (
         <Container>
-          <AddMember />
+          <AddMember onClose={() => closeModal()} />
         </Container>
       ) : null}
       <Main>
@@ -154,14 +159,17 @@ const Project = () => {
             &gt;<Link to="/ongoingProject">진행중인 프로젝트</Link>&gt;
             {project?.project_name}
           </Path>
-          <ProjectInfo />
+          <ProjectInfo onOpen={() => openModal()} />
         </InfoCotainer>
         <Upload />
         <Border />
       </Main>
       <SubHeader>
         <Layout>
-          <ListBtn onClick={() => setCard(false)} isActive={!isCard}>
+          <ListBtn
+            onClick={() => setCurrentView("list")}
+            isActive={currentView === "list"}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -178,7 +186,10 @@ const Project = () => {
               />
             </svg>
           </ListBtn>
-          <CardBtn onClick={() => setCard(true)} isActive={isCard}>
+          <CardBtn
+            onClick={() => setCurrentView("grid")}
+            isActive={currentView === "grid"}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
@@ -196,22 +207,18 @@ const Project = () => {
         </Layout>
         <Tabs>
           <Link to={`/${projectId}/project-files`}>
-            <Tab onClick={() => setFinal(false)} isActive={!isFinal}>
-              프로젝트 파일
-            </Tab>
+            <Tab isActive={matchProjectTab}>프로젝트 파일</Tab>
           </Link>
 
           <Link to={`/${projectId}/final-files`}>
-            <Tab onClick={() => setFinal(true)} isActive={isFinal}>
-              최종 파일
-            </Tab>
+            <Tab isActive={matchFinalTab}>최종 파일</Tab>
           </Link>
         </Tabs>
       </SubHeader>
       {matchProjectTab ? (
-        <ProjectFiles isCard={isCard} />
+        <ProjectFiles currentView={currentView} />
       ) : matchFinalTab ? (
-        <FinalFiles isCard={isCard} />
+        <FinalFiles currentView={currentView} />
       ) : null}
     </Wrapper>
   );

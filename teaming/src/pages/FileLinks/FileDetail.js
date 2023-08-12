@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import FileInfo from "../../components/File/FileInfo";
 import FileViewer from "../../components/File/FileViewer";
 import Comment from "../../components/File/Comment";
@@ -8,10 +8,10 @@ import { useQuery } from "react-query";
 
 const Wrapper = styled.div`
   font-family: "GmarketSans";
+  background: linear-gradient(rgba(3, 63, 255, 0.5) 0%, white 30%);
 `;
 
 const Main = styled.div`
-  background: linear-gradient(rgba(3, 63, 255, 0.5), white);
   padding-top: 45px;
   display: flex;
   flex-direction: column;
@@ -41,6 +41,7 @@ const Col = styled.div`
 
 const Details = () => {
   const { data: project } = useQuery(["project"], getProject);
+  const location = useLocation();
 
   return (
     <Wrapper>
