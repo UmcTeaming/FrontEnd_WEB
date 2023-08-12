@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useMatch, useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
-import { getProject } from "../../api";
+import { getDownloadLink, getProject } from "../../api";
 
 const File = styled.div`
   display: flex;
@@ -86,15 +86,19 @@ const Download = styled.button`
 `;
 
 const ListFile = (data) => {
-  const { data: project } = useQuery(["project"], getProject);
+  const matchProject = useMatch("/:id/project-files");
+  const matchFinal = useMatch("/:id/final-files");
   const { file } = data;
+  const { data: download } = useQuery(["download"], getDownloadLink);
+  const projectId = matchProject && matchProject.params.id;
+  const finalId = matchFinal && matchFinal.params.id;
 
   const onDelete = (e) => {
     e.preventDefault();
 
     if (
       window.confirm(
-        "삭제한 파일은 되돌릴 수 없습니다. 그래도 삭제하시겠습니까? "
+        "삭제한 파일은 되돌릴 수 없습니다. 그래도 삭제하시겠습니까?"
       )
     ) {
       // axios.delete(`/projects/${memberId}/${projectId}/files/${fileId}`);
@@ -111,16 +115,24 @@ const ListFile = (data) => {
   };
 
   return (
-    <Link to={`/${project?.project_id}/files/${file.file_id}`}>
+    <Link to={`${file.file_id}`}>
       <File>
         <ImgContainer>
-          <FileImg src="../img/fileImg/file_img.png" />
-          <FileType>PDF</FileType>
+          <FileImg
+            src={
+              matchProject
+                ? "../img/fileImg/project_file.png"
+                : matchFinal
+                ? "../img/fileImg/final_file.png"
+                : null
+            }
+          />
+          <FileType>{file.file_type}</FileType>
         </ImgContainer>
         <Content>
-          <FileTitle>{file.files_name}</FileTitle>
+          <FileTitle>{file.file_name}</FileTitle>
           <Comment>
-            comment <span>{file.comment_num}</span>
+            comment <span>{file.comment}</span>
           </Comment>
         </Content>
 
@@ -143,7 +155,9 @@ const ListFile = (data) => {
               />
             </svg>
           </Delete>
-          <Download onClick={onDownload}>다운로드</Download>
+          <a href={download?.download_link} download>
+            <Download onClick={onDownload}>다운로드</Download>
+          </a>
         </Buttons>
       </File>
     </Link>

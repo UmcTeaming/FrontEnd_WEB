@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { getComments } from "../../api";
+import { getComments, getProfile } from "../../api";
 import axios from "axios";
 
 const Wrapper = styled.div`
@@ -30,6 +30,7 @@ const Input = styled.input`
   border-radius: 5px;
   font-size: 12px;
   font-family: "GmarketSans";
+  background-color: transparent;
 `;
 
 const Buttons = styled.div`
@@ -91,7 +92,7 @@ const CommentContainer = styled.div`
   position: relative;
 `;
 
-const Profil = styled.div`
+const Profile = styled.div`
   display: flex;
   align-items: center;
   margin-top: 6px;
@@ -135,6 +136,7 @@ const Delete = styled.div`
 const Comment = () => {
   const [value, setValue] = useState("");
   const { data: comments } = useQuery(["comments"], getComments);
+  const { data: profile } = useQuery(["profile"], getProfile);
 
   const onChange = (e) => {
     setValue(e.target.value);
@@ -183,7 +185,13 @@ const Comment = () => {
   return (
     <Wrapper>
       <AddComment>
-        <MyImg />
+        <MyImg
+          src={
+            profile?.profileImage === null
+              ? "../../img/profileImg/profile_img.jpg"
+              : profile?.profileImage
+          }
+        />
         <Input value={value} onChange={onChange} placeholder="댓글 추가..." />
       </AddComment>
       <Buttons>
@@ -211,10 +219,16 @@ const Comment = () => {
                 />
               </svg>
             </Delete>
-            <Profil>
-              <UserImg src={comment.profile_image} />
+            <Profile>
+              <UserImg
+                src={
+                  comment?.profile_image === null
+                    ? "../img/profilImg/profil_img.jpg"
+                    : comment.profile_image
+                }
+              />
               <p>{comment.writer}</p>
-            </Profil>
+            </Profile>
             <Content>{comment.content}</Content>
             <Date>{formatTime(comment.create_at)}</Date>
           </CommentContainer>

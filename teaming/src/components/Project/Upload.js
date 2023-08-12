@@ -2,6 +2,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
+import { useMatch } from "react-router";
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,6 +21,8 @@ const Wrapper = styled.div`
 `;
 
 const Upload = () => {
+  const matchProject = useMatch("/:id/project-files");
+  const matchFinal = useMatch("/:id/final-files");
   const [file, setFile] = useState(null);
 
   const handleChange = (data) => {
@@ -41,7 +44,8 @@ const Upload = () => {
 
     console.log(formDataObject);
 
-    /* axios({
+    if (matchProject) {
+      /* axios({
       method: "POST",
       url: `/projects/${memberId}/${projectId}/files-upload`,
       headers: {
@@ -55,6 +59,22 @@ const Upload = () => {
       .catch((error) => {
         console.error(error);
       }); */
+    } else if (matchFinal) {
+      /* axios({
+        method: "POST",
+        url: `/projects/${memberId}/${projectId}/final-files-upload`,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        data: formData,
+      })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        }); */
+    }
   };
 
   return (

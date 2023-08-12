@@ -1,10 +1,8 @@
 import styled from "styled-components";
-import { useSetRecoilState } from "recoil";
-import { isAddingMemberAtom } from "../../atom";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { getProject } from "../../api";
 import axios from "axios";
+import { useQuery } from "react-query";
 
 const Wrapper = styled.div`
   display: flex;
@@ -91,9 +89,8 @@ const Member = styled.span`
   vertical-align: middle;
 `;
 
-const AddMember = () => {
-  const setAddingMemberAtom = useSetRecoilState(isAddingMemberAtom);
-  const toggleAddingMemberAtom = () => setAddingMemberAtom(false);
+const AddMember = ({ onClose }) => {
+  const { data: project } = useQuery(["project"], getProject);
 
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = async (email) => {
@@ -107,7 +104,7 @@ const AddMember = () => {
 
   return (
     <Wrapper>
-      <Delete onClick={toggleAddingMemberAtom}>
+      <Delete onClick={onClose}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -134,7 +131,8 @@ const AddMember = () => {
           </Label>
         </Form>
         <Members>
-          <Member>givemecoke013@naver.com</Member>
+          {project?.members &&
+            project?.members.map((member) => <Member>{member.email}</Member>)}
         </Members>
       </Container>
     </Wrapper>

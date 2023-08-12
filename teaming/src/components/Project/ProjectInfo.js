@@ -1,14 +1,13 @@
 import styled from "styled-components";
 import { Link, useMatch } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { isAddingMemberAtom, isOngoingAtom } from "../../atom";
 import { useState } from "react";
 import { getProject } from "../../api";
 import { useQuery } from "react-query";
 
 const Wrapper = styled.div`
   display: flex;
-  background-color: white;
+  background-color: #fafafa;
   width: 754px;
   height: 260px;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
@@ -34,7 +33,7 @@ const Circle = styled.div`
 const Img = styled.img`
   width: 356px;
   height: 200px;
-  border: solid 1.5px rgba(0, 0, 0, 0.2);
+  border: solid 1px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
 `;
 
@@ -76,10 +75,10 @@ const Users = styled.div`
     width: 6px;
     height: 6px;
     border-radius: 3px;
-    background: rgba(255, 255, 255, 1);
+    background: #fafafa;
   }
   &::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 1);
+    background: #fafafa;
     border-radius: 3px;
   }
   &:hover {
@@ -149,10 +148,7 @@ const Setting = styled.div`
   padding-left: 16px;
 `;
 
-const ProjectInfo = () => {
-  const isOngoing = useRecoilValue(isOngoingAtom);
-  const setAddingMemberAtom = useSetRecoilState(isAddingMemberAtom);
-  const toggleAddingMemberAtom = () => setAddingMemberAtom(true);
+const ProjectInfo = ({ onOpen }) => {
   const { data: project } = useQuery(["project"], getProject);
   const formatDate = (date) => {
     if (date === undefined) {
@@ -171,7 +167,13 @@ const ProjectInfo = () => {
               cx="7"
               cy="7"
               r="7"
-              fill={isOngoing ? "#527ff5" : "#ffd008"}
+              fill={
+                project?.project_status === "ING"
+                  ? "#527ff5"
+                  : project?.project_status === "END"
+                  ? "#ffd008"
+                  : null
+              }
             />
           </svg>
         </Circle>
@@ -184,7 +186,14 @@ const ProjectInfo = () => {
             진행 기간: {formatDate(project?.start_date)} ~
             {formatDate(project?.end_date)}
           </p>
-          <p>상태: 진행중</p>
+          <p>
+            상태:{" "}
+            {project?.project_status === "ING"
+              ? "진행중"
+              : project?.project_status === "END"
+              ? "마감"
+              : null}
+          </p>
         </Description>
         <UserContainer>
           <Users>
@@ -192,18 +201,15 @@ const ProjectInfo = () => {
               <User
                 src={
                   member?.profile_image === null
-                    ? "기본이미지"
+                    ? "../img/profileImg/profile_img.jpg"
                     : member?.profile_image
                 }
               />
             ))}
-            <User />
-            <User />
-            <User />
-            <User />
           </Users>
-          <AddUser onClick={toggleAddingMemberAtom}>
+          <AddUser>
             <svg
+              onClick={onOpen}
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 25 25"
