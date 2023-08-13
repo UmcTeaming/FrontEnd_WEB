@@ -41,7 +41,7 @@ const Login = () => {
         onSubmit={handleSubmit(onValid)}
         className="flex flex-col mt-36 lg:mt-44 lg:mr-56 z-10 "
       >
-        <Input placeholder="username" {...register("username")} />
+        <Input placeholder="email" {...register("email")} />
         <Input placeholder="password" {...register("password")} />
         <div>
           <div className="text-center text-mainDeepColor mt-4 mb-8 text-sm ">

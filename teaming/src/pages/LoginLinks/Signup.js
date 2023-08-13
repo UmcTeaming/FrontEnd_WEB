@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
 import { BsCheckLg, BsEyeSlash, BsEye } from "react-icons/bs";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const InputDiv = tw.div`
 flex flex-col h-28
@@ -43,23 +45,65 @@ const Signup = () => {
     watch,
   } = useForm();
 
+  const navigate = useNavigate();
+
   const onValid = (data) => {
     if (data.pw1 !== data.pw2) {
       setError("pw2", { message: "비밀전호가 앞서 입력한 내용과 다릅니다" });
       return;
     }
-    if (data.checkbox === false)
+    if (data.checkbox === false) {
       setError("checkbox", {
         message: "필수 약관 동의가 체크되어 있지 않습니다",
       });
+      return;
+    }
+    if (isCheck) {
+      axios
+        .post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
+          name: data.name,
+          email: data.email,
+          password: data.pw1,
+        })
+        .then((res) => {
+          console.log(res);
+          navigate("/");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setError("checkNum", {
+        message: "올바른 인증번호를 재입력해주세요",
+      });
+    }
+
     console.log(data);
   };
   const onClickIsSend = () => {
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/auth/email-duplication`, {
+        email: watch("email"),
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
     setIsSend((prev) => !prev);
   };
 
   const onClickCheck = () => {
-    console.log(watch("checkNum"));
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/auth/email-verification`, {
+        authentication: watch("checkNum"),
+      })
+      .then((res) => {
+        setIsCheck(true);
+        console.log(res);
+      })
+      .catch((err) => {
+        setError("checkNum", { message: "인증번호가 일치하지 않습니다" });
+        setIsCheck(false);
+        console.log(err);
+      });
     setIsCheck((prev) => !prev);
   };
   const onClickIsEye1 = () => {
@@ -82,6 +126,8 @@ const Signup = () => {
       setIsSame(true);
     }
   }, [errors.pw1, watch("pw1"), watch("pw2")]);
+
+  useEffect(() => {});
   return (
     <div className="w-screen flex justify-center py-24 ">
       <div>
@@ -145,10 +191,13 @@ const Signup = () => {
             >
               확인
             </div>
-            {isCheck ? (
+
+            {errors.checkNum && isCheck !== true ? (
+              <ErrorSpan>{errors.checkNum.message}</ErrorSpan>
+            ) : isCheck ? (
               <InputAddiSpan>인증되었습니다</InputAddiSpan>
             ) : (
-              <ErrorSpan>인증 번호가 맞지 않습니다</ErrorSpan>
+              ""
             )}
           </InputDiv>
           <InputDiv className="relative">
