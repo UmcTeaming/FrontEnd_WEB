@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Bar from "../../components/Bar";
 import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
@@ -17,7 +17,7 @@ const Login = () => {
   const { register, handleSubmit, reset } = useForm();
   const [accessToken, setAcessToken] = useRecoilState(tokenState);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
-  const navigate = useNavigate();
+  const [login, setLogin] = useState(false);
   const onValid = (data) => {
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
@@ -26,12 +26,12 @@ const Login = () => {
       })
       .then((res) => {
         console.log(res);
-        setAcessToken(res.data.accessToken);
+        localStorage.setItem("token", res.data.accessToken);
         setIsLogin(true);
       })
       .catch((err) => console.log(err));
-    console.log(data);
   };
+
   return (
     <div className=" flex justify-center lg:justify-between ">
       <div className="space-y-2 ">

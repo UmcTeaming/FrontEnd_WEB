@@ -19,16 +19,16 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { loginState, tokenState } from "./components/atom";
 import axios from "axios";
 
-axios.interceptors.request.use(
+/* axios.interceptors.request.use(
   function (config) {
-    const token = useRecoilValue(tokenState);
+    const token = localStorage.getItem("token");
     config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
   function (error) {
     return Promise.reject(error);
   }
-);
+); */
 
 function App() {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
