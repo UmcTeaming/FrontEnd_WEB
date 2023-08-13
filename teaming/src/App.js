@@ -45,15 +45,21 @@ function App() {
           <Route path="/newProject" element={<NewProject />} />
           <Route path="/mypage" element={<Mypage />} />
           <Route path="/mypage/*" element={<ChangePw />} />
+<<<<<<< HEAD
 
           <Route path="/cleanhome" element={<CleanHome />} />
+=======
+          <Route path="/home" element={<Home />} />{" "}
+          {/* 원래 경로는 / 이지만 확인을 위해 임의로 /home으로 작성했습니다  */}
+>>>>>>> 78ed7a9a712493cca8b974dff6c4c20e9648bc22
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/ongoingProject" element={<OngoingProject />} />
           {/* 포트폴리오 */}
           <Route path="/portfolio" element={<PortfolioList />} />
           <Route path="/:id/project-files" element={<Project />} />
           <Route path="/:id/final-files" element={<Project />} />
-          <Route path="/:id/files/:fileId" element={<FileDetail />} />
+          <Route path="/:id/project-files/:fileId" element={<FileDetail />} />
+          <Route path="/:id/final-files/:fileId" element={<FileDetail />} />
           <Route path="/:id/End" element={<End />} />
         </Routes>
       </BrowserRouter>

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { MdUpload } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 import { useQuery } from "react-query";
-import { getProject } from "../../api";
+import { getDownloadLink, getProject } from "../../api";
 import axios from "axios";
 
 const File = styled.div`
@@ -17,6 +17,7 @@ const File = styled.div`
     text-decoration: none;
     color: black;
   }
+  position: relative;
 `;
 
 const Delete = styled.button`
@@ -68,6 +69,8 @@ const FileTitle = styled.h1`
 
 const Col = styled.div`
   display: flex;
+  position: absolute;
+  bottom: 10px;
   gap: 57px;
 `;
 
@@ -95,8 +98,10 @@ const Download = styled.button`
 `;
 
 const CardFile = (data) => {
-  const { data: project } = useQuery(["project"], getProject);
+  const matchProject = useMatch("/:id/project-files");
+  const matchFinal = useMatch("/:id/final-files");
   const { file } = data;
+  const { data: download } = useQuery(["download"], getDownloadLink);
 
   const onDelete = (e) => {
     e.preventDefault();
@@ -114,13 +119,13 @@ const CardFile = (data) => {
     return;
   };
 
-  const onDownload = (e) => {
+  const onClick = (e) => {
     e.preventDefault();
     console.log("download...");
   };
 
   return (
-    <Link to={`/${project?.project_id}/files/${file.file_id}`}>
+    <Link to={`${file.file_id}`}>
       <File>
         <Delete onClick={onDelete}>
           <svg
@@ -139,18 +144,28 @@ const CardFile = (data) => {
         </Delete>
         <FileContent>
           <ImgContainer>
-            <FileImg src="../img/fileImg/file_img.png" />
-            <FileType>PDF</FileType>
+            <FileImg
+              src={
+                matchProject
+                  ? "../img/fileImg/project_file.png"
+                  : matchFinal
+                  ? "../img/fileImg/final_file.png"
+                  : null
+              }
+            />
+            <FileType>{file.file_type}</FileType>
           </ImgContainer>
-          <FileTitle>{file.files_name}</FileTitle>
+          <FileTitle>{file.file_name}</FileTitle>
         </FileContent>
         <Col>
           <Comment>
-            comment <span>{file.comment_num}</span>
+            comment <span>{file.comment}</span>
           </Comment>
-          <Download onClick={onDownload}>
-            <MdUpload size="13" color="white" transform="rotate(180)" />
-          </Download>
+          <a href={download?.download_link} download>
+            <Download onClick={onClick}>
+              <MdUpload size="13" color="white" transform="rotate(180)" />
+            </Download>
+          </a>
         </Col>
       </File>
     </Link>

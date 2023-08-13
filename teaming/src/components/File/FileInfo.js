@@ -1,7 +1,8 @@
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { getFile, getFileInfo, getProject } from "../../api";
+import { getDownloadLink, getFileInfo, getProject } from "../../api";
 import { MdUpload } from "react-icons/md";
+import { useLocation } from "react-router";
 
 const Wrapper = styled.div`
   display: flex;
@@ -90,15 +91,25 @@ const Download = styled.button`
 `;
 
 function FileInfo() {
+  const location = useLocation();
   const { data: project } = useQuery(["project"], getProject);
   const { data: file } = useQuery(["fileInfo"], getFileInfo);
-  const { data: download } = useQuery(["download"], getFile);
+  const { data: download } = useQuery(["download"], getDownloadLink);
   const formattedDate = file?.upload_date.split(" ")[0].replace(/-/g, ".");
+  const parts = location.pathname.split("/");
 
   return (
     <Wrapper>
       <ImgContainer>
-        <Img src="../../img/fileImg/file_img.png" />
+        <Img
+          src={
+            parts.includes("project-files")
+              ? "../../img/fileImg/project_file.png"
+              : parts.includes("final-files")
+              ? "../../img/fileImg/final_file.png"
+              : null
+          }
+        />
         <FileType>{file?.file_type}</FileType>
       </ImgContainer>
       <Details>
@@ -110,7 +121,18 @@ function FileInfo() {
         <Col>
           <Format>
             <svg width="15px" height="15px">
-              <circle cx="5" cy="5" r="5" fill="#527ff5" />
+              <circle
+                cx="5"
+                cy="5"
+                r="5"
+                fill={
+                  project?.project_status === "ING"
+                    ? "#527FF5"
+                    : project?.project_status === "END"
+                    ? "#FFD008"
+                    : null
+                }
+              />
             </svg>
             {file?.file_type}
           </Format>

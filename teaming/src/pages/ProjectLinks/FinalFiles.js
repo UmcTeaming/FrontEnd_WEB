@@ -2,7 +2,7 @@ import styled from "styled-components";
 import CardFile from "../../components/Project/CardFile";
 import ListFile from "../../components/Project/ListFile";
 import { useQuery } from "react-query";
-import { getProject } from "../../api";
+import { getFinalFiles } from "../../api";
 
 const Wrapper = styled.div`
   display: flex;
@@ -39,37 +39,37 @@ const CardFiles = styled.div`
   border-bottom: solid 1px rgba(0, 0, 0, 0.1);
 `;
 function FinalFiles(props) {
-  const { data: project } = useQuery(["project"], getProject);
-  const { isCard } = props;
+  const { data: finalFiles } = useQuery(["final-files"], getFinalFiles);
+  const { currentView } = props;
 
   const formatDate = (date) => {
     if (date === undefined) {
       return "";
     } else {
-      return date.split(" ")[0].replace(/-/g, ".");
+      return date.split("T")[0].replace(/-/g, ".");
     }
   };
 
   return (
     <Wrapper>
       <Container>
-        {project?.projects_files_all.map((files) => {
+        {finalFiles?.map((files) => {
           return (
             <>
-              <Date>{formatDate(files?.uploade_date)}</Date>
-              {isCard ? (
+              <Date>{formatDate(files?.createdAt)}</Date>
+              {currentView === "grid" ? (
                 <CardFiles>
-                  {files?.files_by_date.map((file) => (
+                  {files?.filesDetails.map((file) => (
                     <CardFile file={file} />
                   ))}
                 </CardFiles>
-              ) : (
+              ) : currentView === "list" ? (
                 <ListFiles>
-                  {files?.files_by_date.map((file) => (
+                  {files?.filesDetails.map((file) => (
                     <ListFile file={file} />
                   ))}
                 </ListFiles>
-              )}
+              ) : null}
             </>
           );
         })}

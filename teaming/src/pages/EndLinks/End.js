@@ -1,7 +1,10 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Calendar from "react-calendar";
+import { useQuery } from "react-query";
+import { getProject } from "../../api";
 import "react-calendar/dist/Calendar.css";
+import axios from "axios";
 
 const Wrapper = styled.div`
   font-family: "GmarketSans";
@@ -19,17 +22,17 @@ const Path = styled.div`
   align-items: center;
   color: white;
   font-size: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 45px;
   svg {
     margin-right: 3px;
   }
-  padding-left: 17rem;
+  padding-left: 23rem;
 `;
 
 const Col = styled.div`
   display: flex;
-  align-items: center;
   justify-content: center;
+  gap: 30px;
 `;
 
 const Illust = styled.div`
@@ -58,13 +61,14 @@ const Img = styled.img`
   position: absolute;
   width: 414px;
   height: 273px;
+  top: 25px;
 `;
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  padding-top: 30px;
 `;
 
 const Date = styled.div`
@@ -79,7 +83,6 @@ const Date = styled.div`
 
 const Calendars = styled.div`
   display: flex;
-  gap: 5px;
   margin-bottom: 20px;
 `;
 
@@ -87,8 +90,17 @@ const CalendarItem = styled(Calendar)`
   font-family: "GmarketSans";
 
   border: none;
+  border-radius: 5px;
+  width: 231px;
+
+  .react-calendar__tile--hasActive {
+    color: white !important;
+    background-color: #527ff5;
+    border-radius: 16px;
+  }
 
   .react-calendar__month-view__weekdays__weekday abbr {
+    font-size: 11px;
     font-weight: 500;
     text-decoration: none;
     border-bottom: none;
@@ -96,6 +108,31 @@ const CalendarItem = styled(Calendar)`
 
   .react-calendar__month-view__weekdays {
     background: rgba(151, 151, 151, 0.2);
+  }
+
+  .react-calendar__navigation {
+    margin: 0;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .react-calendar__month-view__days {
+    font-size: 11px;
+    padding: 5px;
+  }
+
+  .react-calendar__month-view__days > button {
+    margin: 0;
+    padding: 0;
+    height: 32px;
+  }
+
+  .react-calendar__tile {
+    color: #494e50;
+  }
+
+  .react-calendar__tile--now {
+    border-radius: 16px;
   }
 `;
 
@@ -110,20 +147,43 @@ const Button = styled.button`
   background-color: #527ff5;
   border: none;
   border-radius: 30px;
-  a {
-    text-decoration: none;
-    color: white;
-    font-size: 10px;
-    font-weight: 700;
-    font-family: "GmarketSans";
-  }
+  text-decoration: none;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: "GmarketSans";
 `;
 
 const End = () => {
+  const { data: project } = useQuery(["project"], getProject);
+  const startDate = new window.Date(
+    project?.start_date.split(" ")[0].replace(/-/g, ".")
+  );
+
+  const formatDate = (date) => {
+    if (date === undefined) {
+      return "";
+    } else {
+      return date.split(" ")[0].replace(/-/g, ".");
+    }
+  };
   const formatShortWeekday = (locale, date) => {
     const options = { weekday: "short" };
     return new Intl.DateTimeFormat(locale, options).format(date).slice(0, 1);
   };
+  const onClose = () => {
+    /* axios
+      .patch("https://api.example.com/update-data", {
+        project_status: "END",
+      })
+      .then((response) => {
+        console.log(response.data.message);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      }); */
+  };
+
   return (
     <Wrapper>
       <Main>
@@ -158,23 +218,30 @@ const End = () => {
           <Container>
             <Calendars>
               <CalendarContainer>
-                <Date>2023.07.01</Date>
+                <Date>{formatDate(project?.start_date)}</Date>
                 <CalendarItem
+                  next2Label={null}
+                  prev2Label={null}
                   locale="en-US"
                   formatShortWeekday={formatShortWeekday}
+                  value={project?.start_date.split(" ")}
                 />
               </CalendarContainer>
+              <span style={{ color: "white" }}>~</span>
               <CalendarContainer>
-                <Date>2023.08.29</Date>
+                <Date>{formatDate(project?.end_date)}</Date>
                 <CalendarItem
+                  next2Label={null}
+                  prev2Label={null}
                   locale="en-US"
                   formatShortWeekday={formatShortWeekday}
+                  value={project?.end_date.split(" ")}
                 />
               </CalendarContainer>
             </Calendars>
-            <Button>
-              <Link to="/portfolio">프로젝트 종료하기</Link>
-            </Button>
+            <Link to="/portfolio">
+              <Button onClick={onClose}>프로젝트 종료하기</Button>
+            </Link>
           </Container>
         </Col>
       </Main>
