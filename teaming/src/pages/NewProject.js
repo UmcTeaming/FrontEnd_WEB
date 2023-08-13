@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
 import moment from "moment";
@@ -23,6 +23,19 @@ const months = [
   "Dec",
 ];
 
+const colorCode = [
+  "F98984",
+  "FFD008",
+  "FFAA00",
+  "B5EC3E",
+  "8DD773",
+  "527FF5",
+  "456DD0",
+  "BB92FF",
+  "555555",
+  "D9D9D9",
+];
+
 const NewProject = () => {
   const [previewImg, setPreviewImg] = useState();
   const [emails, setEmails] = useState();
@@ -31,6 +44,8 @@ const NewProject = () => {
   const [date2, setDate2] = useState(moment());
   const [selectedDay1, setSelectedDay1] = useState(date1.clone());
   const [selectedDay2, setSelectedDay2] = useState(date2.clone());
+
+  const [logoNum, setLogoNum] = useState(0);
 
   const {
     register,
@@ -175,8 +190,15 @@ const NewProject = () => {
     };
     reader.readAsDataURL(file);
   };
+
+  const onClickLogo = (i) => {
+    setLogoNum(i);
+  };
   const onClickAppend = () => {};
 
+  useEffect(() => {
+    console.log(colorCode[logoNum]);
+  }, [logoNum]);
   return (
     <div className="flex justify-center items-center">
       <form className="flex space-x-6">
@@ -229,13 +251,19 @@ const NewProject = () => {
               <Span className="pt-1">색상</Span>
               <div className="space-y-4">
                 <div className="flex items-center space-x-2">
-                  <div className="h-5 w-5 rounded-full bg-red-300"></div>
+                  <div
+                    className={cls(
+                      "h-5 w-5 rounded-full ",
+                      `bg-[#${colorCode[logoNum]}]`
+                    )}
+                  ></div>
                   <span className="pt-1">해당 색상으로 선택하시겟습니까?</span>
                 </div>
                 <div className="grid grid-cols-5 gap-5 ">
-                  {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => (
+                  {[5, 6, 7, 8, 9, 0, 1, 2, 3, 4].map((n, i) => (
                     <img
                       className="h-10 cursor-pointer"
+                      onClick={() => onClickLogo(i)}
                       src={`/img/newProjectColor/Teaming_color_${String(
                         n
                       )}.png`}
