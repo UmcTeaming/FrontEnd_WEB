@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { HiOutlineUser } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import tw from "tailwind-styled-components";
+import { cls } from "../libs/utils";
 
 const BarItem = tw.div`
 flex space-x-6 items-center cursor-pointer
 `;
 const Bar = () => {
   const [isClick, setIsClick] = useState(false);
+  const { pathname } = useLocation();
   const onClick = () => {
     setIsClick((prev) => !prev);
   };
+  console.log(pathname);
   return (
     <div className="flex flex-col ">
       <div className="px-5 py-3 flex items-center justify-between">
@@ -21,17 +24,32 @@ const Bar = () => {
 
           <div className="space-x-7 text-xs text-gray-400">
             <Link to="/ongoingProject">
-              <span className="cursor-pointer hover:text-mainColor">
+              <span
+                className={cls(
+                  "cursor-pointer hover:text-mainColor",
+                  pathname === "/ongoingProject" ? "text-mainColor" : ""
+                )}
+              >
                 진행중 프로젝트
               </span>
             </Link>
             <Link to="/portfolio">
-              <span className="cursor-pointer hover:text-mainColor">
+              <span
+                className={cls(
+                  "cursor-pointer hover:text-mainColor",
+                  pathname === "/portfolio" ? "text-mainColor" : ""
+                )}
+              >
                 포트폴리오
               </span>
             </Link>
             <Link to="/calendar">
-              <span className="cursor-pointer hover:text-mainColor">
+              <span
+                className={cls(
+                  "cursor-pointer hover:text-mainColor",
+                  pathname === "/calendar" ? "text-mainColor" : ""
+                )}
+              >
                 일정달력
               </span>
             </Link>
