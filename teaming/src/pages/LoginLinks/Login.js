@@ -2,7 +2,10 @@ import React from "react";
 import Bar from "../../components/Bar";
 import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { loginState, tokenState } from "../../components/atom";
 
 const Input = tw.input`
 h-14 w-96 border-b-[1px] border-mainDeepColor outline-none placeholder:text-mainColor p-2
@@ -12,7 +15,21 @@ px-2
 `;
 const Login = () => {
   const { register, handleSubmit, reset } = useForm();
+  const [accessToken, setAcessToken] = useRecoilState(tokenState);
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
+  const navigate = useNavigate();
   const onValid = (data) => {
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
+        email: data.email,
+        password: data.password,
+      })
+      .then((res) => {
+        console.log(res);
+        setAcessToken(res.data.accessToken);
+        setIsLogin(true);
+      })
+      .catch((err) => console.log(err));
     console.log(data);
   };
   return (
@@ -42,7 +59,12 @@ const Login = () => {
         className="flex flex-col mt-36 lg:mt-44 lg:mr-56 z-10 "
       >
         <Input placeholder="email" {...register("email")} />
-        <Input placeholder="password" {...register("password")} />
+        <Input
+          autoComplete=""
+          placeholder="password"
+          type="password"
+          {...register("password")}
+        />
         <div>
           <div className="text-center text-mainDeepColor mt-4 mb-8 text-sm ">
             <FormSpan className="border-r border-mainDeepColor">
