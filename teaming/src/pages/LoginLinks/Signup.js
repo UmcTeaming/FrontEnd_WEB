@@ -23,7 +23,7 @@ const InputAddiSpan = tw.span`
 text-mainColor
 pt-1
 `;
-const ErrorSpan = tw.span`
+export const ErrorSpan = tw.span`
 text-[#F98984]
 pt-1
 `;

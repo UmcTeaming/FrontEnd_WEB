@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Input, InputDiv, InputNameSpan } from "./Signup";
 import { TiDelete } from "react-icons/ti";
+import axios from "axios";
 
 const FindPW = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -11,8 +12,18 @@ const FindPW = () => {
     reset();
   };
   const onValid = (data) => {
-    setIsSubmit(true);
-    setEmail(data.email);
+    axios
+      .patch(`${process.env.REACT_APP_API_URL}/auth/reset-password`, {
+        email: data.email,
+      })
+      .then((res) => {
+        setIsSubmit(true);
+        setEmail(data.email);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("회원가입되지 않은 이메일입니다.");
+      });
   };
   return (
     <div className="flex justify-center py-20">
