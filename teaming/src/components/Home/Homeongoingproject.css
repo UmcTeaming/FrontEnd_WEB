@@ -1,72 +1,122 @@
+/* 프로젝트가 하나도 없을 때 */
+.OngoingProjApp .Ongoingempty {
+  height: 510px;
+  display: grid;
+  grid-template-rows: 232px 232px;
+  grid-template-columns: 300px 300px 300px 300px;
+  gap: 20px;
+}
 
+.Ongoingemptycontent {
+  margin-top: 30px;
+  margin-right: 20px;
+  border-radius: 10px;
+  box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.Ongoingempty .Ongoingemptycontent .emptytitle {
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  margin-top: 15px;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.Ongoingempty .Ongoingemptycontent .emptytitle .emptytitlelineone {
+  margin-left: 10px;
+}
+
+.Ongoingempty .Ongoingemptycontent .emptyimg {
+  background-image: url("../../../public/img/projectImg/noproject_img1.png");
+  background-size: cover;
+  width: 100px;
+  height: 80px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Ongoingempty .Ongoingemptycontent .emptysubtitle {
+  color: rgba(0, 0, 0, 0.25);
+  text-align: center;
+  margin-top: 15px;
+  font-size: 12px;
+  font-style: normal;
+  line-height: normal;
+}
+
+.Ongoingempty .Ongoingemptycontent .emptytitle .emptysubtitlelineone {
+  margin-left: 10px;
+}
+
+/* 프로젝트가 있을 때 */
 .OngoingProjApp .OngoingProjtitle {
   font-size: 20px;
   font-weight: 700;
   margin-top: 40px;
 }
 
-.OngoingProjApp .OngoingProjsubtitle{
+.OngoingProjApp .OngoingProjsubtitle {
   font-size: 13px;
   color: #5f5f5f;
 }
 
-
-.OngoingProjApp .OngoingProjContent{
+.OngoingProjApp .OngoingProjContent {
+  height: 510px;
   display: grid;
-  grid-template-rows: 232px 232px ;
+  grid-template-rows: 232px 232px;
   grid-template-columns: 300px 300px 300px 300px;
-  gap:20px;
+  gap: 20px;
 }
 
-
-.OngoingProjContent .content{
+.OngoingProjContent .content {
   margin-top: 30px;
   margin-right: 20px;
   border-radius: 10px;
-  box-shadow: 1px 4px 8px 1px rgba(0,0,0,.2);
+  box-shadow: 1px 4px 8px 1px rgba(0, 0, 0, 0.2);
 }
 
-.OngoingProjContent .content span{
+.OngoingProjContent .content span {
   font-size: 9px;
-  color:#5f5f5f;
+  color: #5f5f5f;
   float: right;
   padding-right: 20px;
 }
 
-.OngoingProjContent .content .contentprogress{
+.OngoingProjContent .content .contentprogress {
   margin-top: 10px;
 }
 
-.OngoingProjContent .content .progressicon{
+.OngoingProjContent .content .progressicon {
   font-size: 9px;
-  color:#FFD008;
+  color: #ffd008;
   float: right;
   margin-left: 10px;
 }
 
-.OngoingProjContent .content .contentimg{
+.OngoingProjContent .content .contentimg {
   width: 221px;
   height: 123px;
   margin-top: 12px;
 }
 
-.OngoingProjContent .content .contentimgs{
-  background-image: url('../../../public/img/projectImg/project_img.jpg');
+.OngoingProjContent .content .contentimgs {
+  background-image: url("../../../public/img/projectImg/project_img.jpg");
   background-size: cover;
   width: 250px;
   height: 123px;
   margin-top: 12px;
 }
 
-
-.OngoingProjContent .content .contenttitle{
+.OngoingProjContent .content .contenttitle {
   text-align: left;
   margin-top: 20px;
   font-size: 13px;
   margin-left: 5px;
 }
 
-.OngoingProjContent .content .contentsubtitle{
+.OngoingProjContent .content .contentsubtitle {
   text-align: left;
   margin-left: 5px;
   font-size: 9px;

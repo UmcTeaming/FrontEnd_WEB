@@ -43,11 +43,11 @@ const Bar = () => {
                 포트폴리오
               </span>
             </Link>
-            <Link to="/calendar">
+            <Link to="/schedulecalendar">
               <span
                 className={cls(
                   "cursor-pointer hover:text-mainColor",
-                  pathname === "/calendar" ? "text-mainColor" : ""
+                  pathname === "/schedulecalendar" ? "text-mainColor" : ""
                 )}
               >
                 일정달력
