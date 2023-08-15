@@ -5,7 +5,7 @@ import tw from "tailwind-styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { loginState, tokenState } from "../../components/atom";
+import { loginState, memberIdState, tokenState } from "../../components/atom";
 
 const Input = tw.input`
 h-14 w-96 border-b-[1px] border-mainDeepColor outline-none placeholder:text-mainColor p-2
@@ -17,6 +17,7 @@ const Login = () => {
   const { register, handleSubmit, reset } = useForm();
   const [accessToken, setAcessToken] = useRecoilState(tokenState);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
+  const [memberId, setMemberId] = useRecoilState(memberIdState);
   const [login, setLogin] = useState(false);
   const onValid = (data) => {
     axios
@@ -26,7 +27,8 @@ const Login = () => {
       })
       .then((res) => {
         console.log(res);
-        localStorage.setItem("token", res.data.accessToken);
+        localStorage.setItem("token", res.data.data.accessToken);
+        setMemberId(res.data.data.memberId);
         setIsLogin(true);
       })
       .catch((err) => console.log(err));
