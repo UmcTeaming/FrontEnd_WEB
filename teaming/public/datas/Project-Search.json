@@ -1,0 +1,23 @@
+{
+    "status": 200,
+    "message": "프로젝트 정보를 불러왔습니다",
+    "data": {
+        "name": "Trilia",
+        "image": null,
+        "startDate": "2023-02-01",
+        "endDate": "2022-09-21",
+        "projectStatus": "ING",
+        "memberListDtos": [
+            {
+                "member_name": "한소희",
+                "member_image": "이미지 링크",
+                "email": "test@gmail.com"
+            },
+            {
+                "member_name": "공유",
+                "member_image": null,
+                "email": "gong@naver.com"
+            }
+        ]
+    }
+}

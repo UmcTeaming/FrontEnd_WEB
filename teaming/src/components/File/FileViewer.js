@@ -15,7 +15,7 @@ const FileViewer = () => {
   const docs = [
     {
       uri: `${view?.view_link}`,
-      fileType: `${file?.file_type}`,
+      fileType: `docx`, // ${file?.file_type}
     },
   ];
 

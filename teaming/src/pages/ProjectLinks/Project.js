@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link, useMatch } from "react-router-dom";
+import { Link, useMatch, useParams } from "react-router-dom";
 import ProjectInfo from "../../components/Project/ProjectInfo";
 import Upload from "../../components/Project/Upload";
 import AddMember from "../../components/Project/AddMember";
@@ -119,7 +119,8 @@ const Project = () => {
   const [currentView, setCurrentView] = useState("grid");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: project } = useQuery(["project"], getProject);
-  const projectId = 1;
+
+  const { projectId } = useParams();
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -157,7 +158,7 @@ const Project = () => {
               </svg>
             </Link>
             &gt;<Link to="/ongoingProject">진행중인 프로젝트</Link>&gt;
-            {project?.project_name}
+            {project?.name}
           </Path>
           <ProjectInfo onOpen={() => openModal()} />
         </InfoCotainer>
