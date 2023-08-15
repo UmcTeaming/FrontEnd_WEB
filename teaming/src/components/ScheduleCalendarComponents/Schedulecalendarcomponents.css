@@ -1,0 +1,11 @@
+.SchedulecalendarApp{
+  background-image: url('../../../public/img/backgroundImgs/web_bg1.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+.schdulecomponents{
+  width: 450px;
+  height: 350px;
+  
+}
