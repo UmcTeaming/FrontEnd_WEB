@@ -3,17 +3,21 @@ import { HiOutlineUser } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 import tw from "tailwind-styled-components";
 import { cls } from "../libs/utils";
+import { useRecoilState } from "recoil";
+import { loginState } from "./atom";
 
 const BarItem = tw.div`
 flex space-x-6 items-center cursor-pointer
 `;
 const Bar = () => {
   const [isClick, setIsClick] = useState(false);
+
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
   const { pathname } = useLocation();
   const onClick = () => {
     setIsClick((prev) => !prev);
   };
-  console.log(pathname);
+
   return (
     <div className="flex flex-col ">
       <div className="px-5 py-3 flex items-center justify-between">
@@ -22,8 +26,13 @@ const Bar = () => {
             <img className="h-10" src="/img/logo/teamingLogo.png" />
           </Link>
 
-          <div className="space-x-7 text-xs text-gray-400">
-            <Link to="/ongoingProject">
+          <div
+            className="space-x-7 text-xs text-gray-400"
+            onClick={() => {
+              if (!isLogin) alert("로그인 후 이용해주세요!");
+            }}
+          >
+            <Link to={isLogin ? "/ongoingProject" : null}>
               <span
                 className={cls(
                   "cursor-pointer hover:text-mainColor",
@@ -33,7 +42,7 @@ const Bar = () => {
                 진행중 프로젝트
               </span>
             </Link>
-            <Link to="/portfolio">
+            <Link to={isLogin ? "/portfolio" : null}>
               <span
                 className={cls(
                   "cursor-pointer hover:text-mainColor",
@@ -43,7 +52,8 @@ const Bar = () => {
                 포트폴리오
               </span>
             </Link>
-            <Link to="/schedulecalendar">
+            <Link to={isLogin ? "/calendar" : null}>
+
               <span
                 className={cls(
                   "cursor-pointer hover:text-mainColor",
@@ -55,11 +65,16 @@ const Bar = () => {
             </Link>
           </div>
         </div>
-        <div className="flex items-center space-x-3">
-          <Link to="/mypage">
+        <div
+          className="flex items-center space-x-3"
+          onClick={() => {
+            if (!isLogin) alert("로그인 후 이용해주세요!");
+          }}
+        >
+          <Link to={isLogin ? "/mypage" : null}>
             <HiOutlineUser color="gray" className="cursor-pointer" />
           </Link>
-          <Link to="/newProject">
+          <Link to={isLogin ? "/newProject" : null}>
             <div className="bg-mainColor flex items-center text-white pt-2 pb-1 pl-5 pr-6 rounded-full font-bold space-x-2 cursor-pointer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

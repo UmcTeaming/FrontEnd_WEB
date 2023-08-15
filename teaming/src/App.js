@@ -20,7 +20,7 @@ import axios from "axios";
 import { Calendar } from "./pages/Calendar/Calendar";
 import { Schedulecalendar } from "./pages/Schedulecalendar/Schedulecalendar";
 
-axios.interceptors.request.use(
+/* axios.interceptors.request.use(
   function (config) {
     const token = localStorage.getItem("token");
     config.headers.Authorization = `Bearer ${token}`;
@@ -30,7 +30,7 @@ axios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
+ */
 function App() {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   return (
@@ -44,8 +44,12 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/findPW" element={<FindPW />} />
           <Route path="/newProject" element={<NewProject />} />
-          <Route path="/mypage" element={<Mypage />} />
-          <Route path="/mypage/*" element={<ChangePw />} />
+          {isLogin ? <Route path="/mypage" element={<Mypage />} /> : null}
+          {isLogin ? <Route path="/mypage/*" element={<ChangePw />} /> : null}
+
+          <Route path="/cleanhome" element={<CleanHome />} />
+
+
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/schedulecalendar" element={<Schedulecalendar/>}/>
           <Route path="/ongoingProject" element={<OngoingProject />} />
