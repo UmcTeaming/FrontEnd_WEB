@@ -52,11 +52,17 @@ function App() {
           <Route path="/ongoingProject" element={<OngoingProject />} />
           {/* 포트폴리오 */}
           <Route path="/portfolio" element={<PortfolioList />} />
-          <Route path="/:id/project-files" element={<Project />} />
-          <Route path="/:id/final-files" element={<Project />} />
-          <Route path="/:id/project-files/:fileId" element={<FileDetail />} />
-          <Route path="/:id/final-files/:fileId" element={<FileDetail />} />
-          <Route path="/:id/End" element={<End />} />
+          <Route path="/:projectId/project-files" element={<Project />} />
+          <Route path="/:projectId/final-files" element={<Project />} />
+          <Route
+            path="/:projectId/project-files/:fileId"
+            element={<FileDetail />}
+          />
+          <Route
+            path="/:projectId/final-files/:fileId"
+            element={<FileDetail />}
+          />
+          <Route path="/:projectId/End" element={<End />} />
         </Routes>
       </BrowserRouter>
     </div>

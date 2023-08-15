@@ -1,0 +1,18 @@
+{
+    "status": 200,
+    "message": "댓글 정보를 불러왔습니다",
+    "data": [
+        {
+            "writer": "한소희",
+            "content": "너무 어렵다다 ",
+            "create_at": "2023-08-12T12:43:21",
+            "profile_image": null
+        },
+        {
+            "writer": "홍길동",
+            "content": "너무 쉽네요요 ",
+            "create_at": "2023-08-12T12:44:25",
+            "profile_image": null
+        }
+    ]
+}

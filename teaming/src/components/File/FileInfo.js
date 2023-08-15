@@ -60,7 +60,7 @@ const Description = styled.p`
 
 const Col = styled.div`
   display: flex;
-  gap: 278px;
+  gap: 300px;
 `;
 
 const Format = styled.div`
@@ -116,7 +116,7 @@ function FileInfo() {
         <Title>{file?.file_name}</Title>
         <Uploader>{file?.uploader}님이 업로드</Uploader>
         <Description>
-          프로젝트 명: {project?.project_name} <br /> {formattedDate}
+          프로젝트 명: {project?.name} <br /> {formattedDate}
         </Description>
         <Col>
           <Format>

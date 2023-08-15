@@ -1,0 +1,7 @@
+{
+    "status": 200,
+    "message": "댓글을 등록하였습니다",
+    "data": {
+        "commentId": 13
+    }
+}

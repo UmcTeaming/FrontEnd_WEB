@@ -97,7 +97,7 @@ const Profile = styled.div`
   align-items: center;
   margin-top: 6px;
   margin-bottom: 7px;
-  margin-left: 13px;
+  margin-left: 10px;
   p {
     font-size: 10px;
     color: rgba(0, 0, 0, 0.5);
@@ -105,15 +105,15 @@ const Profile = styled.div`
 `;
 
 const UserImg = styled.img`
-  width: 23px;
-  height: 23px;
+  width: 26px;
+  height: 26px;
   background-color: #d9d9d9;
-  border-radius: 12px;
+  border-radius: 13px;
   margin-right: 7px;
 `;
 
 const Content = styled.div`
-  margin-left: 13px;
+  margin-left: 15px;
   font-size: 12px;
   width: 230px;
   height: 37px;
@@ -223,7 +223,7 @@ const Comment = () => {
               <UserImg
                 src={
                   comment?.profile_image === null
-                    ? "../img/profilImg/profil_img.jpg"
+                    ? "../../img/profileImg/profile_img.jpg"
                     : comment.profile_image
                 }
               />
