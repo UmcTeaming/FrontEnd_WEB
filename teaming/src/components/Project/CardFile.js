@@ -119,9 +119,11 @@ const CardFile = (data) => {
     return;
   };
 
-  const onClick = (e) => {
+  const onDownload = (e) => {
     e.preventDefault();
-    console.log("download...");
+    if (download && download.download_link) {
+      window.open(download.download_link, "_blank");
+    }
   };
 
   return (
@@ -161,11 +163,9 @@ const CardFile = (data) => {
           <Comment>
             comment <span>{file.comment}</span>
           </Comment>
-          <a href={download?.download_link} download>
-            <Download onClick={onClick}>
-              <MdUpload size="13" color="white" transform="rotate(180)" />
-            </Download>
-          </a>
+          <Download onClick={onDownload}>
+            <MdUpload size="13" color="white" transform="rotate(180)" />
+          </Download>
         </Col>
       </File>
     </Link>

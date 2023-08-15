@@ -41,7 +41,6 @@ const Col = styled.div`
 
 const Details = () => {
   const { data: project } = useQuery(["project"], getProject);
-  const location = useLocation();
 
   return (
     <Wrapper>
@@ -66,7 +65,7 @@ const Details = () => {
               </svg>
             </Link>
             &gt;<Link to="/ongoingProject">진행중인 프로젝트</Link>&gt;
-            {project?.project_name}
+            {project?.name}
           </Path>
           <FileInfo />
         </InfoCotainer>
