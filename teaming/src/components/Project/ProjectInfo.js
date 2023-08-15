@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link, useMatch } from "react-router-dom";
+import { Link, useMatch, useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useState } from "react";
 import { getProject } from "../../api";
@@ -150,6 +150,8 @@ const Setting = styled.div`
 
 const ProjectInfo = ({ onOpen }) => {
   const { data: project } = useQuery(["project"], getProject);
+  const { projectId } = useParams();
+
   const formatDate = (date) => {
     if (date === undefined) {
       return "";
@@ -168,41 +170,47 @@ const ProjectInfo = ({ onOpen }) => {
               cy="7"
               r="7"
               fill={
-                project?.project_status === "ING"
+                project?.projectStatus === "ING"
                   ? "#527ff5"
-                  : project?.project_status === "END"
+                  : project?.projectStatus === "END"
                   ? "#ffd008"
                   : null
               }
             />
           </svg>
         </Circle>
-        <Img src="../img/projectImg/project_img.jpg" />
+        <Img
+          src={
+            project?.image === null
+              ? "../img/projectImg/project_img.jpg"
+              : project?.image
+          }
+        />
       </ImgContainer>
       <Details>
         <Description>
-          <Title>{project?.project_name}</Title>
+          <Title>{project?.name}</Title>
           <p>
-            진행 기간: {formatDate(project?.start_date)} ~
-            {formatDate(project?.end_date)}
+            진행 기간: {formatDate(project?.startDate)} ~
+            {formatDate(project?.endDate)}
           </p>
           <p>
             상태:{" "}
-            {project?.project_status === "ING"
+            {project?.projectStatus === "ING"
               ? "진행중"
-              : project?.project_status === "END"
+              : project?.projectStatus === "END"
               ? "마감"
               : null}
           </p>
         </Description>
         <UserContainer>
           <Users>
-            {project?.members.map((member) => (
+            {project?.memberListDtos.map((member) => (
               <User
                 src={
-                  member?.profile_image === null
+                  member?.member_image === null
                     ? "../img/profileImg/profile_img.jpg"
-                    : member?.profile_image
+                    : member?.member_image
                 }
               />
             ))}
@@ -228,7 +236,7 @@ const ProjectInfo = ({ onOpen }) => {
           <Link to="/calendar">
             <Check>팀플 일정 확인하기</Check>
           </Link>
-          <Link to={`/${project?.project_id}/end`}>
+          <Link to={`/${projectId}/end`}>
             <Close>프로젝트 마감하기</Close>
           </Link>
         </Buttons>

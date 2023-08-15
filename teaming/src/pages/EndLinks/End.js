@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Calendar from "react-calendar";
 import { useQuery } from "react-query";
 import { getProject } from "../../api";
@@ -93,7 +93,7 @@ const CalendarItem = styled(Calendar)`
   border-radius: 5px;
   width: 231px;
 
-  .react-calendar__tile--hasActive {
+  .react-calendar__tile--active {
     color: white !important;
     background-color: #527ff5;
     border-radius: 16px;
@@ -156,15 +156,13 @@ const Button = styled.button`
 
 const End = () => {
   const { data: project } = useQuery(["project"], getProject);
-  const startDate = new window.Date(
-    project?.start_date.split(" ")[0].replace(/-/g, ".")
-  );
+  const { projectId } = useParams();
 
   const formatDate = (date) => {
     if (date === undefined) {
       return "";
     } else {
-      return date.split(" ")[0].replace(/-/g, ".");
+      return date.replace(/-/g, ".");
     }
   };
   const formatShortWeekday = (locale, date) => {
@@ -204,8 +202,8 @@ const End = () => {
             />
           </svg>
           &gt;<Link to="/onGoingProject">진행중인 프로젝트</Link>&gt;
-          <Link to={`/:id/project-files`}> OO교양 조별과제</Link> &gt; 프로젝트
-          마감
+          <Link to={`/${projectId}/project-files`}>{project?.name}</Link> &gt;
+          프로젝트 마감
         </Path>
         <Col>
           <Illust>
@@ -218,24 +216,24 @@ const End = () => {
           <Container>
             <Calendars>
               <CalendarContainer>
-                <Date>{formatDate(project?.start_date)}</Date>
+                <Date>{formatDate(project?.startDate)}</Date>
                 <CalendarItem
                   next2Label={null}
                   prev2Label={null}
                   locale="en-US"
                   formatShortWeekday={formatShortWeekday}
-                  value={project?.start_date.split(" ")}
+                  value={project?.startDate}
                 />
               </CalendarContainer>
               <span style={{ color: "white" }}>~</span>
               <CalendarContainer>
-                <Date>{formatDate(project?.end_date)}</Date>
+                <Date>{formatDate(project?.endDate)}</Date>
                 <CalendarItem
                   next2Label={null}
                   prev2Label={null}
                   locale="en-US"
                   formatShortWeekday={formatShortWeekday}
-                  value={project?.end_date.split(" ")}
+                  value={project?.endDate}
                 />
               </CalendarContainer>
             </Calendars>

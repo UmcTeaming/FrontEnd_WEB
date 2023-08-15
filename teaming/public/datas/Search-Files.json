@@ -1,0 +1,37 @@
+{
+    "status": 200,
+    "message": "프로젝트 파일들을 불러왔습니다",
+    "data": [
+        {
+            "createdAt": "2023-08-12T00:00:00",
+            "filesDetails": [
+                {
+                    "file_type": "pdf",
+                    "file_name": "모소 실습 정리 (1).pdf",
+                    "file": "/home/ubuntu/app/files/",
+                    "comment": 0,
+                    "file_id": 39
+                }
+            ]
+        },
+        {
+            "createdAt": "2023-08-10T00:00:00",
+            "filesDetails": [
+                {
+                    "file_type": "sql",
+                    "file_name": "PROJECT.sql",
+                    "file": "/home/ubuntu/app/files/",
+                    "comment": 0,
+                    "file_id": 28
+                },
+                {
+                    "file_type": "pdf",
+                    "file_name": "4.이력서 가이드라인(General).pdf",
+                    "file": "/home/ubuntu/app/files/",
+                    "comment": 0,
+                    "file_id": 29
+                }
+            ]
+        }
+    ]
+}

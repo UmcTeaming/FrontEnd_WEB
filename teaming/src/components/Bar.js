@@ -53,10 +53,11 @@ const Bar = () => {
               </span>
             </Link>
             <Link to={isLogin ? "/calendar" : null}>
+
               <span
                 className={cls(
                   "cursor-pointer hover:text-mainColor",
-                  pathname === "/calendar" ? "text-mainColor" : ""
+                  pathname === "/schedulecalendar" ? "text-mainColor" : ""
                 )}
               >
                 일정달력

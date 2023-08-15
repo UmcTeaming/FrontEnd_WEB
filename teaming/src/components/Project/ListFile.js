@@ -111,7 +111,9 @@ const ListFile = (data) => {
 
   const onDownload = (e) => {
     e.preventDefault();
-    console.log("download...");
+    if (download && download.download_link) {
+      window.open(download.download_link, "_blank");
+    }
   };
 
   return (
@@ -155,9 +157,7 @@ const ListFile = (data) => {
               />
             </svg>
           </Delete>
-          <a href={download?.download_link} download>
-            <Download onClick={onDownload}>다운로드</Download>
-          </a>
+          <Download onClick={onDownload}>다운로드</Download>
         </Buttons>
       </File>
     </Link>

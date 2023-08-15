@@ -1,4 +1,59 @@
 
+/* 프로젝트가 하나도 없을 때 */
+.PortfolioApp .Portfolioempty {
+  height: 510px;
+  display: grid;
+  grid-template-rows: 232px 232px;
+  grid-template-columns: 300px 300px 300px 300px;
+  gap: 20px;
+}
+
+.Portfolioemptycontent {
+  margin-top: 30px;
+  margin-right: 20px;
+  border-radius: 10px;
+  box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.Portfolioempty .Portfolioemptycontent .emptytitle {
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  margin-top: 15px;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.Portfolioempty .Portfolioemptycontent .emptytitle .emptytitlelineone {
+  margin-left: 10px;
+}
+
+.Portfolioempty .Portfolioemptycontent .emptyimg {
+  background-image: url("../../../public/img/projectImg/noproject_img1.png");
+  background-size: cover;
+  width: 100px;
+  height: 80px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Portfolioempty .Portfolioemptycontent .emptysubtitle {
+  color: rgba(0, 0, 0, 0.25);
+  text-align: center;
+  margin-top: 15px;
+  font-size: 12px;
+  font-style: normal;
+  line-height: normal;
+}
+
+.Portfolioempty .Portfolioemptycontent .emptytitle .emptysubtitlelineone {
+  margin-left: 10px;
+}
+
+
+
+/* 프로젝트가 존재할 때 */
 .PortfolioApp .Portfoliotitle {
   font-size: 20px;
   font-weight: 700;

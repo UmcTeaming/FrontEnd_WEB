@@ -10,7 +10,6 @@ import PortfolioList from "./pages/PortfolioLinks/portfolioList";
 import Project from "./pages/ProjectLinks/Project";
 import FileDetail from "./pages/FileLinks/FileDetail";
 import End from "./pages/EndLinks/End";
-import { Calendar } from "./pages/Calendar";
 import { Home } from "./pages/Home/Home.js";
 import FindPW from "./pages/LoginLinks/FindPW";
 import CleanHome from "./pages/CleanHome/CleanHome";
@@ -18,6 +17,8 @@ import { OngoingProject } from "./pages/OngoingProject/OngoingProject";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { loginState, tokenState } from "./components/atom";
 import axios from "axios";
+import { Calendar } from "./pages/Calendar/Calendar";
+import { Schedulecalendar } from "./pages/Schedulecalendar/Schedulecalendar";
 
 /* axios.interceptors.request.use(
   function (config) {
@@ -48,15 +49,23 @@ function App() {
 
           <Route path="/cleanhome" element={<CleanHome />} />
 
+
           <Route path="/calendar" element={<Calendar />} />
+          <Route path="/schedulecalendar" element={<Schedulecalendar/>}/>
           <Route path="/ongoingProject" element={<OngoingProject />} />
           {/* 포트폴리오 */}
           <Route path="/portfolio" element={<PortfolioList />} />
-          <Route path="/:id/project-files" element={<Project />} />
-          <Route path="/:id/final-files" element={<Project />} />
-          <Route path="/:id/project-files/:fileId" element={<FileDetail />} />
-          <Route path="/:id/final-files/:fileId" element={<FileDetail />} />
-          <Route path="/:id/End" element={<End />} />
+          <Route path="/:projectId/project-files" element={<Project />} />
+          <Route path="/:projectId/final-files" element={<Project />} />
+          <Route
+            path="/:projectId/project-files/:fileId"
+            element={<FileDetail />}
+          />
+          <Route
+            path="/:projectId/final-files/:fileId"
+            element={<FileDetail />}
+          />
+          <Route path="/:projectId/End" element={<End />} />
         </Routes>
       </BrowserRouter>
     </div>

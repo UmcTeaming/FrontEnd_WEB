@@ -10,10 +10,7 @@ export const Home = () => {
   return (
     <div className='homecontainer'>
       <div className='homebanner'><Homebanner /></div>
-      <div className='bodysection'>
         <div className='homeproject'><Homeongoingproject /></div>
-        {/* <div className='homecalendar'><Homecalendar /></div> */}
-      </div>
       <div className='homeportfolio'><Homeportfolio /></div>
     </div>
   )

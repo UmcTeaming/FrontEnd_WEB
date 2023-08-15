@@ -131,8 +131,10 @@ const AddMember = ({ onClose }) => {
           </Label>
         </Form>
         <Members>
-          {project?.members &&
-            project?.members.map((member) => <Member>{member.email}</Member>)}
+          {project.memberListDtos &&
+            project.memberListDtos.map((member) => (
+              <Member>{member.email}</Member>
+            ))}
         </Members>
       </Container>
     </Wrapper>
