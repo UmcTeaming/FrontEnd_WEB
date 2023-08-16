@@ -26,9 +26,11 @@ flex space-x-2
 const Mypage = () => {
   const [editState, setEditState] = useState(false);
 
+  const [previewImg, setPreviewImg] = useState();
+
   const [nickName, setNickName] = useState();
   const [email, setEmail] = useState();
-  const [profileImg, setProfileImg] = useState();
+
   const { handleSubmit, register, reset, watch } = useForm();
 
   const [memberId, setMemberId] = useRecoilState(memberIdState);
@@ -46,6 +48,7 @@ const Mypage = () => {
       )
       .then((res) => {
         console.log(res);
+
         setNickName(data.nickName);
         setEditState(false);
       })
@@ -55,6 +58,52 @@ const Mypage = () => {
       });
   };
 
+  const insertImg = (e) => {
+    const file = e.target.files[0];
+    let reader = new FileReader();
+    reader.onload = () => {
+      const fileURL = reader.result;
+      setPreviewImg(fileURL);
+    };
+    reader.readAsDataURL(file);
+
+    const formData = new FormData();
+    formData.append("change_image_file", file);
+
+    axios({
+      method: "patch",
+      url: `${process.env.REACT_APP_API_URL}/member/${memberId}/mypage/change-image`,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      data: formData,
+      transformRequest: (data, headers) => {
+        return data;
+      },
+    })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
+  const onClickBasikImg = () => {
+    const formData = new FormData();
+    formData.append("change_image_file", null);
+
+    axios({
+      method: "patch",
+      url: `${process.env.REACT_APP_API_URL}/member/${memberId}/mypage/change-image`,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      data: formData,
+      transformRequest: (data, headers) => {
+        return data;
+      },
+    })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/member/${memberId}/mypage`)
@@ -62,11 +111,12 @@ const Mypage = () => {
         console.log(res);
         setEmail(res.data.data.email);
         setNickName(res.data.data.name);
+        setPreviewImg(res.data.data.profileImage);
       })
       .catch((err) => {
         alert(err);
       });
-  }, [nickName]);
+  }, [nickName, previewImg]);
   return (
     <div className="flex flex-col justify-center items-center mt-20 space-y-10">
       <div className="space-y-8">
@@ -89,10 +139,28 @@ const Mypage = () => {
         </div>
         <div className="flex items-end space-x-14">
           <div className="flex flex-col items-center space-y-3">
-            <div className="h-32 w-32 bg-[#D9D9D9] text-gray-400 rounded-full shadow-xl flex justify-center items-center text-sm">
-              이미지
+            <label htmlFor="img">
+              <div className="h-32 w-32 bg-[#D9D9D9] text-gray-400 rounded-full shadow-xl flex justify-center items-center text-sm overflow-hidden">
+                {previewImg !== null ? (
+                  <img src={previewImg} className="object-cover " />
+                ) : (
+                  <span className="">이미지</span>
+                )}
+              </div>
+            </label>
+            <input
+              {...register("img")}
+              type="file"
+              accept=".gif, .jpg, .png"
+              id="img"
+              {...register("img")}
+              className="hidden"
+              onChange={(e) => insertImg(e)}
+            />
+
+            <div className="text-sm text-gray-300" onClick={onClickBasikImg}>
+              기본 이미지로 변경
             </div>
-            <div className="text-sm text-gray-300">기본 이미지로 변경</div>
           </div>
 
           <div className="py-3 space-y-5">
