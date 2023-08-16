@@ -1,21 +1,72 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiLock } from "react-icons/ci";
 import tw from "tailwind-styled-components";
 import { HiOutlinePencil } from "react-icons/hi";
 import { useForm } from "react-hook-form";
 import { Link, Routes, Route } from "react-router-dom";
 import ChangePw from "./ChangePw";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { memberIdState } from "../../components/atom";
+
+/* axios.interceptors.request.use(
+  function (config) {
+    const token = localStorage.getItem("token");
+    config.headers.Authorization = `Bearer ${token}`;
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+); */
 
 const Div = tw.div`
 flex space-x-2
 `;
 const Mypage = () => {
   const [editState, setEditState] = useState(false);
+
+  const [nickName, setNickName] = useState();
+  const [email, setEmail] = useState();
+  const [profileImg, setProfileImg] = useState();
   const { handleSubmit, register, reset, watch } = useForm();
+
+  const [memberId, setMemberId] = useRecoilState(memberIdState);
 
   const onClick = () => {
     setEditState((prev) => !prev);
   };
+  const onValidNickName = (data) => {
+    axios
+      .patch(
+        `${process.env.REACT_APP_API_URL}/member/${memberId}/mypage/change-nickname`,
+        {
+          change_nickname: data.nickName,
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        setNickName(data.nickName);
+        setEditState(false);
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+        console.log(err.response.data.message);
+      });
+  };
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/member/${memberId}/mypage`)
+      .then((res) => {
+        console.log(res);
+        setEmail(res.data.data.email);
+        setNickName(res.data.data.name);
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }, [nickName]);
   return (
     <div className="flex flex-col justify-center items-center mt-20 space-y-10">
       <div className="space-y-8">
@@ -47,7 +98,10 @@ const Mypage = () => {
           <div className="py-3 space-y-5">
             <div className="">
               {editState ? (
-                <form className="relative flex flex-col">
+                <form
+                  onSubmit={handleSubmit(onValidNickName)}
+                  className="relative flex flex-col"
+                >
                   <input
                     {...register("nickName")}
                     placeholder=""
@@ -61,19 +115,21 @@ const Mypage = () => {
                     <div className="h-5"></div>
                   )}
 
-                  <button className="absolute right-0">확인</button>
+                  <button className="absolute right-0 bg-mainColor rounded-full text-white px-2 pt-1 bottom-6 text-sm focus:bg-mainColor">
+                    확인
+                  </button>
                 </form>
               ) : (
                 <div className="flex items-center space-x-1 mb-5">
                   <span className="pt-1">
-                    <span className="text-mainColor">카리나</span>님
+                    <span className="text-mainColor">{nickName}</span>님
                   </span>
 
                   <HiOutlinePencil color="gray" onClick={onClick} />
                 </div>
               )}
 
-              <span className="text-gray-400">Teaming@xlald.com</span>
+              <span className="text-gray-400">{email}</span>
             </div>
 
             <Link to="changePw">

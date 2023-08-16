@@ -20,7 +20,7 @@ import axios from "axios";
 import { Calendar } from "./pages/Calendar/Calendar";
 import { Schedulecalendar } from "./pages/Schedulecalendar/Schedulecalendar";
 
-/* axios.interceptors.request.use(
+axios.interceptors.request.use(
   function (config) {
     const token = localStorage.getItem("token");
     config.headers.Authorization = `Bearer ${token}`;
@@ -30,7 +30,7 @@ import { Schedulecalendar } from "./pages/Schedulecalendar/Schedulecalendar";
     return Promise.reject(error);
   }
 );
- */
+
 function App() {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   return (
@@ -49,9 +49,8 @@ function App() {
 
           <Route path="/cleanhome" element={<CleanHome />} />
 
-
           <Route path="/calendar" element={<Calendar />} />
-          <Route path="/schedulecalendar" element={<Schedulecalendar/>}/>
+          <Route path="/schedulecalendar" element={<Schedulecalendar />} />
           <Route path="/ongoingProject" element={<OngoingProject />} />
           {/* 포트폴리오 */}
           <Route path="/portfolio" element={<PortfolioList />} />
