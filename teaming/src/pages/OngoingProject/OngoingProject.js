@@ -11,6 +11,31 @@ import { useState } from "react";
 import PjBoxTemplate from "../../components/portfolioComponents/portfolioListBoxType/pjBoxes.js";
 import PjLineTemplate from "../../components/portfolioComponents/portfolioListLineType/pjLines.js";
 
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+
+const CardBtn = styled.div`
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  svg {
+    fill: ${(props) => (props.isActive ? "rgb(255, 208, 8)" : "#808080")};
+  }
+`;
+
+const ListBtn = styled.div`
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  svg {
+    stroke: ${(props) => (props.isActive ? "rgb(255, 208, 8)" : "#808080")};
+  }
+`;
+
 export const OngoingProject = () => {
   const [viewBox, setViewBox] = useState(true);
 
@@ -33,7 +58,9 @@ export const OngoingProject = () => {
           <div className="component">
             <div className="route oproute">
               <span>
-                <FontAwesomeIcon icon={faHouse} />
+              <Link to="/">
+                  <FontAwesomeIcon icon={faHouse} />
+                </Link> 
                 <FontAwesomeIcon icon={faChevronRight} />
                 진행 중인 프로젝트
               </span>
@@ -53,35 +80,41 @@ export const OngoingProject = () => {
           <div className="element">
             <div className="list">
               <div className="howToView">
-                <button
-                  className="lineBtn"
-                  onClick={() => {
-                    setViewBox(false);
-                    {
-                      handleClick();
-                    }
-                  }}
-                  style={{
-                    color: active2 ? "#808080" : "#FFD008",
-                    color: active ? "#FFD008" : "#808080",
-                  }}
-                >
-                  <FontAwesomeIcon icon={faBars} />
-                </button>
-                <button
-                  className="boxBtn"
-                  onClick={() => {
-                    setViewBox(true);
-                    {
-                      handleClick2();
-                    }
-                  }}
-                  style={{
-                    color: active2 ? "#FFD008" : "#808080",
-                    color: active ? "#808080" : "#FFD008",
-                  }}
-                >
-                  <FontAwesomeIcon icon={faBorderAll} />
+                <button className="lineBtn">
+                    <ListBtn onClick={() => setViewBox(false)} isActive={!viewBox}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 22 20"
+                        stroke-width="2"
+                        class="w-6 h-6"
+                        width="17px"
+                        height="15px"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                        />
+                      </svg>
+                    </ListBtn>
+                  </button>
+                  <button className="boxBtn">
+                  <CardBtn onClick={() => setViewBox(true)} isActive={viewBox}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      className="w-5 h-5"
+                      width="15px"
+                      height="15px"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M4.25 2A2.25 2.25 0 002 4.25v2.5A2.25 2.25 0 004.25 9h2.5A2.25 2.25 0 009 6.75v-2.5A2.25 2.25 0 006.75 2h-2.5zm0 9A2.25 2.25 0 002 13.25v2.5A2.25 2.25 0 004.25 18h2.5A2.25 2.25 0 009 15.75v-2.5A2.25 2.25 0 006.75 11h-2.5zm9-9A2.25 2.25 0 0011 4.25v2.5A2.25 2.25 0 0013.25 9h2.5A2.25 2.25 0 0018 6.75v-2.5A2.25 2.25 0 0015.75 2h-2.5zm0 9A2.25 2.25 0 0011 13.25v2.5A2.25 2.25 0 0013.25 18h2.5A2.25 2.25 0 0018 15.75v-2.5A2.25 2.25 0 0015.75 11h-2.5z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </CardBtn>
                 </button>
               </div>
               {viewBox ? <PjBoxTemplate /> : <PjLineTemplate />}

@@ -84,6 +84,7 @@ button:focus {
       padding-top: 50px;
       color: white;
       font-size: var(--font-small);
+      font-weight: lighter;
     }
     .Name{
       .userName{
@@ -94,6 +95,7 @@ button:focus {
       .ment{
         font-size: var(--font-small);
         color: white;
+        font-weight: lighter;
       }
     }
   }
@@ -154,7 +156,7 @@ button:focus {
           position: absolute;
           right: 7%;
           top: 3%;
-          transform: translate(0%, 100%);
+          transform: translate(0%, 70%);
           color: #FFD008;
           font-size: var(--font-micro);
           margin-left: var(--padding-small);
