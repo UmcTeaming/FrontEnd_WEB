@@ -82,11 +82,11 @@ const  PortfolioList = () => {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
-              viewBox="0 0 22z 20"
+              viewBox="0 0 15 21"
               stroke-width="2"
               class="w-6 h-6"
-              width="17px"
-              height="15px"
+              width="5px"
+              height="5px"
             >
               <path
                 stroke-linecap="round"
