@@ -1,11 +1,79 @@
-.SchedulecalendarApp{
-  background-image: url('../../../public/img/backgroundImgs/web_bg1.png');
+.SchedulecalendarApp {
+  background-image: url("../../../public/img/backgroundImgs/web_bg1.png");
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+/* 달력 관련 스타일 */
+.SchedulecalendarApp .Calendartxt {
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 100px;
+}
+
+.calendarblock {
+  border-radius: 5px;
+  box-shadow: 1px 1px 8px 0.5px rgba(0, 0, 0, 0.2);
+}
+
+.scheduletitle {
+  color: #fff;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+/* 스케줄 관련 스타일 */
+.schedulecomponents {
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.schedulecomponents .colorbar {
+  width: 10px;
+  height: 60px;
+  background-color: #ffd008;
+  border-radius: 10px;
+}
+
+.schedulecomponents .content {
+  font-size: 13px;
+  color: #000;
+}
+
+.schedulecomponents .contentdateperiod {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.schedulecomponents .contentdescription {
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.schedulecomponents .contenttimeperiod {
+  margin-left: 100px;
+  height: 30px;
+  width: 100px;
+  background-color: #FFD008;
+  border-radius: 15px;
 
 }
-.schdulecomponents{
-  width: 450px;
-  height: 350px;
-  
+
+.schedulecomponents .contenttimeperiod .timeperiod{
+  color: #fff;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 700;
+  justify-content: center;
+  text-align: center;
+  padding-top: 3px;
 }
