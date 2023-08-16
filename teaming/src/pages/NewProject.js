@@ -3,6 +3,10 @@ import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
 import moment from "moment";
 import { cls } from "../libs/utils";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { memberIdState } from "../components/atom";
+import { useNavigate } from "react-router-dom";
 
 const Span = tw.span`
 text-mainMoreDeepColor font-bold
@@ -16,6 +20,7 @@ const months = [
   "Apr",
   "May",
   "June",
+  "July",
   "Aug",
   "Sep",
   "Oct",
@@ -24,16 +29,16 @@ const months = [
 ];
 
 const colorCode = [
-  "F98984",
-  "FFD008",
-  "FFAA00",
-  "B5EC3E",
-  "8DD773",
-  "527FF5",
-  "456DD0",
-  "BB92FF",
-  "555555",
-  "D9D9D9",
+  "#F98984",
+  "#FFD008",
+  "#FFAA00",
+  "#B5EC3E",
+  "#8DD773",
+  "#527FF5",
+  "#456DD0",
+  "#BB92FF",
+  "#555555",
+  "#D9D9D9",
 ];
 
 const NewProject = () => {
@@ -47,13 +52,17 @@ const NewProject = () => {
 
   const [logoNum, setLogoNum] = useState(0);
 
+  const [memberId, setMemberId] = useRecoilState(memberIdState);
+
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm();
-
+  const [file, setFile] = useState();
   const handleMonth = (x, num) => {
     x
       ? num === 1
@@ -84,7 +93,6 @@ const NewProject = () => {
         : date.clone().endOf("month").week();
 
     let calendar = [];
-
     calendar.push(
       <div className="flex justify-between items-center">
         <div onClick={() => handleMonth(0, num)}>
@@ -104,16 +112,8 @@ const NewProject = () => {
           </svg>
         </div>
         <div className="space-x-2">
-          <span>
-            {num === 1
-              ? months[Number(selectedDay1.format("MM")) - 1]
-              : months[Number(selectedDay2.format("MM")) - 1]}
-          </span>
-          <span>
-            {num === 1
-              ? selectedDay1.format("YYYY")
-              : selectedDay2.format("YYYY")}
-          </span>
+          <span>{months[Number(date.format("MM")) - 1]}</span>
+          <span>{date.format("YYYY")}</span>
         </div>
         <div onClick={() => handleMonth(1, num)}>
           <svg
@@ -160,12 +160,19 @@ const NewProject = () => {
                 const isMonth =
                   current.clone().format("MM") !== date.format("MM");
 
+                const isFocus =
+                  num === 1
+                    ? selectedDay1.format("YYYY-MM-DD") ===
+                      current.clone().format("YYYY-MM-DD")
+                    : selectedDay2.format("YYYY-MM-DD") ===
+                      current.clone().format("YYYY-MM-DD");
                 return (
                   <div key={i} className="py-1">
                     <span
                       className={cls(
                         "text-center hover:font-extrabold cursor-pointer",
-                        isMonth ? "text-gray-200" : ""
+                        isMonth ? "text-gray-200" : "",
+                        isFocus ? "text-mainColor font-bold" : ""
                       )}
                       onClick={() => onClickDay(current, num)}
                     >
@@ -183,6 +190,7 @@ const NewProject = () => {
 
   const insertImg = (e) => {
     const file = e.target.files[0];
+    setFile(file);
     let reader = new FileReader();
     reader.onload = () => {
       const fileURL = reader.result;
@@ -194,14 +202,35 @@ const NewProject = () => {
   const onClickLogo = (i) => {
     setLogoNum(i);
   };
-  const onClickAppend = () => {};
 
-  useEffect(() => {
-    console.log(colorCode[logoNum]);
-  }, [logoNum]);
+  const onValid = (data) => {
+    const formData = new FormData();
+    formData.append("project_name", data.projectName);
+    formData.append("project_image", file);
+    formData.append("start_date", selectedDay1.format("YYYY-MM-DD"));
+    formData.append("end_date", selectedDay2.format("YYYY-MM-DD"));
+    formData.append("project_color", colorCode[logoNum]);
+
+    axios({
+      method: "post",
+      url: `${process.env.REACT_APP_API_URL}/projects/${memberId}/create`,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      data: formData,
+      transformRequest: (data, headers) => {
+        return data;
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        navigate(`/${res.data.data.project_id}/project-files`);
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="flex justify-center items-center">
-      <form className="flex space-x-6">
+      <form onSubmit={handleSubmit(onValid)} className="flex space-x-6">
         <div>
           <div className="flex text-mainDeepColor items-center space-x-1">
             <svg
@@ -232,6 +261,9 @@ const NewProject = () => {
                 </div>
               </label>
               <input
+                {...register("img")}
+                type="file"
+                accept=".gif, .jpg, .png"
                 id="img"
                 type="file"
                 {...register("img")}
@@ -254,7 +286,7 @@ const NewProject = () => {
                   <div
                     className={cls(
                       "h-5 w-5 rounded-full ",
-                      `bg-[#${colorCode[logoNum]}]`
+                      `bg-[${colorCode[logoNum]}]`
                     )}
                   ></div>
                   <span className="pt-1">해당 색상으로 선택하시겟습니까?</span>
@@ -262,6 +294,7 @@ const NewProject = () => {
                 <div className="grid grid-cols-5 gap-5 ">
                   {[5, 6, 7, 8, 9, 0, 1, 2, 3, 4].map((n, i) => (
                     <img
+                      key={i}
                       className="h-10 cursor-pointer"
                       onClick={() => onClickLogo(i)}
                       src={`/img/newProjectColor/Teaming_color_${String(
@@ -297,38 +330,6 @@ const NewProject = () => {
                 <div>{buildCalendar(1)}</div>
                 <div>{buildCalendar(2)}</div>
               </div>
-            </div>
-          </div>
-          <div className="ml-3 space-y-8 ">
-            <div className="space-y-3">
-              <Span className="">팀원 추가</Span>
-              <div className="flex space-x-2">
-                {[0, 1, 2, 3, 4, 5, 6].map((i) => (
-                  <div className="flex flex-col items-center space-y-1">
-                    <div className="h-10 w-10 bg-gray-300 rounded-full" />
-                    <span className="text-gray-400">팀원</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="relative flex flex-col ">
-              <Span className="pb-5">이메일</Span>
-              <input
-                {...register("email", {
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message:
-                      "이메일에 오류가 있거나팀원이 티밍에 가입하지않았어요",
-                  },
-                })}
-                className="border-b border-mainColor outline-none pb-1"
-                placeholder="초대할 팀원의 이메일을 입력해주세요."
-              />
-              <span>{errors.email?.message}</span>
-              <div className="border border-mainColor absolute right-0 rounded-full pt-1 px-3 text-mainColor text-sm top-10 cursor-pointer">
-                추가
-              </div>
-              <div></div>
             </div>
           </div>
           <div className="bg-mainColor flex justify-center rounded-full mx-10">
