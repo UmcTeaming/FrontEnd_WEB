@@ -7,18 +7,7 @@ const  PjLines = () => {
     return (
         <div className="elementLineView">
             <PjLineTemplate/>
-            <PjLineTemplate/>
-            <PjLineTemplate/>
-            <PjLineTemplate/>
-            <PjLineTemplate/>
-            <PjLineTemplate/>
-            <PjLineTemplate/>
-            <PjLineTemplate/>
-            <PjLineTemplate/>
-            <PjLineTemplate/>
-            <PjLineTemplate/>
-            <PjLineTemplate/>
-            <PjLineTemplate/>
+
         </div>       
     );
 };

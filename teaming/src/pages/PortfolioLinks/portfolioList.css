@@ -77,6 +77,9 @@ button:focus {
   place-items: center;
   background-image:url("../../../public/img/backgroundImgs/web_bg3.png");
   background-repeat: repeat-x;
+  background-size: cover;
+  min-height: 100vh;
+  align-items: start;
   /* component */
   .component{
     .route {

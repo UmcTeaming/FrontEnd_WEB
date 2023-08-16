@@ -8,45 +8,7 @@ const  PjBoxes = () => {
     return (
         <div className="line">
                 <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-                <PjBoxTemplate/>
-              </div>
+        </div>
         
     );
 };
