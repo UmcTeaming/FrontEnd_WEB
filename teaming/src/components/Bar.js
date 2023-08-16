@@ -52,7 +52,7 @@ const Bar = () => {
                 포트폴리오
               </span>
             </Link>
-            <Link to={isLogin ? "/calendar" : null}>
+            <Link to={isLogin ? "/schedulecalendar" : null}>
 
               <span
                 className={cls(
