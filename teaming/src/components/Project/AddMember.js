@@ -3,6 +3,9 @@ import { useForm } from "react-hook-form";
 import { getProject } from "../../api";
 import axios from "axios";
 import { useQuery } from "react-query";
+import { memberIdState, tokenState } from "../atom";
+import { useRecoilValue } from "recoil";
+import { useParams } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -90,7 +93,12 @@ const Member = styled.span`
 `;
 
 const AddMember = ({ onClose }) => {
-  const { data: project } = useQuery(["project"], getProject);
+  const memberId = useRecoilValue(memberIdState);
+  const accessToken = useRecoilValue(tokenState);
+  const { projectId } = useParams();
+  const { data: project } = useQuery(["project"], () =>
+    getProject(memberId.toString(), projectId.toString(), accessToken)
+  );
 
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = async (email) => {

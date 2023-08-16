@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import { Link, useMatch, useLocation } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 import { useQuery } from "react-query";
-import { getDownloadLink, getProject } from "../../api";
 
 const File = styled.div`
   display: flex;
@@ -86,12 +85,9 @@ const Download = styled.button`
 `;
 
 const ListFile = (data) => {
-  const matchProject = useMatch("/:id/project-files");
-  const matchFinal = useMatch("/:id/final-files");
+  const matchProject = useMatch("/:projectId/project-files");
+  const matchFinal = useMatch("/:projectId/final-files");
   const { file } = data;
-  const { data: download } = useQuery(["download"], getDownloadLink);
-  const projectId = matchProject && matchProject.params.id;
-  const finalId = matchFinal && matchFinal.params.id;
 
   const onDelete = (e) => {
     e.preventDefault();
@@ -111,9 +107,10 @@ const ListFile = (data) => {
 
   const onDownload = (e) => {
     e.preventDefault();
-    if (download && download.download_link) {
-      window.open(download.download_link, "_blank");
-    }
+    window.open(
+      "https://calibre-ebook.com/downloads/demos/demo.docx",
+      "_blank"
+    );
   };
 
   return (

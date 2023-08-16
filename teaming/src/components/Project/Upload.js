@@ -21,8 +21,8 @@ const Wrapper = styled.div`
 `;
 
 const Upload = () => {
-  const matchProject = useMatch("/:id/project-files");
-  const matchFinal = useMatch("/:id/final-files");
+  const matchProject = useMatch("/:projectId/project-files");
+  const matchFinal = useMatch("/:projectId/final-files");
   const [file, setFile] = useState(null);
 
   const handleChange = (data) => {

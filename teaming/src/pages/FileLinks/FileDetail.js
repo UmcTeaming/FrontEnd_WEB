@@ -1,10 +1,12 @@
 import styled from "styled-components";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import FileInfo from "../../components/File/FileInfo";
 import FileViewer from "../../components/File/FileViewer";
 import Comment from "../../components/File/Comment";
 import { getProject } from "../../api";
 import { useQuery } from "react-query";
+import { useRecoilValue } from "recoil";
+import { memberIdState, tokenState } from "../../components/atom";
 
 const Wrapper = styled.div`
   font-family: "GmarketSans";
@@ -40,7 +42,12 @@ const Col = styled.div`
 `;
 
 const Details = () => {
-  const { data: project } = useQuery(["project"], getProject);
+  const memberId = useRecoilValue(memberIdState);
+  const accessToken = useRecoilValue(tokenState);
+  const { projectId } = useParams();
+  const { data: project } = useQuery(["project"], () =>
+    getProject(memberId.toString(), projectId.toString(), accessToken)
+  );
 
   return (
     <Wrapper>

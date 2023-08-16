@@ -3,6 +3,9 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 import { getComments, getProfile } from "../../api";
 import axios from "axios";
+import { memberIdState, tokenState } from "../atom";
+import { useRecoilValue } from "recoil";
+import { useParams } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -134,9 +137,16 @@ const Delete = styled.div`
 `;
 
 const Comment = () => {
+  const memberId = useRecoilValue(memberIdState);
+  const accessToken = useRecoilValue(tokenState);
+  const { fileId } = useParams;
   const [value, setValue] = useState("");
-  const { data: comments } = useQuery(["comments"], getComments);
-  const { data: profile } = useQuery(["profile"], getProfile);
+  const { data: comments } = useQuery(["comments"], () =>
+    getComments(memberId.toString(), fileId.toString(), accessToken)
+  );
+  const { data: profile } = useQuery(["profile"], () =>
+    getProfile(memberId.toString(), accessToken)
+  );
 
   const onChange = (e) => {
     setValue(e.target.value);

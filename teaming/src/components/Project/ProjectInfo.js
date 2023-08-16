@@ -4,6 +4,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useState } from "react";
 import { getProject } from "../../api";
 import { useQuery } from "react-query";
+import { memberIdState, tokenState } from "../atom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -149,8 +150,12 @@ const Setting = styled.div`
 `;
 
 const ProjectInfo = ({ onOpen }) => {
-  const { data: project } = useQuery(["project"], getProject);
+  const memberId = useRecoilValue(memberIdState);
+  const accessToken = useRecoilValue(tokenState);
   const { projectId } = useParams();
+  const { data: project } = useQuery(["project"], () =>
+    getProject(memberId.toString(), projectId.toString(), accessToken)
+  );
 
   const formatDate = (date) => {
     if (date === undefined) {

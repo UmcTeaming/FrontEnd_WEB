@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { MdUpload } from "react-icons/md";
 import { Link, useMatch } from "react-router-dom";
 import { useQuery } from "react-query";
-import { getDownloadLink, getProject } from "../../api";
 import axios from "axios";
 
 const File = styled.div`
@@ -98,10 +97,9 @@ const Download = styled.button`
 `;
 
 const CardFile = (data) => {
-  const matchProject = useMatch("/:id/project-files");
-  const matchFinal = useMatch("/:id/final-files");
+  const matchProject = useMatch("/:projectId/project-files");
+  const matchFinal = useMatch("/:projectId/final-files");
   const { file } = data;
-  const { data: download } = useQuery(["download"], getDownloadLink);
 
   const onDelete = (e) => {
     e.preventDefault();
@@ -121,9 +119,10 @@ const CardFile = (data) => {
 
   const onDownload = (e) => {
     e.preventDefault();
-    if (download && download.download_link) {
-      window.open(download.download_link, "_blank");
-    }
+    window.open(
+      "https://calibre-ebook.com/downloads/demos/demo.docx",
+      "_blank"
+    );
   };
 
   return (

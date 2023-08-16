@@ -1,57 +1,137 @@
 import axios from "axios";
 
-export const getDownloadLink = async () => {
-  // const response = await axios.get(`/projects/${projectId}/files/${fileId}/download`);
-  // return response.data;
-  return {
-    download_link: "https://calibre-ebook.com/downloads/demos/demo.docx",
-  };
+axios.interceptors.request.use(
+  function (config) {
+    const token = localStorage.getItem("token");
+    config.headers.Authorization = `Bearer ${token}`;
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
+
+export const getProfile = async (memberId, accessToken) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/member/${memberId}/mypage`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    return response.data.data;
+  } catch (error) {
+    console.error("Fetch Member Page Error:", error);
+    throw error;
+  }
+
+  // const response = await axios.get("/datas/mypage.json");
+  // return response.data.data;
 };
 
-export const getFileView = async () => {
-  // const response = await axios.get(`/files/${fileId}/view`);
-  // return response.data;
-  return {
-    view_link: "https://calibre-ebook.com/downloads/demos/demo.docx",
-  };
-};
+export const getProject = async (memberId, projectId, accessToken) => {
+  /* try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
 
-export const getFileInfo = async () => {
-  // const response = await axios.get(`/projects/${projectId}/files/${fileId}`);
-  // return response.data;
-  const response = await axios.get("/datas/SingleFile-Search.json");
-  return response.data.data;
-};
+    return response.data.data;
+  } catch (error) {
+    console.error("Fetch Member Page Error:", error);
+    throw error;
+  } */
 
-export const getComments = async () => {
-  // const response = await axios.get(`/files/${memberId}/${fileId}/comments`);
-  // return response.data;
-  const response = await axios.get("/datas/Comment-Search.json");
-  return response.data.data;
-};
-
-export const getProject = async () => {
-  // const response = await axios.get(`/projects/${memberId}/${projectId}`);
-  // return response.data;
   const response = await axios.get("/datas/Project-Search.json");
   return response.data.data;
 };
 
-export const getProjectFiles = async () => {
+export const getProjectFiles = async (memberId, projectId, accessToken) => {
+  /* try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/files`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    return response.data.data;
+  } catch (error) {
+    console.error("Fetch Member Page Error:", error);
+    throw error;
+  } */
   const response = await axios.get("/datas/Search-Files.json");
   return response.data.data;
 };
 
-export const getFinalFiles = async () => {
-  // const response = await axios.get(`/projects/${memberId}/${projectId}/final-files`);
-  // return response.data;
+export const getFinalFiles = async (memberId, projectId, accessToken) => {
+  /* try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/final-file`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    return response.data.data;
+  } catch (error) {
+    console.error("Fetch Member Page Error:", error);
+    throw error;
+  } */
+
   const response = await axios.get("/datas/Search-Final-Files.json");
   return response.data.data;
 };
 
-export const getProfile = async () => {
-  // const response = await axios.get(`/member/${memberId}/mypage`);
-  // return response.data;
-  const response = await axios.get("/datas/mypage.json");
+export const getFile = async (memberId, projectId, fileId, accessToken) => {
+  /* try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/files/${fileId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    return response.data.data;
+  } catch (error) {
+    console.error("Fetch Member Page Error:", error);
+    throw error;
+  } */
+
+  const response = await axios.get("/datas/SingleFile-Search.json");
+  return response.data.data;
+};
+
+export const getComments = async (memberId, fileId, accessToken) => {
+  /* try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/files/${memberId}/${fileId}/comments`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    return response.data.data;
+  } catch (error) {
+    console.error("Fetch Member Page Error:", error);
+    throw error;
+  } */
+
+  const response = await axios.get("/datas/Comment-Search.json");
   return response.data.data;
 };
