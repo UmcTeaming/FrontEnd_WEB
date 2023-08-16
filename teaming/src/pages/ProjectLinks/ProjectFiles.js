@@ -2,7 +2,10 @@ import styled from "styled-components";
 import CardFile from "../../components/Project/CardFile";
 import ListFile from "../../components/Project/ListFile";
 import { useQuery } from "react-query";
-import { getProject, getProjectFiles } from "../../api";
+import { getProjectFiles } from "../../api";
+import { useRecoilValue } from "recoil";
+import { useParams } from "react-router-dom";
+import { memberIdState, tokenState } from "../../components/atom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -40,7 +43,12 @@ const CardFiles = styled.div`
 `;
 
 const ProjectFiles = (props) => {
-  const { data: projectFiles } = useQuery(["project-files"], getProjectFiles);
+  const memberId = useRecoilValue(memberIdState);
+  const accessToken = useRecoilValue(tokenState);
+  const { projectId } = useParams();
+  const { data: projectFiles } = useQuery(["project-files"], () =>
+    getProjectFiles(memberId.toString(), projectId.toString(), accessToken)
+  );
   const { currentView } = props;
 
   const formatDate = (date) => {

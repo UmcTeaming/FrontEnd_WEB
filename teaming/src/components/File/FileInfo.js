@@ -1,8 +1,11 @@
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { getDownloadLink, getFileInfo, getProject } from "../../api";
+import { getFile, getProject } from "../../api";
 import { MdUpload } from "react-icons/md";
 import { useLocation } from "react-router";
+import { memberIdState, tokenState } from "../atom";
+import { useRecoilValue } from "recoil";
+import { useParams } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -92,11 +95,22 @@ const Download = styled.button`
 
 function FileInfo() {
   const location = useLocation();
-  const { data: project } = useQuery(["project"], getProject);
-  const { data: file } = useQuery(["fileInfo"], getFileInfo);
-  const { data: download } = useQuery(["download"], getDownloadLink);
-  const formattedDate = file?.upload_date.split(" ")[0].replace(/-/g, ".");
   const parts = location.pathname.split("/");
+  const memberId = useRecoilValue(memberIdState);
+  const accessToken = useRecoilValue(tokenState);
+  const { projectId, fileId } = useParams();
+  const { data: project } = useQuery(["project"], () =>
+    getProject(memberId.toString(), projectId.toString(), accessToken)
+  );
+  const { data: file } = useQuery(["file"], () =>
+    getFile(
+      memberId.toString(),
+      projectId.toString(),
+      fileId.toString(),
+      accessToken
+    )
+  );
+  const formattedDate = file?.upload_date.split(" ")[0].replace(/-/g, ".");
 
   return (
     <Wrapper>
@@ -126,9 +140,9 @@ function FileInfo() {
                 cy="5"
                 r="5"
                 fill={
-                  project?.project_status === "ING"
+                  project?.projectStatus === "ING"
                     ? "#527FF5"
-                    : project?.project_status === "END"
+                    : project?.projectStatus === "END"
                     ? "#FFD008"
                     : null
                 }
@@ -136,7 +150,10 @@ function FileInfo() {
             </svg>
             {file?.file_type}
           </Format>
-          <a href={download?.download_link} download>
+          <a
+            href="https://calibre-ebook.com/downloads/demos/demo.docx"
+            download
+          >
             <Download>
               <MdUpload size="15" color="white" transform="rotate(180)" />
               <span>파일 다운로드</span>
