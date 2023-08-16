@@ -30,7 +30,6 @@ const Mypage = () => {
 
   const [nickName, setNickName] = useState();
   const [email, setEmail] = useState();
-  const [profileImg, setProfileImg] = useState();
 
   const { handleSubmit, register, reset, watch } = useForm();
 
@@ -112,12 +111,12 @@ const Mypage = () => {
         console.log(res);
         setEmail(res.data.data.email);
         setNickName(res.data.data.name);
-        setProfileImg(res.data.data.profileImage);
+        setPreviewImg(res.data.data.profileImage);
       })
       .catch((err) => {
         alert(err);
       });
-  }, [nickName, profileImg]);
+  }, [nickName, previewImg]);
   return (
     <div className="flex flex-col justify-center items-center mt-20 space-y-10">
       <div className="space-y-8">
