@@ -1,0 +1,11 @@
+{
+    "status": 200,
+    "message": "프로젝트의 스케줄",
+    "data": {
+        "schedule_name" : "Example Schedule",
+        "schedule_start" : "2023-07-24",
+        "schedule_start_time" : "03:00:00",
+        "schedule_end" : "2023-08-01",
+        "schedule_end_time" : "05:00:00"
+    }
+}

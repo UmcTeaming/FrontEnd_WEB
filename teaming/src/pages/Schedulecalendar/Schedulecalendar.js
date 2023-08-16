@@ -3,7 +3,7 @@ import { Schedulecalendarcomponents } from '../../components/ScheduleCalendarCom
 
 export const Schedulecalendar = () => {
   return (
-    <div className='Schedulecalendarcontaine flex justify-center items-center h-screen bg-gray-100'>
+    <div className='Schedulecalendarcontainer'>
       <Schedulecalendarcomponents/>
     </div>
   )
