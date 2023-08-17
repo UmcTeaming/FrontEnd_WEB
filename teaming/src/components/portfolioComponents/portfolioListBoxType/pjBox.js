@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const PjBox = () => {
   return (
-    <Link to="/29/project-files">
+    <Link to="/:id/project-files">
       <div className="box">
         <div className="thumbNail">
           <img className="thumbNailPic" src="/img/logo/loginMLogo.png" />
