@@ -14,3 +14,8 @@ export const memberIdState = atom({
   key: "memberIdState",
   default: "",
 });
+
+export const nickNameState = atom({
+  key: "nickNameState",
+  default: "",
+});

@@ -5,7 +5,12 @@ import tw from "tailwind-styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { loginState, memberIdState, tokenState } from "../../components/atom";
+import {
+  loginState,
+  memberIdState,
+  nickNameState,
+  tokenState,
+} from "../../components/atom";
 
 const Input = tw.input`
 h-14 w-96 border-b-[1px] border-mainDeepColor outline-none placeholder:text-mainColor p-2
@@ -18,7 +23,8 @@ const Login = () => {
   const [accessToken, setAcessToken] = useRecoilState(tokenState);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const [memberId, setMemberId] = useRecoilState(memberIdState);
-  const [login, setLogin] = useState(false);
+  const [nickName, setNickName] = useRecoilState(nickNameState);
+
   const onValid = (data) => {
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
@@ -27,8 +33,9 @@ const Login = () => {
       })
       .then((res) => {
         console.log(res);
-        localStorage.setItem("token", res.data.data.accessToken);
-        setMemberId(res.data.data.memberId);
+        localStorage.setItem("token", res.data.data.jwtToken.accessToken);
+        setMemberId(res.data.data.jwtToken.memberId);
+        setNickName(res.data.data.name);
         setIsLogin(true);
       })
       .catch((err) => console.log(err));
