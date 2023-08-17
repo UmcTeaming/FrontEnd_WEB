@@ -21,9 +21,6 @@ const OPjLine = ({ projects }) => {
               </span>
             </div>
             <div className="starNcircle">
-              <span className="star">
-                <FontAwesomeIcon icon={faStar} />
-              </span>
               <span className="circle2">
                 <FontAwesomeIcon icon={faCircle} color="#527FF5" />
               </span>
