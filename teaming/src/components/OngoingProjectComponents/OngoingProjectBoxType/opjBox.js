@@ -1,13 +1,13 @@
 import React from 'react';
-import "../../../pages/PortfolioLinks/portfolioList.css"
+import "../../../pages/OngoingProject/OngoingProject.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-const PjBox = ({ project }) => {
+const OPjBox = ({ project }) => {
     const defaultImage = "/img/projectImg/project_img.jpg"; // 기본 이미지 경로 설정
     return (
-        <Link to={`/${project.projectId}/final-files`}>
+        <Link to={`/${project.projectId}/project-files`}>
             <div className="box">
                 <div className="thumbNail">
                     <img
@@ -29,4 +29,4 @@ const PjBox = ({ project }) => {
     );
 };
 
-export default PjBox;
+export default OPjBox;

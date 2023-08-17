@@ -1,12 +1,11 @@
 import React from 'react';
 import "../../../pages/PortfolioLinks/portfolioList.css"
-
-import PjLineTemplate from './pjLine';
+import PjLine from './pjLine';
 
 const PjLines = ({ projects }) => {
     return (
         <div className="elementLineView">
-            <PjLineTemplate projects={projects} />
+            <PjLine projects={projects} />
         </div>       
     );
 };

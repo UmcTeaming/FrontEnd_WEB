@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import "./portfolioList.css";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+
 import PjBoxes from '../../components/portfolioComponents/portfolioListBoxType/pjBoxes.js';
 import PjLines from '../../components/portfolioComponents/portfolioListLineType/pjLines.js';
 
