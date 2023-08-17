@@ -33,7 +33,7 @@ export const getProfile = async (memberId, accessToken) => {
 };
 
 export const getProject = async (memberId, projectId, accessToken) => {
-  /* try {
+  try {
     const response = await axios.get(
       `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}`,
       {
@@ -47,14 +47,14 @@ export const getProject = async (memberId, projectId, accessToken) => {
   } catch (error) {
     console.error("Fetch Member Page Error:", error);
     throw error;
-  } */
+  }
 
-  const response = await axios.get("/datas/Project-Search.json");
-  return response.data.data;
+  // const response = await axios.get("/datas/Project-Search.json");
+  // return response.data.data;
 };
 
 export const getProjectFiles = async (memberId, projectId, accessToken) => {
-  /* try {
+  try {
     const response = await axios.get(
       `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/files`,
       {
@@ -68,15 +68,15 @@ export const getProjectFiles = async (memberId, projectId, accessToken) => {
   } catch (error) {
     console.error("Fetch Member Page Error:", error);
     throw error;
-  } */
-  const response = await axios.get("/datas/Search-Files.json");
-  return response.data.data;
+  }
+  // const response = await axios.get("/datas/Search-Files.json");
+  // return response.data.data;
 };
 
 export const getFinalFiles = async (memberId, projectId, accessToken) => {
-  /* try {
+  try {
     const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/final-file`,
+      `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/final-files`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -88,14 +88,14 @@ export const getFinalFiles = async (memberId, projectId, accessToken) => {
   } catch (error) {
     console.error("Fetch Member Page Error:", error);
     throw error;
-  } */
+  }
 
-  const response = await axios.get("/datas/Search-Final-Files.json");
-  return response.data.data;
+  // const response = await axios.get("/datas/Search-Final-Files.json");
+  // return response.data.data;
 };
 
 export const getFile = async (memberId, projectId, fileId, accessToken) => {
-  /* try {
+  try {
     const response = await axios.get(
       `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/files/${fileId}`,
       {
@@ -109,14 +109,14 @@ export const getFile = async (memberId, projectId, fileId, accessToken) => {
   } catch (error) {
     console.error("Fetch Member Page Error:", error);
     throw error;
-  } */
+  }
 
-  const response = await axios.get("/datas/SingleFile-Search.json");
-  return response.data.data;
+  // const response = await axios.get("/datas/SingleFile-Search.json");
+  // return response.data.data;
 };
 
 export const getComments = async (memberId, fileId, accessToken) => {
-  /* try {
+  try {
     const response = await axios.get(
       `${process.env.REACT_APP_API_URL}/files/${memberId}/${fileId}/comments`,
       {
@@ -130,8 +130,8 @@ export const getComments = async (memberId, fileId, accessToken) => {
   } catch (error) {
     console.error("Fetch Member Page Error:", error);
     throw error;
-  } */
+  }
 
-  const response = await axios.get("/datas/Comment-Search.json");
-  return response.data.data;
+  // const response = await axios.get("/datas/Comment-Search.json");
+  // return response.data.data;
 };
