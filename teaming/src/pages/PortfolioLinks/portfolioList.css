@@ -213,7 +213,7 @@ button:focus {
           color: gray;
         }
         .circle2{
-          margin-left: var(--padding-medium);
+          font-size: 15px;
           color: #FFD008;
         }
       }

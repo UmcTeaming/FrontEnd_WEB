@@ -43,27 +43,18 @@ const PortfolioList = () => {
     const nickName = useRecoilState(nickNameState);
 
     useEffect(() => {
-        axios
-            .get("/datas/portfolio.json")
-            .then((response) => {
-                console.log(response);
-                setPortfolioData(response.data.data.portfolio);
-            })
-            .catch((error) => {
-                console.error("Error fetching portfolio data:", error);
-            });
-
+        console.log("API 호출이 실행됐습니다.");
         axios
             .get(`${process.env.REACT_APP_API_URL}/member/${memberId}/portfolio`)
             .then((response) => {
-                setPortfolioData(prevPortfolioData => [...prevPortfolioData, ...response.data.data.portfolio]);
+                setPortfolioData(response.data.data.portfolio); // 이전 데이터 초기화 후 새로운 데이터 설정
                 console.log(response);
             })
             .catch((error) => {
                 console.error("Error fetching portfolio data:", error);
             });
     }, [memberId]);
-
+    
     return (
         <>
             <div className="main">
