@@ -10,7 +10,7 @@ import PjLines from '../../components/portfolioComponents/portfolioListLineType/
 import styled from "styled-components";
 import axios from 'axios';
 import { useRecoilState } from "recoil";
-import { memberIdState } from "../../components/atom";
+import { memberIdState, nickNameState } from "../../components/atom";
 
 const CardBtn = styled.div`
   border: none;
@@ -38,6 +38,7 @@ const PortfolioList = () => {
     const [viewBox, setViewBox] = useState(true);
     const [portfolioData, setPortfolioData] = useState([]);
     const [memberId] = useRecoilState(memberIdState);
+    const nickName = useRecoilState(nickNameState);
 
     useEffect(() => {
       axios.get("/datas/portfolio.json")
@@ -66,7 +67,7 @@ const PortfolioList = () => {
 
                         <div className="Name">
                             <br />
-                            <span className="userName">카리나님의 포트폴리오</span><br />
+                            <span className="userName">{nickName}님의 포트폴리오</span><br />
                             <span className="ment">지금까지의 프로젝트를 한눈에 모아보세요!</span>
                         </div>
                     </div>
