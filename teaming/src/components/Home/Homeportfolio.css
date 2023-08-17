@@ -1,4 +1,16 @@
 
+/* 제목과 소제목 */
+.PortfolioApp .Portfoliotitle {
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 50px;
+}
+
+.PortfolioApp .Portfoliosubtitle{
+  font-size: 13px;
+  color: #5f5f5f;
+}
+
 /* 프로젝트가 하나도 없을 때 */
 .PortfolioApp .Portfolioempty {
   height: 510px;
@@ -51,28 +63,13 @@
   margin-left: 10px;
 }
 
-
-
-/* 프로젝트가 존재할 때 */
-.PortfolioApp .Portfoliotitle {
-  font-size: 20px;
-  font-weight: 700;
-  margin-top: 50px;
-}
-
-.PortfolioApp .Portfoliosubtitle{
-  font-size: 13px;
-  color: #5f5f5f;
-}
-
-
-.PortfolioApp .Portfoliocontent{
+/* 마감한 프로젝트가 있을 때 */
+.PortfolioApp .Portfoliocontent .grid-container{
   display: grid;
   grid-template-rows: 250px 250px ;
   grid-template-columns: 300px 300px 300px 300px;
   gap: 20px
 }
-
 
 .Portfoliocontent .content{
   margin-top: 30px;
@@ -88,6 +85,10 @@
   padding-right: 20px;
 }
 
+.Portfoliocontent .content .contentprogress{
+  margin-top: 10px;
+}
+
 .Portfoliocontent .content .progressicon{
   font-size: 9px;
   color:#FFD008;
@@ -99,6 +100,7 @@
 .Portfoliocontent .content .contentimg{
   width: 221px;
   height: 123px;
+  margin-top: 12px;
 }
 
 .Portfoliocontent .content .contentimgs{
@@ -106,20 +108,29 @@
   background-size: cover;
   width: 260px;
   height: 123px;
-  margin-top: 12px;
+  margin-top: 5px;
+  margin-left: 10px;
+}
 
+.Portfoliocontent .content .contenttxt{
+  margin-left: 30px;
 }
 
 .Portfoliocontent .content .contenttitle{
-  text-align: center;
   margin-top: 20px;
   font-size: 13px;
 }
 
 
-.Portfoliocontent .content .contentdescription{
-  text-align: center;
-  margin-top: 10px;
+.Portfoliocontent .content .contentsubtitle{
+  margin-top: 15px;
+  font-size: 9px;
+  color: #808080;
+  line-height: .5;
+}
+
+.Portfoliocontent .content .contentmember{
+  margin-top: 5px;
   font-size: 9px;
   color: #808080;
 }
