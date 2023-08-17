@@ -68,7 +68,7 @@ const Upload = () => {
       })
         .then((response) => {
           console.log(response.data);
-          queryClient.invalidateQueries("project-files");
+          queryClient.invalidateQueries("final-files");
         })
         .catch((error) => {
           console.error(error);

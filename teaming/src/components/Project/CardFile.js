@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { MdUpload } from "react-icons/md";
-import { Link, useMatch } from "react-router-dom";
+import { Link, useMatch, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import axios from "axios";
+import { memberIdState } from "../atom";
+import { useRecoilValue } from "recoil";
 
 const File = styled.div`
   display: flex;
@@ -97,6 +99,8 @@ const Download = styled.button`
 `;
 
 const CardFile = (data) => {
+  const memberId = useRecoilValue(memberIdState);
+  const { projectId } = useParams();
   const matchProject = useMatch("/:projectId/project-files");
   const matchFinal = useMatch("/:projectId/final-files");
   const { file } = data;
@@ -109,7 +113,14 @@ const CardFile = (data) => {
         "삭제한 파일은 되돌릴 수 없습니다. 그래도 삭제하시겠습니까? "
       )
     ) {
-      // axios.delete(`/projects/${memberId}/${projectId}/files/${fileId}`);
+      /* axios
+        .delete(`/projects/${memberId}/${projectId}/files/${file.file_id}`)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        }); */
       console.log("삭제되었습니다.");
     } else {
       console.log("취소되었습니다.");
