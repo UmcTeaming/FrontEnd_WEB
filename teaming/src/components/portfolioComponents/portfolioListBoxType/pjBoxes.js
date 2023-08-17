@@ -1,15 +1,14 @@
 import React from 'react';
 import "../../../pages/PortfolioLinks/portfolioList.css"
-import PjBoxTemplate from './pjBox';
+import PjBox from './pjBox';
 
-
-
-const  PjBoxes = () => {
+const PjBoxes = ({ projects }) => {
     return (
         <div className="line">
-                <PjBoxTemplate/>
+            {projects.map(project => (
+                <PjBox key={project.projectId} project={project} />
+            ))}
         </div>
-        
     );
 };
 

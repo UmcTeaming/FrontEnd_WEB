@@ -1,0 +1,57 @@
+{
+    "status": 200,
+    "message": null,
+    "data": {
+        "member_id": 54,
+        "portfolio": [
+            {
+                "projectId": 8,
+                "projectName": "Skynoodle",
+                "projectStartDate": "2022-09-08",
+                "projectEndDate": "2023-07-13",
+                "projectImage": null,
+                "projectStatus": "END"
+            },
+            {
+                "projectId": 7,
+                "projectName": "Jaxbean",
+                "projectStartDate": "2023-05-16",
+                "projectEndDate": "2023-06-13",
+                "projectImage": null,
+                "projectStatus": "END"
+            },
+            {
+                "projectId": 9,
+                "projectName": "Eadel",
+                "projectStartDate": "2023-03-26",
+                "projectEndDate": "2023-04-14",
+                "projectImage": null,
+                "projectStatus": "END"
+            },
+            {
+                "projectId": 2,
+                "projectName": "Thoughtbridge",
+                "projectStartDate": "2023-05-12",
+                "projectEndDate": "2023-01-26",
+                "projectImage": null,
+                "projectStatus": "END"
+            },
+            {
+                "projectId": 6,
+                "projectName": "Voomm",
+                "projectStartDate": "2022-11-26",
+                "projectEndDate": "2022-11-12",
+                "projectImage": null,
+                "projectStatus": "END"
+            },
+            {
+                "projectId": 10,
+                "projectName": "Yabox",
+                "projectStartDate": "2022-10-05",
+                "projectEndDate": "2022-08-18",
+                "projectImage": null,
+                "projectStatus": "END"
+            }
+        ]
+    }
+}
