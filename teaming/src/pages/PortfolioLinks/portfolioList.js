@@ -43,7 +43,8 @@ const PortfolioList = () => {
     const nickName = useRecoilState(nickNameState);
 
     useEffect(() => {
-      axios.get("/datas/portfolio.json")
+        axios
+            .get("/datas/portfolio.json")
             .then((response) => {
                 console.log(response);
                 setPortfolioData(response.data.data.portfolio);
