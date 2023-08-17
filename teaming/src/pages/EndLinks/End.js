@@ -176,16 +176,19 @@ const End = () => {
     return new Intl.DateTimeFormat(locale, options).format(date).slice(0, 1);
   };
   const onClose = () => {
-    /* axios
-      .patch("https://api.example.com/update-data", {
-        project_status: "END",
-      })
+    axios
+      .patch(
+        `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/status`,
+        {
+          project_status: "END",
+        }
+      )
       .then((response) => {
-        console.log(response.data.message);
+        console.log(response);
       })
       .catch((error) => {
         console.error("Error:", error);
-      }); */
+      });
   };
 
   return (
