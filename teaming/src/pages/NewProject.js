@@ -64,13 +64,13 @@ const NewProject = () => {
   } = useForm();
   const [file, setFile] = useState();
   const handleMonth = (x, num) => {
-    x
-      ? num === 1
+    num === 1
+      ? x
         ? setDate1(date1.clone().add(1, "month"))
-        : setDate2(date2.clone().add(1, "month"))
-      : num === 1
-      ? setDate1(date1.clone().subtract(1, "month"))
-      : setDate1(date2.clone().subtract(1, "month"));
+        : setDate1(date1.clone().subtract(1, "month"))
+      : x
+      ? setDate2(date2.clone().add(1, "month"))
+      : setDate2(date2.clone().subtract(1, "month"));
   };
 
   const onClickDay = (current, num) => {

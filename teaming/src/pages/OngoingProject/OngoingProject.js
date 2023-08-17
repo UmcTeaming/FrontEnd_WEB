@@ -9,7 +9,7 @@ import { faBorderAll } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 import PjBoxTemplate from "../../components/portfolioComponents/portfolioListBoxType/pjBoxes.js";
-import PjLineTemplate from "../../components/portfolioComponents/portfolioListLineType/pjLines.js";
+import PjLineTemplate from "../../components/OngoingProjectComponents/OngoingProjectLineType/opjLines";
 
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -18,7 +18,7 @@ import { useRecoilState } from "recoil";
 import { memberIdState, nickNameState } from "../../components/atom";
 
 import "../PortfolioLinks/portfolioList.css";
-import PjBox from "../../components/portfolioComponents/portfolioListBoxType/pjBox";
+import OpjBox from "../../components/OngoingProjectComponents/OngoingProjectBoxType/opjBox";
 
 const CardBtn = styled.div`
   border: none;
@@ -147,7 +147,7 @@ export const OngoingProject = () => {
               {viewBox ? (
                 <div className="line">
                   {projects?.map((project) => (
-                    <PjBox key={project.projectId} project={project} />
+                    <OpjBox key={project.projectId} project={project} />
                   ))}
                 </div>
               ) : (
