@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import styled from "styled-components";
 import { getComments, getProfile } from "../../api";
 import axios from "axios";
@@ -139,7 +139,7 @@ const Delete = styled.div`
 const Comment = () => {
   const memberId = useRecoilValue(memberIdState);
   const accessToken = useRecoilValue(tokenState);
-  const { fileId } = useParams;
+  const { fileId } = useParams();
   const [value, setValue] = useState("");
   const { data: comments } = useQuery(["comments"], () =>
     getComments(memberId.toString(), fileId.toString(), accessToken)
@@ -147,23 +147,51 @@ const Comment = () => {
   const { data: profile } = useQuery(["profile"], () =>
     getProfile(memberId.toString(), accessToken)
   );
+  const queryClient = useQueryClient();
 
   const onChange = (e) => {
     setValue(e.target.value);
   };
-  const clickedCancle = () => {
+
+  const onCancle = () => {
     setValue("");
   };
-  const onSubmit = (e) => {
-    e.preventDefault();
 
-    /* axios
-      .post(`/files/${fileId}/${memberId}/comments`, {
-        content: value,
+  const onSubmit = () => {
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/files/${memberId}/${fileId}/comments`,
+        {
+          content: value,
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        queryClient.invalidateQueries("comments");
       })
-      .then((res) => console.log(res)); */
+      .catch((error) => console.error("Error : ", error));
 
     setValue("");
+  };
+
+  const onDelete = (commentId) => {
+    if (
+      window.confirm(
+        "삭제한 파일은 되돌릴 수 없습니다. 그래도 삭제하시겠습니까? "
+      )
+    ) {
+      axios
+        .delete(
+          `${process.env.REACT_APP_API_URL}/files/${memberId}/${fileId}/comments/${commentId}`
+        )
+        .then((response) => {
+          console.log(response);
+          queryClient.invalidateQueries("comments");
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
   };
 
   const formatTime = (dateString) => {
@@ -183,14 +211,6 @@ const Comment = () => {
 
     return `${year}. ${month}. ${day} ${amPm} ${hours} : ${minutes}`;
   };
-  const DeleteComment = () => {
-    if (
-      !window.confirm(
-        "삭제한 파일은 되돌릴 수 없습니다. 그래도 삭제하시겠습니까? "
-      )
-    )
-      return false;
-  };
 
   return (
     <Wrapper>
@@ -205,14 +225,14 @@ const Comment = () => {
         <Input value={value} onChange={onChange} placeholder="댓글 추가..." />
       </AddComment>
       <Buttons>
-        <CancleBtn onClick={clickedCancle}>취소</CancleBtn>
+        <CancleBtn onClick={onCancle}>취소</CancleBtn>
         <AddBtn onClick={onSubmit}>댓글</AddBtn>
       </Buttons>
       <Border />
       <Comments>
         {comments?.map((comment) => (
-          <CommentContainer>
-            <Delete onClick={DeleteComment}>
+          <CommentContainer id={comment.commentId}>
+            <Delete onClick={() => onDelete(comment.commentId)}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

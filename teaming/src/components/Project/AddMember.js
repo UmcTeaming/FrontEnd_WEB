@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { getProject } from "../../api";
 import axios from "axios";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { memberIdState, tokenState } from "../atom";
 import { useRecoilValue } from "recoil";
 import { useParams } from "react-router-dom";
@@ -99,14 +99,25 @@ const AddMember = ({ onClose }) => {
   const { data: project } = useQuery(["project"], () =>
     getProject(memberId.toString(), projectId.toString(), accessToken)
   );
+  const queryClient = useQueryClient();
 
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = async (email) => {
     console.log(email);
-    // axios.post(`/projects/${memberId}/${projectId}/invitations`, email);
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/invitations`,
+        email
+      )
+      .then((response) => {
+        console.log(response);
+        queryClient.invalidateQueries("project");
+      })
+      .catch((error) => console.log(error));
   };
-  const onValid = (data) => {
-    onSubmit(data);
+  const onValid = (email) => {
+    console.log(email);
+    onSubmit(email);
     reset();
   };
 
