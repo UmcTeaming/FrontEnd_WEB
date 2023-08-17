@@ -6,6 +6,7 @@ import { useLocation } from "react-router";
 import { memberIdState, tokenState } from "../atom";
 import { useRecoilValue } from "recoil";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const Wrapper = styled.div`
   display: flex;
@@ -112,6 +113,31 @@ function FileInfo() {
   );
   const formattedDate = file?.upload_date.split(" ")[0].replace(/-/g, ".");
 
+  const handleDownload = async () => {
+    const downloadUrl = `${process.env.REACT_APP_API_URL}/files/${memberId}/${projectId}/files/${fileId}/download`;
+
+    try {
+      const response = await axios.get(downloadUrl, {
+        responseType: "blob",
+      });
+      const contentDisposition = response.headers["content-disposition"];
+      console.log(contentDisposition);
+
+      // Blob 객체 생성
+      const blob = new Blob([response.data]);
+
+      // 다운로드 링크 생성 및 클릭
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = file?.file_name;
+      link.click();
+
+      console.log("download...");
+    } catch (error) {
+      console.error("Error downloading file:", error);
+    }
+  };
+
   return (
     <Wrapper>
       <ImgContainer>
@@ -150,15 +176,10 @@ function FileInfo() {
             </svg>
             {file?.file_type}
           </Format>
-          <a
-            href="https://calibre-ebook.com/downloads/demos/demo.docx"
-            download
-          >
-            <Download>
-              <MdUpload size="15" color="white" transform="rotate(180)" />
-              <span>파일 다운로드</span>
-            </Download>
-          </a>
+          <Download onClick={handleDownload}>
+            <MdUpload size="15" color="white" transform="rotate(180)" />
+            <span>파일 다운로드</span>
+          </Download>
         </Col>
       </Details>
     </Wrapper>

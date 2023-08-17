@@ -1,16 +1,5 @@
 import axios from "axios";
 
-axios.interceptors.request.use(
-  function (config) {
-    const token = localStorage.getItem("token");
-    config.headers.Authorization = `Bearer ${token}`;
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
-  }
-);
-
 export const getProfile = async (memberId, accessToken) => {
   try {
     const response = await axios.get(
@@ -33,7 +22,7 @@ export const getProfile = async (memberId, accessToken) => {
 };
 
 export const getProject = async (memberId, projectId, accessToken) => {
-  /* try {
+  try {
     const response = await axios.get(
       `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}`,
       {
@@ -47,14 +36,14 @@ export const getProject = async (memberId, projectId, accessToken) => {
   } catch (error) {
     console.error("Fetch Member Page Error:", error);
     throw error;
-  } */
+  }
 
-  const response = await axios.get("/datas/Project-Search.json");
-  return response.data.data;
+  // const response = await axios.get("/datas/Project-Search.json");
+  // return response.data.data;
 };
 
 export const getProjectFiles = async (memberId, projectId, accessToken) => {
-  /* try {
+  try {
     const response = await axios.get(
       `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/files`,
       {
@@ -68,9 +57,9 @@ export const getProjectFiles = async (memberId, projectId, accessToken) => {
   } catch (error) {
     console.error("Fetch Member Page Error:", error);
     throw error;
-  } */
-  const response = await axios.get("/datas/Search-Files.json");
-  return response.data.data;
+  }
+  // const response = await axios.get("/datas/Search-Files.json");
+  // return response.data.data;
 };
 
 export const getFinalFiles = async (memberId, projectId, accessToken) => {
@@ -95,7 +84,7 @@ export const getFinalFiles = async (memberId, projectId, accessToken) => {
 };
 
 export const getFile = async (memberId, projectId, fileId, accessToken) => {
-  /* try {
+  try {
     const response = await axios.get(
       `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/files/${fileId}`,
       {
@@ -109,10 +98,10 @@ export const getFile = async (memberId, projectId, fileId, accessToken) => {
   } catch (error) {
     console.error("Fetch Member Page Error:", error);
     throw error;
-  } */
+  }
 
-  const response = await axios.get("/datas/SingleFile-Search.json");
-  return response.data.data;
+  // const response = await axios.get("/datas/SingleFile-Search.json");
+  // return response.data.data;
 };
 
 export const getComments = async (memberId, fileId, accessToken) => {

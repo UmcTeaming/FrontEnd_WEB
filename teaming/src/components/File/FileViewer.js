@@ -27,7 +27,7 @@ const FileViewer = () => {
   const docs = [
     {
       uri: "https://calibre-ebook.com/downloads/demos/demo.docx",
-      fileType: `docx`, // ${file?.file_type}
+      fileType: `docx`, // `${file?.file_type}`
     },
   ];
 

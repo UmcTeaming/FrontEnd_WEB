@@ -3,6 +3,10 @@ import axios from "axios";
 import { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import { useMatch } from "react-router";
+import { useRecoilValue } from "recoil";
+import { memberIdState } from "../atom";
+import { useParams } from "react-router-dom";
+import { useQueryClient } from "react-query";
 
 const Wrapper = styled.div`
   display: flex;
@@ -24,6 +28,9 @@ const Upload = () => {
   const matchProject = useMatch("/:projectId/project-files");
   const matchFinal = useMatch("/:projectId/final-files");
   const [file, setFile] = useState(null);
+  const memberId = useRecoilValue(memberIdState);
+  const { projectId } = useParams();
+  const queryClient = useQueryClient();
 
   const handleChange = (data) => {
     // const fileUrl = URL.createObjectURL(data);
@@ -37,32 +44,17 @@ const Upload = () => {
 
     formData.append("file", file);
 
-    const formDataObject = {};
+    /* const formDataObject = {};
     formData.forEach((value, key) => {
       formDataObject[key] = value;
     });
 
-    console.log(formDataObject);
+    console.log(formDataObject); */
 
     if (matchProject) {
-      /* axios({
-      method: "POST",
-      url: `/projects/${memberId}/${projectId}/files-upload`,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      data: formData,
-    })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      }); */
-    } else if (matchFinal) {
-      /* axios({
+      axios({
         method: "POST",
-        url: `/projects/${memberId}/${projectId}/final-files-upload`,
+        url: `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/files-upload`,
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -70,10 +62,27 @@ const Upload = () => {
       })
         .then((response) => {
           console.log(response.data);
+          queryClient.invalidateQueries("project-files");
         })
         .catch((error) => {
           console.error(error);
-        }); */
+        });
+    } else if (matchFinal) {
+      axios({
+        method: "POST",
+        url: `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/final-files-upload`,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        data: formData,
+      })
+        .then((response) => {
+          console.log(response.data);
+          queryClient.invalidateQueries("final-files");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
   };
 
