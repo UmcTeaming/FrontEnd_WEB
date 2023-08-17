@@ -43,7 +43,18 @@ const PortfolioList = () => {
     useEffect(() => {
       axios.get("/datas/portfolio.json")
             .then((response) => {
+                console.log(response);
                 setPortfolioData(response.data.data.portfolio);
+            })
+            .catch((error) => {
+                console.error("Error fetching portfolio data:", error);
+            });
+
+        axios
+            .get(`${process.env.REACT_APP_API_URL}/member/${memberId}/portfolio`)
+            .then((response) => {
+                setPortfolioData(prevPortfolioData => [...prevPortfolioData, ...response.data.data.portfolio]);
+                console.log(response);
             })
             .catch((error) => {
                 console.error("Error fetching portfolio data:", error);

@@ -2,7 +2,7 @@
     "status": 200,
     "message": null,
     "data": {
-        "member_id": 54,
+        "member_id": 25,
         "portfolio": [
             {
                 "projectId": 8,
@@ -25,14 +25,6 @@
                 "projectName": "Eadel",
                 "projectStartDate": "2023-03-26",
                 "projectEndDate": "2023-04-14",
-                "projectImage": null,
-                "projectStatus": "END"
-            },
-            {
-                "projectId": 2,
-                "projectName": "Thoughtbridge",
-                "projectStartDate": "2023-05-12",
-                "projectEndDate": "2023-01-26",
                 "projectImage": null,
                 "projectStatus": "END"
             },
