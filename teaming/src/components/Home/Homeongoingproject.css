@@ -1,3 +1,15 @@
+/* 제목과 소제목  */
+.OngoingProjApp .OngoingProjtitle {
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 40px;
+}
+
+.OngoingProjApp .OngoingProjsubtitle {
+  font-size: 13px;
+  color: #5f5f5f;
+}
+
 /* 프로젝트가 하나도 없을 때 */
 .OngoingProjApp .Ongoingempty {
   height: 510px;
@@ -50,19 +62,8 @@
   margin-left: 10px;
 }
 
-/* 프로젝트가 있을 때 */
-.OngoingProjApp .OngoingProjtitle {
-  font-size: 20px;
-  font-weight: 700;
-  margin-top: 40px;
-}
-
-.OngoingProjApp .OngoingProjsubtitle {
-  font-size: 13px;
-  color: #5f5f5f;
-}
-
-.OngoingProjApp .OngoingProjContent {
+/* 진행 중인 프로젝트가 있을 때 */
+.OngoingProjApp .OngoingProjContent .grid-container {
   height: 510px;
   display: grid;
   grid-template-rows: 232px 232px;
@@ -106,19 +107,28 @@
   background-size: cover;
   width: 250px;
   height: 123px;
-  margin-top: 12px;
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
+.OngoingProjContent .content .contenttxt {
+  margin-left: 30px;
 }
 
 .OngoingProjContent .content .contenttitle {
-  text-align: left;
-  margin-top: 20px;
+  margin-top: 5px;
   font-size: 13px;
-  margin-left: 5px;
 }
 
 .OngoingProjContent .content .contentsubtitle {
-  text-align: left;
-  margin-left: 5px;
+  margin-top: 15px;
+  font-size: 9px;
+  color: #808080;
+  line-height: .5;
+}
+
+.OngoingProjContent .content .contentmember {
+  margin-top: 5px;
   font-size: 9px;
   color: #808080;
 }
