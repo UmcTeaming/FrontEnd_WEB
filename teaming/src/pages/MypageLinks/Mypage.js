@@ -7,7 +7,7 @@ import { Link, Routes, Route } from "react-router-dom";
 import ChangePw from "./ChangePw";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { memberIdState } from "../../components/atom";
+import { memberIdState, nickNameState } from "../../components/atom";
 import basicProfile from "./프로필_기본.jpg";
 
 /* axios.interceptors.request.use(
@@ -29,7 +29,7 @@ const Mypage = () => {
 
   const [previewImg, setPreviewImg] = useState();
 
-  const [nickName, setNickName] = useState();
+  const [nickName, setNickName] = useRecoilState(nickNameState);
   const [email, setEmail] = useState();
 
   const { handleSubmit, register, reset, watch } = useForm();
