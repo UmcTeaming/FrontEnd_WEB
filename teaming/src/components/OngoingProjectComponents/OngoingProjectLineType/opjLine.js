@@ -1,15 +1,15 @@
 import React from 'react';
-import "../../../pages/PortfolioLinks/portfolioList.css"
+import "../../../pages/OngoingProject/OngoingProject.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
 
-const PjLine = ({ projects }) => {
+const OPjLine = ({ projects }) => {
     return (
         <div className="elementLineView">
             {projects.map(project => (
-                <Link key={project.projectId} to={`/${project.projectId}/final-files`}>
+                <Link key={project.projectId} to={`/${project.projectId}/project-files`}>
                     <div className="lineElement">     
                         <div className="titleNdate">
                             <span className="title">{project.projectName}</span>
@@ -26,4 +26,4 @@ const PjLine = ({ projects }) => {
     );
 };
 
-export default PjLine;
+export default OPjLine;
