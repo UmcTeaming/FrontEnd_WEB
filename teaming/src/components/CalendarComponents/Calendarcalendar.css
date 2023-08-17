@@ -36,8 +36,12 @@
 .schedulecomponents .colorbar {
   width: 10px;
   height: 60px;
-  background-color: #ffd008;
   border-radius: 10px;
+}
+
+.delete{
+  margin-left: auto;
+  font-size: 15px;
 }
 
 .schedulecomponents .content {
@@ -60,10 +64,9 @@
 }
 
 .schedulecomponents .contenttimeperiod {
-  margin-left: 100px;
+  margin-left: auto;
   height: 30px;
   width: 100px;
-  background-color: #FFD008;
   border-radius: 15px;
 
 }
@@ -162,7 +165,6 @@
 }
 
 .dailycontent .colorbar{
-  background-color: #FFD008;
   grid-row: 1/3;
   grid-column: 1;
   border-radius: 10px;
@@ -190,7 +192,6 @@
 }
 
 .dailycontent .contenttimeperiod{
-  background-color: #FFD008;
   border-radius: 15px;
   grid-row: 3;
   grid-column: 3;

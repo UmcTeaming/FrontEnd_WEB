@@ -1,7 +1,9 @@
 .SchedulecalendarApp {
-  background-image: url("../../../public/img/backgroundImgs/web_bg1.png");
+  /* background-image: url("../../../public/img/backgroundImgs/web_bg1.png");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
+  background-image: linear-gradient(  rgba(3, 63, 255, 0.50),#fff);
+  width: 100%; 
 }
 
 /* 달력 관련 스타일 */
@@ -36,8 +38,12 @@
 .schedulecomponents .colorbar {
   width: 10px;
   height: 60px;
-  background-color: #ffd008;
   border-radius: 10px;
+}
+
+.delete{
+  margin-left: auto;
+  font-size: 15px;
 }
 
 .schedulecomponents .content {
@@ -60,10 +66,9 @@
 }
 
 .schedulecomponents .contenttimeperiod {
-  margin-left: 100px;
+  margin-left:auto;
   height: 30px;
   width: 100px;
-  background-color: #FFD008;
   border-radius: 15px;
 
 }

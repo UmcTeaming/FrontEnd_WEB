@@ -2,6 +2,7 @@ import "./Calendarcalendar.css";
 import React, { useState, Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { CalendarIcon } from "@heroicons/react/solid";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import { Menu, Transition } from "@headlessui/react";
@@ -25,38 +26,64 @@ import {
   startOfToday,
 } from "date-fns";
 
-// 일정 데이터를 받는 부분_해당 내용들은 예시
-const meetings = [
-  {
-    id: 1,
-    name: "티밍 전체 대면 회의 - 중구 퇴계로",
-    dailyscrum: "00교양 조별 과제",
-    startDatetime: "2023-08-11T13:00",
-    endDatetime: "2023-08-13T14:30",
-  },
-  {
-    id: 1,
-    name: "티밍 전체 대면 회의 - 중구 퇴계로",
-    dailyscrum: "00교양 조별 과제",
-    startDatetime: "2023-08-11T13:00",
-    endDatetime: "2023-08-13T14:30",
-  },
-  {
-    id: 2,
-    name: "Michael Foster",
-    imageUrl:
-      "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2023-08-20T09:00",
-    endDatetime: "2023-08-20T11:30",
-  },
-];
-
 // className함수는 여러 개의 클래스 이름들을 받아들이고, 조건에 따라 필터링하여 결합한 문자열을 반환함
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export const Calendarcalendar = () => {
+  // 일정 데이터를 받는 부분_해당 내용들은 예시
+  const [meetings, setMeetings] = useState([
+    {
+      id: 1,
+      name: "티밍 전체 대면 회의 - 중구 퇴계로",
+      dailyscrum: "00교양 조별 과제",
+      startDatetime: "2023-08-11T13:00",
+      endDatetime: "2023-08-13T14:30",
+      project_color: "#d79ac3",
+    },
+    {
+      id: 2,
+      name: "티밍 전체 대면 회의 - 중구 퇴계로",
+      dailyscrum: "00교양 조별 과제",
+      startDatetime: "2023-08-11T13:00",
+      endDatetime: "2023-08-13T14:30",
+      project_color: "#d79ac3",
+    },
+    {
+      id: 3,
+      name: "티밍 전체 대면 회의 - 중구 퇴계로",
+      dailyscrum: "00교양 조별 과제",
+      startDatetime: "2023-08-11T13:00",
+      endDatetime: "2023-08-13T14:30",
+      project_color: "#d79ac3",
+    },
+    {
+      id: 4,
+      name: "프로젝트 회의",
+      dailyscrum: "티밍 회의",
+      startDateTime: "2023-08-13T14:00",
+      endDateTime: "2023-08-15T16:30",
+      project_color: "#FFD008",
+    },
+    {
+      id: 5,
+      name: "티밍 전체 대면 회의 - 송파구 퇴계로",
+      dailyscrum: "00교양 조별 과제",
+      startDatetime: "2023-08-11T13:00",
+      endDatetime: "2023-08-13T14:30",
+      project_color: "#FFD008",
+    },
+    {
+      id: 6,
+      name: "Michael Foster",
+      imageUrl:
+        "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      startDatetime: "2023-08-18T09:00",
+      endDatetime: "2023-08-20T11:30",
+    },
+  ]);
+
   let today = startOfToday();
   let [selectedDay, setSelectedDay] = useState(today); //selectDay상태와 setCount 함수를 선언
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
@@ -82,6 +109,13 @@ export const Calendarcalendar = () => {
   let selectedDayMeetings = meetings.filter((meeting) =>
     isSameDay(parseISO(meeting.startDatetime), selectedDay)
   );
+
+  const handleDelete = (meetingId) => {
+    const updatedMeetings = meetings.filter(
+      (meeting) => meeting.id !== meetingId
+    );
+    setMeetings(updatedMeetings);
+  };
 
   return (
     <div className="SchedulecalendarApp pt-10">
@@ -187,7 +221,11 @@ export const Calendarcalendar = () => {
             <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500 max-h-80 overflow-y-auto">
               {selectedDayMeetings.length > 0 ? (
                 selectedDayMeetings.map((meeting) => (
-                  <Meeting meeting={meeting} key={meeting.id} />
+                  <Meeting
+                    meeting={meeting}
+                    key={meeting.id}
+                    onDelete={handleDelete}
+                  />
                 ))
               ) : (
                 <p>등록된 일정이 없습니다</p>
@@ -230,16 +268,27 @@ export const Calendarcalendar = () => {
     </div>
   );
 };
-function Meeting({ meeting }) {
+function Meeting({ meeting, onDelete }) {
   let startDateTime = parseISO(meeting.startDatetime);
   let endDateTime = parseISO(meeting.endDatetime);
+  // project_color 값을 가져와서 스타일로 적용
+  const colorStyle = {
+    backgroundColor: meeting.project_color,
+  };
   return (
     <div className="schedulecomponents ">
       <li className="flex items-center border border-white-300 mb-2 bg-white px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-10 hover:bg-gray-10">
         {/* flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100 */}
-        <div className="colorbar"></div>
+        <div className="colorbar" style={colorStyle}></div>
         <div className="flex-auto">
-          <div className="content text-black-900">{meeting.name}</div>
+          <div className="flex">
+            <div className="content text-black-900">{meeting.name}</div>
+            <FontAwesomeIcon
+              className="delete"
+              icon={faXmark}
+              onClick={() => onDelete(meeting.id)}
+            />
+          </div>
           <div className="contentdateperiod mt-0.5">
             <time dateTime={meeting.startDatetime}>
               {format(startDateTime, "yyy.MM.dd")}
@@ -251,7 +300,7 @@ function Meeting({ meeting }) {
           </div>
           <div className="flex">
             <div className="contentdescription">{meeting.dailyscrum}</div>
-            <div className="contenttimeperiod">
+            <div className="contenttimeperiod" style={colorStyle}>
               <div className="timeperiod">
                 <time dateTime={meeting.startDatetime}>
                   {format(startDateTime, "H:mm")}
