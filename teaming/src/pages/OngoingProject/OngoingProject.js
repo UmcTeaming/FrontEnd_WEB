@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./OngoingProject.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,6 +13,12 @@ import PjLineTemplate from "../../components/portfolioComponents/portfolioListLi
 
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { memberIdState, nickNameState } from "../../components/atom";
+
+import "../PortfolioLinks/portfolioList.css";
+import PjBox from "../../components/portfolioComponents/portfolioListBoxType/pjBox";
 
 const CardBtn = styled.div`
   border: none;
@@ -41,6 +47,11 @@ export const OngoingProject = () => {
 
   const [active, setActive] = useState(false);
   const [active2, setActive2] = useState(false);
+
+  const [memberId, setMemberId] = useRecoilState(memberIdState);
+  const [nickName, setNickName] = useRecoilState(nickNameState);
+
+  const [projects, setProjects] = useState();
   const handleClick = () => {
     setActive(!active);
     setActive2(active2);
@@ -49,6 +60,17 @@ export const OngoingProject = () => {
     setActive(!active);
     setActive2(active2);
   };
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/member/${memberId}/progressProjects`
+      )
+      .then((res) => {
+        console.log(res);
+        setProjects(res.data.data.progressProjects);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <>
@@ -58,9 +80,9 @@ export const OngoingProject = () => {
           <div className="component">
             <div className="route oproute">
               <span>
-              <Link to="/">
+                <Link to="/">
                   <FontAwesomeIcon icon={faHouse} />
-                </Link> 
+                </Link>
                 <FontAwesomeIcon icon={faChevronRight} />
                 진행 중인 프로젝트
               </span>
@@ -69,7 +91,9 @@ export const OngoingProject = () => {
             <div className="Name opname">
               <br />
               <br />
-              <span className="userName opusername">카리나님의 팀 프로젝트 </span>
+              <span className="userName opusername">
+                {nickName}님의 팀 프로젝트
+              </span>
               <br />
               <span className="ment opment">
                 현재 진행 중인 프로젝트를 한 눈에 모아보세요!
@@ -81,25 +105,28 @@ export const OngoingProject = () => {
             <div className="list">
               <div className="howToView">
                 <button className="lineBtn">
-                    <ListBtn onClick={() => setViewBox(false)} isActive={!viewBox}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 15 21"
-                        stroke-width="2"
-                        class="w-6 h-6"
-                        width="5px"
-                        height="5px"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                        />
-                      </svg>
-                    </ListBtn>
-                  </button>
-                  <button className="boxBtn">
+                  <ListBtn
+                    onClick={() => setViewBox(false)}
+                    isActive={!viewBox}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 15 21"
+                      stroke-width="2"
+                      class="w-6 h-6"
+                      width="5px"
+                      height="5px"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                      />
+                    </svg>
+                  </ListBtn>
+                </button>
+                <button className="boxBtn">
                   <CardBtn onClick={() => setViewBox(true)} isActive={viewBox}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -117,7 +144,17 @@ export const OngoingProject = () => {
                   </CardBtn>
                 </button>
               </div>
-              {viewBox ? <PjBoxTemplate /> : <PjLineTemplate />}
+              {viewBox ? (
+                <div className="line">
+                  {projects?.map((project) => (
+                    <PjBox key={project.projectId} project={project} />
+                  ))}
+                </div>
+              ) : (
+                <div className="elementLineView">
+                  <PjLineTemplate projects={projects} />
+                </div>
+              )}
             </div>
           </div>
         </div>
