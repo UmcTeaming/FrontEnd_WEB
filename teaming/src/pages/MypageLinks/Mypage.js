@@ -8,6 +8,7 @@ import ChangePw from "./ChangePw";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { memberIdState } from "../../components/atom";
+import basicProfile from "./프로필_기본.jpg";
 
 /* axios.interceptors.request.use(
   function (config) {
@@ -60,6 +61,7 @@ const Mypage = () => {
 
   const insertImg = (e) => {
     const file = e.target.files[0];
+    console.log(file);
     let reader = new FileReader();
     reader.onload = () => {
       const fileURL = reader.result;
@@ -81,14 +83,19 @@ const Mypage = () => {
         return data;
       },
     })
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+      })
       .catch((err) => console.log(err));
   };
 
   const onClickBasikImg = () => {
+    const profileImg = new File([basicProfile], "프로필_기본.jpg", {
+      type: "image/jpeg",
+    });
     const formData = new FormData();
-    formData.append("change_image_file", null);
-
+    formData.append("change_image_file", profileImg);
+    console.log(profileImg);
     axios({
       method: "patch",
       url: `${process.env.REACT_APP_API_URL}/member/${memberId}/mypage/change-image`,
@@ -100,7 +107,10 @@ const Mypage = () => {
         return data;
       },
     })
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        setPreviewImg(res.data.data);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -116,7 +126,7 @@ const Mypage = () => {
       .catch((err) => {
         alert(err);
       });
-  }, [nickName, previewImg]);
+  }, [nickName]);
   return (
     <div className="flex flex-col justify-center items-center mt-20 space-y-10">
       <div className="space-y-8">
@@ -142,7 +152,11 @@ const Mypage = () => {
             <label htmlFor="img">
               <div className="h-32 w-32 bg-[#D9D9D9] text-gray-400 rounded-full shadow-xl flex justify-center items-center text-sm overflow-hidden">
                 {previewImg !== null ? (
-                  <img src={previewImg} className="object-cover " />
+                  <img
+                    alt=""
+                    src={previewImg === null ? basicProfile : previewImg}
+                    className="object-cover "
+                  />
                 ) : (
                   <span className="">이미지</span>
                 )}
