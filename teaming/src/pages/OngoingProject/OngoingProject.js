@@ -2,10 +2,8 @@ import React, { useEffect } from "react";
 import "./OngoingProject.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { faBorderAll } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 import PjBoxTemplate from "../../components/portfolioComponents/portfolioListBoxType/pjBoxes.js";
@@ -45,21 +43,11 @@ const ListBtn = styled.div`
 export const OngoingProject = () => {
   const [viewBox, setViewBox] = useState(true);
 
-  const [active, setActive] = useState(false);
-  const [active2, setActive2] = useState(false);
-
   const [memberId, setMemberId] = useRecoilState(memberIdState);
   const [nickName, setNickName] = useRecoilState(nickNameState);
 
   const [projects, setProjects] = useState();
-  const handleClick = () => {
-    setActive(!active);
-    setActive2(active2);
-  };
-  const handleClick2 = () => {
-    setActive(!active);
-    setActive2(active2);
-  };
+
   useEffect(() => {
     axios
       .get(
