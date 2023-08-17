@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 
 export const Homeportfolio = () => {
-  const items = ['item']; // 리스트가 비어있는 경우
+  const items = []; // 리스트가 비어있는 경우
   // const items = ['item1', 'item2', 'item3']; // 리스트에 내용이 있는 경우
   return (
     <div className="PortfolioApp">
