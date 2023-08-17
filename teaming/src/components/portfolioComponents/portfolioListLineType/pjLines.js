@@ -3,11 +3,10 @@ import "../../../pages/PortfolioLinks/portfolioList.css"
 
 import PjLineTemplate from './pjLine';
 
-const  PjLines = () => {
+const PjLines = ({ projects }) => {
     return (
         <div className="elementLineView">
-            <PjLineTemplate/>
-
+            <PjLineTemplate projects={projects} />
         </div>       
     );
 };
