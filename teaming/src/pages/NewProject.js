@@ -271,13 +271,18 @@ const NewProject = () => {
                 onChange={(e) => insertImg(e)}
               />
             </div>
-            <div className="pt-3 pb-10 flex flex-col space-y-3">
+            <div className="pt-3 pb-10 flex flex-col space-y-3 relative">
               <Span>프로젝트 명</Span>
               <input
-                {...register("projectName")}
+                {...register("projectName", {
+                  required: "프로젝트명을 입력해주세요!",
+                })}
                 placeholder="프로젝트 명을 입력해주세요."
                 className="placeholder:text-gray-400 placeholder:opacity-50 border-b-[1.5px] border-mainColor"
               />
+              <span className="absolute bottom-4 text-sm text-red-400">
+                {errors.projectName?.message}
+              </span>
             </div>
             <div className="flex space-x-3">
               <Span className="pt-1">색상</Span>
