@@ -3,8 +3,67 @@ import "./Homeportfolio.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 
+// datas > home.json데이터 가져와야 함
+
 export const Homeportfolio = () => {
-  const items = ["item1", "item2"]; // 리스트가 비어있는 경우
+  const items = [
+    {
+      projectName: "Skynoodle",
+      projectStartDate: "2022-09-08",
+      projectEndDate: "2023-07-13",
+      projectStatus: "END",
+      member_name: "팀원 정보를 알려주세요",
+    },
+    {
+      projectName: "Jaxbean",
+      projectStartDate: "2023-05-16",
+      projectEndDate: "2023-06-13",
+      projectStatus: "END",
+      member_name: "팀원 정보를 알려주세요",
+    },
+    {
+      projectName: "Flashdog",
+      projectStartDate: "2023-03-26",
+      projectEndDate: "2023-04-14",
+      projectStatus: "END",
+      member_name: "팀원 정보를 알려주세요",
+    },
+    {
+      projectName: "Eadel",
+      projectStartDate: "2023-03-26",
+      projectEndDate: "2023-04-14",
+      projectStatus: "END",
+      member_name: "팀원 정보를 알려주세요",
+    },
+    {
+      projectName: "Thoughtbridge",
+      projectStartDate: "2023-05-12",
+      projectEndDate: "2023-01-26",
+      projectStatus: "END",
+      member_name: "팀원 정보를 알려주세요",
+    },
+    {
+      projectName: "PQuinu",
+      projectStartDate: "2022-09-05",
+      projectEndDate: "2022-11-20",
+      projectStatus: "ING",
+      member_name: "팀원 정보를 알려주세요",
+    },
+    {
+      projectName: "Voomm",
+      projectStartDate: "2022-11-26",
+      projectEndDate: "2022-11-12",
+      projectStatus: "END",
+      member_name: "팀원 정보를 알려주세요",
+    },
+    {
+      projectName: "Yabox",
+      projectStartDate: "2022-10-05",
+      projectEndDate: "2022-08-18",
+      projectStatus: "END",
+      member_name: "팀원 정보를 알려주세요",
+    }
+  ]; 
   // const items = ['item1', 'item2', 'item3']; // 리스트에 내용이 있는 경우
   const maxItemsToShow = 8; // 최대로 보여줄 아이템 개수
 
@@ -40,14 +99,27 @@ export const Homeportfolio = () => {
           <div className="grid-container">
             {items.slice(0, maxItemsToShow).map((item, index) => (
               <div key={index} className="content">
-                <span className="contentprogress">
-                  마감{" "}
-                  <FontAwesomeIcon className="progressicon" icon={faCircle} />
-                </span>
+                      {item.projectStatus === "ING" ? (
+                        <span className="contentprogress">
+                          진행중{" "}
+                          <FontAwesomeIcon
+                            icon={faCircle}
+                            style={{ color: "blue" }}
+                          />
+                        </span>
+                      ) : (
+                        <span className="contentprogress">
+                          마감{" "}
+                          <FontAwesomeIcon
+                            icon={faCircle}
+                            style={{ color: "yellow" }}
+                          />
+                        </span>
+                      )}
                 <div className="contentimgs"></div>
                 <div className="contenttxt">
-                  <div className="contenttitle">프로젝트 이름을 적어주세요</div>
-                  <div className="contentsubtitle">프로젝트 진행 날짜를 적어주세요</div>
+                  <div className="contenttitle">{item.projectName}</div>
+                  <div className="contentsubtitle">{`${item.projectStartDate} ~ ${item.projectEndDate}`}</div>
                   <div className="contentmember">팀원 정보를 알려주세요</div>
                 </div>
               </div>

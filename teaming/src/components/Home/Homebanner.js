@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./BannerStyle/Homebanner.css";
 // 아이콘 관련
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,6 +8,7 @@ import {
   faCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
+// 배너 슬라이더 관련
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
@@ -17,27 +18,33 @@ import "swiper/css/navigation";
 
 import { EffectCoverflow, Pagination, Navigation } from "swiper";
 
+// 데이터 적용 관련
+import axios from "axios";
+
+// datas > home.json데이터 가져와야 함
+
 export const Homebanner = () => {
   const items = [
     {
-      title: "프로젝트0 이름을 적어주세요",
-
-      description: "프로젝트 진행 날짜를 적어주세요",
-      member: "팀원 정보를 알려주세요",
+      projectName: "Auto-Encoder 머신러닝 프로젝트",
+      projectDate: "2023-09-01",
+      projectStatus: "ING",
+      member_name: "팀원 정보를 알려주세요",
     },
     {
-      title: "프로젝트1 이름을 적어주세요",
-
-      description: "프로젝트 진행 날짜를 적어주세요",
-      member: "팀원 정보를 알려주세요",
+      projectName: "스토리텔링 팀 프로젝트",
+      projectDate: "2023-09-01",
+      projectStatus: "ING",
+      member_name: "팀원 정보를 알려주세요",
     },
     {
-      title: "프로젝트2 이름을 적어주세요",
-
-      description: "프로젝트 진행 날짜를 적어주세요",
-      member: "팀원 정보를 알려주세요",
+      projectName: "연출학개론 팀 프로젝트",
+      projectDate: "2023-09-01",
+      projectStatus: "ING",
+      member_name: "팀원 정보를 알려주세요",
     },
-  ]; // 리스트가 비어있는 경우
+  ];
+
   // const items = ['item1', 'item2', 'item3']; // 리스트에 내용이 있는 경우
 
   return (
@@ -92,20 +99,30 @@ export const Homebanner = () => {
                 <SwiperSlide key={index}>
                   <div className="contentdisplay_inline">
                     <div className="content">
-                      <span className="contentprogress">
-                        진행중{" "}
-                        <FontAwesomeIcon
-                          icon={faCircle}
-                          style={{ color: "blue" }}
-                        />
-                      </span>
+                      {item.projectStatus === "ING" ? (
+                        <span className="contentprogress">
+                          진행중{" "}
+                          <FontAwesomeIcon
+                            icon={faCircle}
+                            style={{ color: "blue" }}
+                          />
+                        </span>
+                      ) : (
+                        <span className="contentprogress">
+                          마감{" "}
+                          <FontAwesomeIcon
+                            icon={faCircle}
+                            style={{ color: "yellow" }}
+                          />
+                        </span>
+                      )}
                       <div className="contentimgs"></div>
-                      <div className="contenttitle">{item.title}</div>
+                      <div className="contenttitle">{item.projectName}</div>
 
                       <div className="contentdescription">
-                        {item.description}
+                        {item.projectDate}
                       </div>
-                      <div className="contentmember">{item.member}</div>
+                      <div className="contentmember">{item.member_name}</div>
                     </div>
                   </div>
                 </SwiperSlide>

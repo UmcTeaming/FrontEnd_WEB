@@ -1,0 +1,155 @@
+{
+  "status": 200,
+  "message": null,
+  "data": {
+      "memberId": 54,
+      "name": "한소희",
+      "recentlyProject": [
+          {
+              "projectId": 22,
+              "projectName": "Auto-Encoder 머신러닝 프로젝트",
+              "projectCreatedDate": "2023-09-01",
+              "projectStatus": "ING",
+              "projectImage": null
+          },
+          {
+              "projectId": 24,
+              "projectName": "스토리텔링 팀 프로젝트",
+              "projectCreatedDate": "2023-09-01",
+              "projectStatus": "ING",
+              "projectImage": null
+          },
+          {
+              "projectId": 26,
+              "projectName": "연출학개론 팀 프로젝트",
+              "projectCreatedDate": "2023-09-01",
+              "projectStatus": "ING",
+              "projectImage": "https://teamingbucket.s3.ap-northeast-2.amazonaws.com/projectImage/projectName-연출학개론 팀 프로젝트문상훈짤.jpeg"
+          }
+      ],
+      "progressProject": [
+          {
+              "projectId": 4,
+              "projectName": "Trilia",
+              "projectStartDate": "2023-02-01",
+              "projectEndDate": "2022-09-21",
+              "projectImage": null,
+              "projectStatus": "ING"
+          },
+          {
+              "projectId": 1,
+              "projectName": "Fivespan",
+              "projectStartDate": "2023-06-21",
+              "projectEndDate": "2022-12-01",
+              "projectImage": null,
+              "projectStatus": "ING"
+          },
+          {
+              "projectId": 5,
+              "projectName": "Flashdog",
+              "projectStartDate": "2023-01-12",
+              "projectEndDate": "2023-02-17",
+              "projectImage": null,
+              "projectStatus": "ING"
+          },
+          {
+              "projectId": 11,
+              "projectName": "Project 1",
+              "projectStartDate": "2023-07-01",
+              "projectEndDate": "2023-07-31",
+              "projectImage": null,
+              "projectStatus": "ING"
+          },
+          {
+              "projectId": 12,
+              "projectName": "Project 1",
+              "projectStartDate": "2023-07-01",
+              "projectEndDate": "2023-07-31",
+              "projectImage": null,
+              "projectStatus": "ING"
+          },
+          {
+              "projectId": 13,
+              "projectName": "Project 1",
+              "projectStartDate": "2023-07-01",
+              "projectEndDate": "2023-07-31",
+              "projectImage": null,
+              "projectStatus": "ING"
+          },
+          {
+              "projectId": 14,
+              "projectName": "Project 1",
+              "projectStartDate": "2023-07-01",
+              "projectEndDate": "2023-08-31",
+              "projectImage": null,
+              "projectStatus": "ING"
+          },
+          {
+              "projectId": 15,
+              "projectName": "Project 1",
+              "projectStartDate": "2023-07-01",
+              "projectEndDate": "2023-08-31",
+              "projectImage": null,
+              "projectStatus": "ING"
+          }
+      ],
+      "portfolio": [
+          {
+              "projectId": 8,
+              "projectName": "Skynoodle",
+              "projectStartDate": "2022-09-08",
+              "projectEndDate": "2023-07-13",
+              "projectImage": null,
+              "projectStatus": "END"
+          },
+          {
+              "projectId": 7,
+              "projectName": "Jaxbean",
+              "projectStartDate": "2023-05-16",
+              "projectEndDate": "2023-06-13",
+              "projectImage": null,
+              "projectStatus": "END"
+          },
+          {
+              "projectId": 9,
+              "projectName": "Eadel",
+              "projectStartDate": "2023-03-26",
+              "projectEndDate": "2023-04-14",
+              "projectImage": null,
+              "projectStatus": "END"
+          },
+          {
+              "projectId": 2,
+              "projectName": "Thoughtbridge",
+              "projectStartDate": "2023-05-12",
+              "projectEndDate": "2023-01-26",
+              "projectImage": null,
+              "projectStatus": "END"
+          },
+          {
+              "projectId": 3,
+              "projectName": "Quinu",
+              "projectStartDate": "2022-09-05",
+              "projectEndDate": "2022-11-20",
+              "projectImage": null,
+              "projectStatus": "END"
+          },
+          {
+              "projectId": 6,
+              "projectName": "Voomm",
+              "projectStartDate": "2022-11-26",
+              "projectEndDate": "2022-11-12",
+              "projectImage": null,
+              "projectStatus": "END"
+          },
+          {
+              "projectId": 10,
+              "projectName": "Yabox",
+              "projectStartDate": "2022-10-05",
+              "projectEndDate": "2022-08-18",
+              "projectImage": null,
+              "projectStatus": "END"
+          }
+      ]
+  }
+}
