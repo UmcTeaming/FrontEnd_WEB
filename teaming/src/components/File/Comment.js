@@ -177,7 +177,7 @@ const Comment = () => {
   const onDelete = (commentId) => {
     if (
       window.confirm(
-        "삭제한 댓글은 되돌릴 수 없습니다. 그래도 삭제하시겠습니까? "
+        "삭제한 파일은 되돌릴 수 없습니다. 그래도 삭제하시겠습니까? "
       )
     ) {
       axios
