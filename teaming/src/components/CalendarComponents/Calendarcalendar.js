@@ -318,67 +318,76 @@ export const Calendarcalendar = () => {
       </div>
 
       {/* 새 일정 만들기 */}
-      <div className="newlist ">
-        <div className="newlisttxt">
-          <FontAwesomeIcon icon={faCirclePlus} /> 새 일정 만들기
-        </div>
-        <div className="newlistcontent">
-          <div className="calendarScheduletitle">
-            <input
-              type="text"
-              ref={newlisttextRef} // Ref to capture the input value
-              placeholder="새 일정의 제목을 적어주세요,,,"
-            />
-            <button className="newlistbtn" onClick={handleCreateButton}>
-              생성
-            </button>
+      <div className="flex justify-center items-center">
+        <div
+          className="newlist"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <div className="newlisttxt">
+            <FontAwesomeIcon icon={faCirclePlus} /> 새 일정 만들기
           </div>
-
-          <div className="container">
-            <div className="calendarWrapper">
-              <div className="calendarschedulefont">
-                <span className="bluefont">시작 일정:</span>
-                <span className="scheduledata1 startdate">
-                  {getFormattedDate(selectedDate1)}
-                </span>
-                <span className="starttime">
-                  {" "}
-                  <input
-                    type="time"
-                    value={selectedTime1}
-                    onChange={handleTimeChange1}
-                  />
-                </span>
-              </div>
-              <Calendar
-                onChange={handleDateChange1}
-                value={selectedDate1}
-                formatShortWeekday={formatWeekday}
-                formatDay={formatDayNumber} // 날짜를 숫자만 표시
-                calendarType="US" // 일요일부터 시작하는 달력 형식 설정
+          <div className="newlistcontent ">
+            <div className="calendarScheduletitle">
+              <input
+                type="text"
+                ref={newlisttextRef} // Ref to capture the input value
+                placeholder="새 일정의 제목을 적어주세요,,,"
               />
+              <button className="newlistbtn" onClick={handleCreateButton}>
+                생성
+              </button>
             </div>
-            <div className="calendarWrapper">
-              <div className="calendarschedulefont">
-                <span className="bluefont">마감 일정:</span>{" "}
-                <span className="scheduledata1 enddate">
-                  {getFormattedDate(selectedDate2)}
-                </span>
-                <span className="endtime">
-                  <input
-                    type="time"
-                    value={selectedTime2}
-                    onChange={handleTimeChange2}
-                  />
-                </span>
+
+            <div className="container">
+              <div className="calendarWrapper">
+                <div className="calendarschedulefont">
+                  <span className="bluefont">시작 일정:</span>
+                  <span className="scheduledata1 startdate">
+                    {getFormattedDate(selectedDate1)}
+                  </span>
+                  <span className="starttime">
+                    {" "}
+                    <input
+                      type="time"
+                      value={selectedTime1}
+                      onChange={handleTimeChange1}
+                    />
+                  </span>
+                </div>
+                <Calendar
+                  onChange={handleDateChange1}
+                  value={selectedDate1}
+                  formatShortWeekday={formatWeekday}
+                  formatDay={formatDayNumber} // 날짜를 숫자만 표시
+                  calendarType="US" // 일요일부터 시작하는 달력 형식 설정
+                />
               </div>
-              <Calendar
-                onChange={handleDateChange2}
-                value={selectedDate2}
-                formatShortWeekday={formatWeekday}
-                formatDay={formatDayNumber} // 날짜를 숫자만 표시
-                calendarType="US" // 일요일부터 시작하는 달력 형식 설정
-              />
+              <div className="calendarWrapper">
+                <div className="calendarschedulefont">
+                  <span className="bluefont">마감 일정:</span>{" "}
+                  <span className="scheduledata1 enddate">
+                    {getFormattedDate(selectedDate2)}
+                  </span>
+                  <span className="endtime">
+                    <input
+                      type="time"
+                      value={selectedTime2}
+                      onChange={handleTimeChange2}
+                    />
+                  </span>
+                </div>
+                <Calendar
+                  onChange={handleDateChange2}
+                  value={selectedDate2}
+                  formatShortWeekday={formatWeekday}
+                  formatDay={formatDayNumber} // 날짜를 숫자만 표시
+                  calendarType="US" // 일요일부터 시작하는 달력 형식 설정
+                />
+              </div>
             </div>
           </div>
         </div>
