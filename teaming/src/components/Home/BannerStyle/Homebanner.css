@@ -142,6 +142,12 @@
   margin-left: auto;
   margin-right: auto;
   overflow: hidden;
+  border-radius: 10px;
+}
+
+.contentprogress2{
+  position: absolute;
+  transform: translate(320%, 100%);
 }
 
 .contentimgs img {
