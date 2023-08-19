@@ -122,12 +122,25 @@ const ListFile = (data) => {
     }
   };
 
-  const onDownload = (e) => {
+  const handleDownload = (e) => {
     e.preventDefault();
-    window.open(
-      "https://calibre-ebook.com/downloads/demos/demo.docx",
-      "_blank"
-    );
+    const downloadUrl = `${process.env.REACT_APP_API_URL}/files/${memberId}/${projectId}/files/${file.file_id}/download`;
+
+    axios({
+      method: "GET",
+      url: downloadUrl,
+      responseType: "blob",
+    })
+      .then((response) => {
+        const blob = new Blob([response.data]);
+        const link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = file?.file_name;
+        link.click();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -171,7 +184,7 @@ const ListFile = (data) => {
               />
             </svg>
           </Delete>
-          <Download onClick={onDownload}>다운로드</Download>
+          <Download onClick={handleDownload}>다운로드</Download>
         </Buttons>
       </File>
     </Link>
