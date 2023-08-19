@@ -1,5 +1,6 @@
 import "./Calendarcalendar.css";
-import React, { useState, Fragment, useRef } from "react";
+import React, { useState, Fragment, useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -28,6 +29,9 @@ import {
 // 일정 추가 부분
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { memberIdState } from "../atom";
 
 // className함수는 여러 개의 클래스 이름들을 받아들이고, 조건에 따라 필터링하여 결합한 문자열을 반환함
 function classNames(...classes) {
@@ -99,6 +103,11 @@ export const Calendarcalendar = () => {
     end: endOfMonth(firstDayCurrentMonth),
   });
 
+  const [memberId, setMemebrId] = useRecoilState(memberIdState);
+  const { projectId } = useParams();
+
+  const [dateList, setDateList] = useState();
+  const [daymeetings, setDayMeetings] = useState();
   function previousMonth() {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
@@ -132,7 +141,7 @@ export const Calendarcalendar = () => {
     const title = newlisttextRef.current.value;
     const startDateTime = `${getFormattedDate(selectedDate1)} ${selectedTime1}`;
     const endDateTime = `${getFormattedDate(selectedDate2)} ${selectedTime2}`;
-
+    if (title === "") return;
     const newMeeting = {
       id: meetings.length + 1,
       name: title,
@@ -159,6 +168,23 @@ export const Calendarcalendar = () => {
     setSelectedDate2(new Date());
     setSelectedTime1("00:00");
     setSelectedTime2("00:00");
+
+    axios({
+      method: "post",
+      url: `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/schedule`,
+
+      data: {
+        schedule_name: title,
+        schedule_start: startDateTime.slice(0, 10).replaceAll(".", "-"),
+        schedule_end: endDateTime.slice(0, 10).replaceAll(".", "-"),
+        schedule_start_time: startDateTime.slice(11, 16) + ":00",
+        schedule_end_time: endDateTime.slice(11, 16) + ":00",
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleDateChange1 = (date) => {
@@ -199,6 +225,38 @@ export const Calendarcalendar = () => {
   // Refs to hold input values
   const newlisttextRef = useRef(null);
 
+  useEffect(() => {
+    console.log(format(today, "yyyy-MM-dd"));
+    axios({
+      method: "post",
+      url: `${process.env.REACT_APP_API_URL}/member/${memberId}/date_list`,
+
+      data: {
+        date_request: format(today, "yyyy-MM-dd"),
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        setDateList(res.data.data);
+      })
+      .catch((err) => console.log(err));
+
+    axios({
+      method: "post",
+      url: `${process.env.REACT_APP_API_URL}/member/${memberId}/schedule_start`,
+
+      data: {
+        schedule_start: format(selectedDate1, "yyyy-MM-dd"),
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        setDayMeetings(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(selectedDayMeetings);
   return (
     <div className="SchedulecalendarApp pt-10">
       <div className="Calendartxt">
@@ -282,10 +340,10 @@ export const Calendarcalendar = () => {
                   </button>
 
                   <div className="w-1 h-1 mx-auto mt-1">
-                    {meetings.some((meeting) =>
-                      isSameDay(parseISO(meeting.startDatetime), day)
-                    ) && (
-                      <div className="w-1 h-1 rounded-full bg-sky-500"></div>
+                    {dateList?.map((date) =>
+                      isSameDay(parseISO(date.date_list), day) ? (
+                        <div className="w-1 h-1 rounded-full bg-sky-500"></div>
+                      ) : null
                     )}
                   </div>
                 </div>

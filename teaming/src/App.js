@@ -50,7 +50,7 @@ function App() {
 
           <Route path="/cleanhome" element={<CleanHome />} />
 
-          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/:projectId/calendar" element={<Calendar />} />
           <Route path="/schedulecalendar" element={<Schedulecalendar />} />
           <Route path="/ongoingProject" element={<OngoingProject />} />
           {/* 포트폴리오 */}
