@@ -47,7 +47,11 @@ const PortfolioList = () => {
         axios
             .get(`${process.env.REACT_APP_API_URL}/member/${memberId}/portfolio`)
             .then((response) => {
-                setPortfolioData(response.data.data.portfolio); // 이전 데이터 초기화 후 새로운 데이터 설정
+                // 프로젝트 시작 날짜(projectStartDate)를 기준으로 오름차순 정렬
+                const sortedPortfolioData = response.data.data.portfolio.sort((a, b) =>
+                    new Date(a.projectStartDate) - new Date(b.projectStartDate)
+                );
+                setPortfolioData(sortedPortfolioData);
                 console.log(response);
             })
             .catch((error) => {
