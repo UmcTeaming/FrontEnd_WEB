@@ -238,7 +238,7 @@ const ProjectInfo = ({ onOpen }) => {
           </AddUser>
         </UserContainer>
         <Buttons>
-          <Link to="/calendar">
+          <Link to={`/${projectId}/calendar`}>
             <Check>팀플 일정 확인하기</Check>
           </Link>
           <Link to={`/${projectId}/end`}>

@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import "./Schedulecalendarcomponents.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
@@ -21,8 +21,9 @@ import {
   parseISO,
   startOfToday,
 } from "date-fns";
-
-
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { memberIdState } from "../atom";
 
 // className함수는 여러 개의 클래스 이름들을 받아들이고, 조건에 따라 필터링하여 결합한 문자열을 반환함
 function classNames(...classes) {
@@ -30,58 +31,59 @@ function classNames(...classes) {
 }
 
 export const Schedulecalendarcomponents = () => {
-
   // 일정 데이터를 받는 부분_해당 내용들은 예시
-const [meetings,setMeetings] = useState([
-  {
-    id: 1,
-    name: "티밍 전체 대면 회의 - 중구 퇴계로",
-    dailyscrum: "00교양 조별 과제",
-    startDatetime: "2023-08-11T13:00",
-    endDatetime: "2023-08-13T14:30",
-    project_color: "#d79ac3",
-  },
-  {
-    id: 2,
-    name: "티밍 전체 대면 회의 - 중구 퇴계로",
-    dailyscrum: "00교양 조별 과제",
-    startDatetime: "2023-08-11T13:00",
-    endDatetime: "2023-08-13T14:30",
-    project_color: "#d79ac3",
-  },
-  {
-    id: 3,
-    name: "티밍 전체 대면 회의 - 중구 퇴계로",
-    dailyscrum: "00교양 조별 과제",
-    startDatetime: "2023-08-11T13:00",
-    endDatetime: "2023-08-13T14:30",
-    project_color: "#d79ac3",
-  },
-  {
-    id: 4,
-    name: "프로젝트 회의",
-    dailyscrum: "티밍 회의",
-    startDateTime: "2023-08-13T14:00",
-    endDateTime: "2023-08-15T16:30",
-    project_color: "#FFD008",
-  },
-  {
-    id: 5,
-    name: "티밍 전체 대면 회의 - 송파구 퇴계로",
-    dailyscrum: "00교양 조별 과제",
-    startDatetime: "2023-08-11T13:00",
-    endDatetime: "2023-08-13T14:30",
-    project_color: "#FFD008",
-  },
-  {
-    id: 6,
-    name: "Michael Foster",
-    imageUrl:
-      "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2023-08-18T09:00",
-    endDatetime: "2023-08-20T11:30",
-  },
-]);
+  const [meetings, setMeetings] = useState([
+    {
+      id: 1,
+      name: "티밍 전체 대면 회의 - 중구 퇴계로",
+      dailyscrum: "00교양 조별 과제",
+      startDatetime: "2023-08-11T13:00",
+      endDatetime: "2023-08-13T14:30",
+      project_color: "#d79ac3",
+    },
+    {
+      id: 2,
+      name: "티밍 전체 대면 회의 - 중구 퇴계로",
+      dailyscrum: "00교양 조별 과제",
+      startDatetime: "2023-08-11T13:00",
+      endDatetime: "2023-08-13T14:30",
+      project_color: "#d79ac3",
+    },
+    {
+      id: 3,
+      name: "티밍 전체 대면 회의 - 중구 퇴계로",
+      dailyscrum: "00교양 조별 과제",
+      startDatetime: "2023-08-11T13:00",
+      endDatetime: "2023-08-13T14:30",
+      project_color: "#d79ac3",
+    },
+    {
+      id: 4,
+      name: "프로젝트 회의",
+      dailyscrum: "티밍 회의",
+      startDateTime: "2023-08-13T14:00",
+      endDateTime: "2023-08-15T16:30",
+      project_color: "#FFD008",
+    },
+    {
+      id: 5,
+      name: "티밍 전체 대면 회의 - 송파구 퇴계로",
+      dailyscrum: "00교양 조별 과제",
+      startDatetime: "2023-08-11T13:00",
+      endDatetime: "2023-08-13T14:30",
+      project_color: "#FFD008",
+    },
+    {
+      id: 6,
+      name: "Michael Foster",
+      imageUrl:
+        "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      startDatetime: "2023-08-18T09:00",
+      endDatetime: "2023-08-20T11:30",
+    },
+  ]);
+
+  const [memberId, setMemberId] = useRecoilState(memberIdState);
 
   let today = startOfToday();
   let [selectedDay, setSelectedDay] = useState(today); //selectDay상태와 setCount 함수를 선언
@@ -110,9 +112,23 @@ const [meetings,setMeetings] = useState([
   );
 
   const handleDelete = (meetingId) => {
-    const updatedMeetings = meetings.filter((meeting) => meeting.id !== meetingId);
+    const updatedMeetings = meetings.filter(
+      (meeting) => meeting.id !== meetingId
+    );
     setMeetings(updatedMeetings);
   };
+
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/schedule`
+      )
+      .then((res) => {
+        console.log(res);
+        setMeetings(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div className="SchedulecalendarApp pt-10">
@@ -196,11 +212,11 @@ const [meetings,setMeetings] = useState([
                   </button>
 
                   <div className="w-1 h-1 mx-auto mt-1">
-                    {meetings.some((meeting) =>
-                      isSameDay(parseISO(meeting.startDatetime), day)
-                    ) && (
-                      <div className="w-1 h-1 rounded-full bg-sky-500"></div>
-                    )}
+                    {/* {meetings?.map((meeting) =>
+                      isSameDay(parseISO(date.date_list), day) ? (
+                        <div className="w-1 h-1 rounded-full bg-sky-500"></div>
+                      ) : null
+                    )} */}
                   </div>
                 </div>
               ))}
@@ -234,7 +250,7 @@ const [meetings,setMeetings] = useState([
   );
 };
 
-function Meeting({ meeting,onDelete }) {
+function Meeting({ meeting, onDelete }) {
   let startDateTime = parseISO(meeting.startDatetime);
   let endDateTime = parseISO(meeting.endDatetime);
 
