@@ -7,9 +7,10 @@ import { faCircle } from "@fortawesome/free-solid-svg-icons";
 // 데이터 적용 관련
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { memberIdState } from "../../components/atom";
+import { memberIdState,nickNameState } from "../../components/atom";
 
 export const Homeportfolio = () => {
+  const [nickName, setNickName] = useRecoilState(nickNameState);
   const [memberId, setMemberId] = useRecoilState(memberIdState);
   const [portfolio, setportfolio] = useState([]);
 
@@ -95,7 +96,7 @@ export const Homeportfolio = () => {
         <a href="/portfolio">포트폴리오 &#62;</a>
       </div>
       <div className="Portfoliosubtitle">
-        000님의 프로젝트를 한눈에 모아보세요!
+        {nickName}님의 프로젝트를 한눈에 모아보세요!
       </div>
 
       {portfolio.length === 0 ? (
