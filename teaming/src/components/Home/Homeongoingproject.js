@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Homeongoingproject.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
@@ -92,7 +93,7 @@ export const Homeongoingproject = () => {
   return (
     <div className="OngoingProjApp">
       <div className="OngoingProjtitle">
-        <a href="/ongoingProject">진행중인 프로젝트&#62;</a>
+      <Link to="/ongoingProject">진행중인 프로젝트 &#62;</Link>
       </div>
       <div className="OngoingProjsubtitle">
         프로젝트의 상태가 '진행중인' 프로젝트입니다

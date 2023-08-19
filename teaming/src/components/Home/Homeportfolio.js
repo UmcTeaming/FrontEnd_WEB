@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Homeportfolio.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
@@ -7,9 +8,10 @@ import { faCircle } from "@fortawesome/free-solid-svg-icons";
 // 데이터 적용 관련
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { memberIdState } from "../../components/atom";
+import { memberIdState, nickNameState } from "../../components/atom";
 
 export const Homeportfolio = () => {
+  const [nickName, setNickName] = useRecoilState(nickNameState);
   const [memberId, setMemberId] = useRecoilState(memberIdState);
   const [portfolio, setportfolio] = useState([]);
 
@@ -92,10 +94,10 @@ export const Homeportfolio = () => {
   return (
     <div className="PortfolioApp">
       <div className="Portfoliotitle">
-        <a href="/portfolio">포트폴리오 &#62;</a>
+        <Link to="/portfolio">포트폴리오 &#62;</Link>
       </div>
       <div className="Portfoliosubtitle">
-        000님의 프로젝트를 한눈에 모아보세요!
+        {nickName}님의 프로젝트를 한눈에 모아보세요!
       </div>
 
       {portfolio.length === 0 ? (
