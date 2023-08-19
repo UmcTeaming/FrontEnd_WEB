@@ -118,7 +118,7 @@ export const Schedulecalendarcomponents = () => {
     setMeetings(updatedMeetings);
   };
 
-  useEffect(() => {
+  /*  useEffect(() => {
     axios
       .get(
         `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/schedule`
@@ -128,7 +128,7 @@ export const Schedulecalendarcomponents = () => {
         setMeetings(res.data.data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, []); */
 
   return (
     <div className="SchedulecalendarApp pt-10">
