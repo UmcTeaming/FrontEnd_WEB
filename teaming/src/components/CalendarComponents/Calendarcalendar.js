@@ -1,5 +1,5 @@
 import "./Calendarcalendar.css";
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -25,6 +25,9 @@ import {
   parseISO,
   startOfToday,
 } from "date-fns";
+// 일정 추가 부분
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 // className함수는 여러 개의 클래스 이름들을 받아들이고, 조건에 따라 필터링하여 결합한 문자열을 반환함
 function classNames(...classes) {
@@ -115,6 +118,48 @@ export const Calendarcalendar = () => {
       (meeting) => meeting.id !== meetingId
     );
     setMeetings(updatedMeetings);
+  };
+
+  // newlist에 해당하는 변수들
+
+  const [selectedDate1, setSelectedDate1] = useState(new Date());
+  const [selectedDate2, setSelectedDate2] = useState(new Date());
+
+  const handleDateChange1 = (date) => {
+    setSelectedDate1(date);
+  };
+
+  const handleDateChange2 = (date) => {
+    setSelectedDate2(date);
+  };
+
+  // 함수를 이용하여 날짜 형식을 변환하는 예시
+  const getFormattedDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}.${month}.${day}`;
+  };
+
+  // 월화수목금을 영어 대문자로 변경하는 함수
+  const formatWeekday = (locale, date) => {
+    const weekdays = ["S", "M", "T", "W", "T", "F", "S"];
+    return weekdays[date.getDay()];
+  };
+
+  // 날짜를 숫자만 표시하는 함수
+  const formatDayNumber = (locale, date) => {
+    return date.getDate();
+  };
+
+  // Refs to hold input values
+  const newlisttextRef = useRef(null);
+
+  // Click handler for the 생성 button
+  const handleCreateButton = () => {
+    console.log("새 일정의 제목:", newlisttextRef.current.value);
+    console.log("시작 일정:", getFormattedDate(selectedDate1));
+    console.log("마감 일정:", getFormattedDate(selectedDate2));
   };
 
   return (
@@ -234,33 +279,54 @@ export const Calendarcalendar = () => {
           </section>
         </div>
       </div>
+
       {/* 새 일정 만들기 */}
       <div className="newlist ">
         <div className="newlisttxt">
           <FontAwesomeIcon icon={faCirclePlus} /> 새 일정 만들기
         </div>
         <div className="newlistcontent">
+          <div className="calendarScheduletitle">
           <input
-            type="newlisttext"
-            placeholder="새 일정의 제목을 적어주세요,,,"
-          />
-          <button className="newlistbtn">생성</button>
-          <div className="newlistpicker">
-            <div className="periodpicker">시작 일정</div>
-            <input type="newlistpickertext" placeholder=",,," />
-            <div className="periodpicker">마감 일정</div>
-            <input type="newlistpickertext" placeholder=",,," />
+              type="text"
+              ref={newlisttextRef} // Ref to capture the input value
+              placeholder="새 일정의 제목을 적어주세요,,,"
+            />
+           <button className="newlistbtn" onClick={handleCreateButton}>
+            생성
+            </button>
           </div>
-          <div className="newlistperiod">
-            <div className="newliststart">
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateCalendar />
-              </LocalizationProvider>
+
+          <div className="container">
+            <div className="calendarWrapper">
+              <div className="calendarschedulefont">
+                <span className="bluefont">시작 일정:</span>
+                <span className="scheduledata1 startdate">
+                  {getFormattedDate(selectedDate1)}
+                </span>{" "}
+              </div>
+              <Calendar
+                onChange={handleDateChange1}
+                value={selectedDate1}
+                formatShortWeekday={formatWeekday}
+                formatDay={formatDayNumber} // 날짜를 숫자만 표시
+                calendarType="US" // 일요일부터 시작하는 달력 형식 설정
+              />
             </div>
-            <div className="newlistend">
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateCalendar />
-              </LocalizationProvider>
+            <div className="calendarWrapper">
+              <div className="calendarschedulefont">
+                <span className="bluefont">마감 일정:</span>{" "}
+                <span className="scheduledata1 enddate">
+                  {getFormattedDate(selectedDate2)}
+                </span>
+              </div>
+              <Calendar
+                onChange={handleDateChange2}
+                value={selectedDate2}
+                formatShortWeekday={formatWeekday}
+                formatDay={formatDayNumber} // 날짜를 숫자만 표시
+                calendarType="US" // 일요일부터 시작하는 달력 형식 설정
+              />
             </div>
           </div>
         </div>
