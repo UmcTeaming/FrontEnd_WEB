@@ -66,7 +66,7 @@
 .OngoingProjApp .OngoingProjContent .grid-container {
   height: 510px;
   display: grid;
-  grid-template-rows: 232px 232px;
+  grid-template-rows: 250px 250px;
   grid-template-columns: 300px 300px 300px 300px;
   gap: 20px;
 }
@@ -98,25 +98,34 @@
 
 .OngoingProjContent .content .contentimg {
   width: 221px;
-  height: 123px;
+  height: 100px;
   margin-top: 12px;
+  overflow: hidden;
 }
 
 .OngoingProjContent .content .contentimgs {
-  background-image: url("../../../public/img/projectImg/project_img.jpg");
+  /* background-image: url("../../../public/img/projectImg/project_img.jpg"); */
   background-size: cover;
-  width: 250px;
-  height: 123px;
-  margin-top: 5px;
-  margin-left: 10px;
+  width: 230px;
+  height: 110px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
+
+.contentimgs img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .OngoingProjContent .content .contenttxt {
+  margin-top: 10px;
   margin-left: 30px;
 }
 
 .OngoingProjContent .content .contenttitle {
-  margin-top: 5px;
+  margin-top: 3px;
   font-size: 13px;
 }
 
