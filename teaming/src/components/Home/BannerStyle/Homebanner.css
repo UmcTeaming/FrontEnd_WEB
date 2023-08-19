@@ -139,7 +139,17 @@
   width: 280.24px;
   height: 179.51px;
   margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
 }
+
+.contentimgs img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 
 .BannerContent .content .contenttitle {
   text-align: left;

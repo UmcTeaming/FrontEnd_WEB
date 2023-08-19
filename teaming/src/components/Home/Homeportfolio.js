@@ -146,7 +146,7 @@ export const Homeportfolio = () => {
                 <div className="contenttxt">
                   <div className="contenttitle">{item.projectName}</div>
                   <div className="contentsubtitle">{`${item.projectStartDate} ~ ${item.projectEndDate}`}</div>
-                  <div className="contentmember">팀원 정보를 알려주세요</div>
+                  <div className="contentmember">팀원 정보를 알려주세요!</div>
                 </div>
               </div>
             ))}
