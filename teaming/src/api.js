@@ -94,6 +94,22 @@ export const getFinalFiles = async (memberId, projectId, accessToken) => {
   // return response.data.data;
 };
 
+export const getFileLink = async (memberId, projectId, fileId) => {
+  try {
+    const response = await axios({
+      method: "GET",
+      url: `${process.env.REACT_APP_API_URL}/files/${memberId}/${projectId}/files/${fileId}/download`,
+      responseType: "blob",
+    });
+    const blob = new Blob([response.data]);
+    const link = window.URL.createObjectURL(blob);
+    return link;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+};
+
 export const getFile = async (memberId, projectId, fileId, accessToken) => {
   try {
     const response = await axios.get(

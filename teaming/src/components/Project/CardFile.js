@@ -62,10 +62,14 @@ const FileType = styled.span`
   transform: translate(-50%, 0);
 `;
 
-const FileTitle = styled.h1`
+const FileTitle = styled.span`
+  display: block;
   width: 123px;
+  height: 40px;
   font-size: 14px;
   margin-bottom: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const Col = styled.div`
@@ -132,12 +136,25 @@ const CardFile = (data) => {
     }
   };
 
-  const onDownload = (e) => {
+  const handleDownload = (e) => {
     e.preventDefault();
-    window.open(
-      "https://calibre-ebook.com/downloads/demos/demo.docx",
-      "_blank"
-    );
+    const downloadUrl = `${process.env.REACT_APP_API_URL}/files/${memberId}/${projectId}/files/${file.file_id}/download`;
+
+    axios({
+      method: "GET",
+      url: downloadUrl,
+      responseType: "blob",
+    })
+      .then((response) => {
+        const blob = new Blob([response.data]);
+        const link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = file?.file_name;
+        link.click();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -177,7 +194,7 @@ const CardFile = (data) => {
           <Comment>
             comment <span>{file.comment}</span>
           </Comment>
-          <Download onClick={onDownload}>
+          <Download onClick={handleDownload}>
             <MdUpload size="13" color="white" transform="rotate(180)" />
           </Download>
         </Col>
