@@ -6,8 +6,8 @@ import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
-import PjBoxTemplate from "../../components/portfolioComponents/portfolioListBoxType/pjBoxes.js";
-import PjLineTemplate from "../../components/OngoingProjectComponents/OngoingProjectLineType/opjLines";
+import OpjBox from "../../components/OngoingProjectComponents/OngoingProjectBoxType/opjBox";
+import OpjLines from "../../components/OngoingProjectComponents/OngoingProjectLineType/opjLines";
 
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -16,7 +16,6 @@ import { useRecoilState } from "recoil";
 import { memberIdState, nickNameState } from "../../components/atom";
 
 import "../PortfolioLinks/portfolioList.css";
-import OpjBox from "../../components/OngoingProjectComponents/OngoingProjectBoxType/opjBox";
 
 const CardBtn = styled.div`
   border: none;
@@ -50,15 +49,16 @@ export const OngoingProject = () => {
 
   useEffect(() => {
     axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/member/${memberId}/progressProjects`
-      )
+      .get(`${process.env.REACT_APP_API_URL}/member/${memberId}/progressProjects`)
       .then((res) => {
-        console.log(res);
-        setProjects(res.data.data.progressProjects);
+        // 프로젝트 시작 날짜(projectStartDate)를 기준으로 오름차순 정렬
+        const sortedProjects = res.data.data.progressProjects.sort((a, b) => {
+          return new Date(a.projectStartDate) - new Date(b.projectStartDate);
+        });
+        setProjects(sortedProjects);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [memberId]);
 
   return (
     <>
@@ -140,7 +140,7 @@ export const OngoingProject = () => {
                 </div>
               ) : (
                 <div className="elementLineView">
-                  <PjLineTemplate projects={projects} />
+                  <OpjLines projects={projects} />
                 </div>
               )}
             </div>
