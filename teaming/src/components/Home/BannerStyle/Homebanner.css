@@ -134,7 +134,7 @@
 }
 
 .BannerContent .content .contentimgs {
-  background-image: url("../../../../public/img/projectImg/project_img.jpg");
+  /* background-image: url("../../../../public/img/projectImg/project_img.jpg"); */
   background-size: cover;
   width: 280.24px;
   height: 179.51px;

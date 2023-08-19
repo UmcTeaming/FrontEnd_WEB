@@ -103,7 +103,7 @@
 }
 
 .OngoingProjContent .content .contentimgs {
-  background-image: url("../../../public/img/projectImg/project_img.jpg");
+  /* background-image: url("../../../public/img/projectImg/project_img.jpg"); */
   background-size: cover;
   width: 250px;
   height: 123px;
