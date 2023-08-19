@@ -122,7 +122,7 @@ export const Homebanner = () => {
                   <div className="contentdisplay_inline">
                     <div className="content">
                       {item.projectStatus === "ING" ? (
-                        <span className="contentprogress">
+                        <span className="contentprogress2">
                           진행중{" "}
                           <FontAwesomeIcon
                             icon={faCircle}
@@ -130,7 +130,7 @@ export const Homebanner = () => {
                           />
                         </span>
                       ) : (
-                        <span className="contentprogress">
+                        <span className="contentprogress2">
                           마감{" "}
                           <FontAwesomeIcon
                             icon={faCircle}
