@@ -29,17 +29,17 @@ const Upload = () => {
   const { projectId } = useParams();
   const matchProject = useMatch("/:projectId/project-files");
   const matchFinal = useMatch("/:projectId/final-files");
-  const [file, setFile] = useState(null);
   const queryClient = useQueryClient();
 
   const handleChange = (data) => {
-    setFile(data);
-    handleUpload();
+    if (data !== null) {
+      handleUpload(data);
+    }
   };
 
-  const handleUpload = () => {
+  const handleUpload = (selectedFile) => {
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", selectedFile);
 
     if (matchProject) {
       axios({
