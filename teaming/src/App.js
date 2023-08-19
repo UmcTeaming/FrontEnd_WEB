@@ -4,6 +4,7 @@ import Login from "./pages/LoginLinks/Login";
 import Bar from "./components/Bar";
 import Signup from "./pages/LoginLinks/Signup";
 import NewProject from "./pages/NewProject";
+import EditProject from "./pages/EditProject";
 import Mypage from "./pages/MypageLinks/Mypage";
 import ChangePw from "./pages/MypageLinks/ChangePw";
 import PortfolioList from "./pages/PortfolioLinks/portfolioList";
@@ -56,6 +57,7 @@ function App() {
           <Route path="/portfolio" element={<PortfolioList />} />
           <Route path="/:projectId/project-files" element={<Project />} />
           <Route path="/:projectId/final-files" element={<Project />} />
+          <Route path="/:projectId/edit" element={<EditProject />} />
           <Route
             path="/:projectId/project-files/:fileId"
             element={<FileDetail />}
