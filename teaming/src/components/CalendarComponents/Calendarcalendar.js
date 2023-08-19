@@ -79,11 +79,11 @@ export const Calendarcalendar = () => {
     },
     {
       id: 6,
-      name: "Michael Foster",
-      imageUrl:
-        "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      startDatetime: "2023-08-18T09:00",
-      endDatetime: "2023-08-20T11:30",
+      name: "왜 안 뜨냐고 ",
+      dailyscrum: "00교양 조별 과제",
+      startDatetime: "2023-08-11T13:00",
+      endDatetime: "2023-08-13T14:30",
+      project_color: "#FFD008",
     },
   ]);
 
@@ -121,9 +121,45 @@ export const Calendarcalendar = () => {
   };
 
   // newlist에 해당하는 변수들
-
+  const [newMeetingTitle, setNewMeetingTitle] = useState("");
   const [selectedDate1, setSelectedDate1] = useState(new Date());
   const [selectedDate2, setSelectedDate2] = useState(new Date());
+  const [selectedTime1, setSelectedTime1] = useState("00:00");
+  const [selectedTime2, setSelectedTime2] = useState("00:00");
+
+  // Click handler for the 생성 button
+  const handleCreateButton = () => {
+    const title = newlisttextRef.current.value;
+    const startDateTime = `${getFormattedDate(selectedDate1)} ${selectedTime1}`;
+    const endDateTime = `${getFormattedDate(selectedDate2)} ${selectedTime2}`;
+
+    const newMeeting = {
+      id: meetings.length + 1,
+      name: title,
+      dailyscrum: "티밍", // 수정 가능
+      startDatetime: startDateTime,
+      endDatetime: endDateTime,
+      project_color: "#FF008", // 수정 가능
+    };
+
+    // 콘솔에서 확인하고 싶은 경우(final)
+    console.log("새 일정의 제목:", title);
+    console.log("시작 일정:", startDateTime);
+    console.log("마감 일정:", endDateTime);
+
+    // 콘솔에서 확인하고 싶은 경우(ver.1)
+    // console.log("새 일정의 제목:", newlisttextRef.current.value);
+    // console.log("시작 일정:", getFormattedDate(selectedDate1));
+    // console.log("마감 일정:", getFormattedDate(selectedDate2));
+
+    setMeetings([...meetings, newMeeting]); // 새로운 일정을 기존 meetings 배열에 추가
+    setSelectedDay(selectedDate1); // 새 회의의 시작 날짜로 선택한 날짜 업데이트
+    newlisttextRef.current.value = ""; // 입력 필드 초기화
+    setSelectedDate1(new Date());
+    setSelectedDate2(new Date());
+    setSelectedTime1("00:00");
+    setSelectedTime2("00:00");
+  };
 
   const handleDateChange1 = (date) => {
     setSelectedDate1(date);
@@ -131,6 +167,14 @@ export const Calendarcalendar = () => {
 
   const handleDateChange2 = (date) => {
     setSelectedDate2(date);
+  };
+
+  const handleTimeChange1 = (event) => {
+    setSelectedTime1(event.target.value);
+  };
+
+  const handleTimeChange2 = (event) => {
+    setSelectedTime2(event.target.value);
   };
 
   // 함수를 이용하여 날짜 형식을 변환하는 예시
@@ -154,13 +198,6 @@ export const Calendarcalendar = () => {
 
   // Refs to hold input values
   const newlisttextRef = useRef(null);
-
-  // Click handler for the 생성 button
-  const handleCreateButton = () => {
-    console.log("새 일정의 제목:", newlisttextRef.current.value);
-    console.log("시작 일정:", getFormattedDate(selectedDate1));
-    console.log("마감 일정:", getFormattedDate(selectedDate2));
-  };
 
   return (
     <div className="SchedulecalendarApp pt-10">
@@ -287,13 +324,13 @@ export const Calendarcalendar = () => {
         </div>
         <div className="newlistcontent">
           <div className="calendarScheduletitle">
-          <input
+            <input
               type="text"
               ref={newlisttextRef} // Ref to capture the input value
               placeholder="새 일정의 제목을 적어주세요,,,"
             />
-           <button className="newlistbtn" onClick={handleCreateButton}>
-            생성
+            <button className="newlistbtn" onClick={handleCreateButton}>
+              생성
             </button>
           </div>
 
@@ -303,7 +340,15 @@ export const Calendarcalendar = () => {
                 <span className="bluefont">시작 일정:</span>
                 <span className="scheduledata1 startdate">
                   {getFormattedDate(selectedDate1)}
-                </span>{" "}
+                </span>
+                <span className="starttime">
+                  {" "}
+                  <input
+                    type="time"
+                    value={selectedTime1}
+                    onChange={handleTimeChange1}
+                  />
+                </span>
               </div>
               <Calendar
                 onChange={handleDateChange1}
@@ -318,6 +363,13 @@ export const Calendarcalendar = () => {
                 <span className="bluefont">마감 일정:</span>{" "}
                 <span className="scheduledata1 enddate">
                   {getFormattedDate(selectedDate2)}
+                </span>
+                <span className="endtime">
+                  <input
+                    type="time"
+                    value={selectedTime2}
+                    onChange={handleTimeChange2}
+                  />
                 </span>
               </div>
               <Calendar
