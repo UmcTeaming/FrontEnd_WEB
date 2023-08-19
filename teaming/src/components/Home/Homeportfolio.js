@@ -12,7 +12,7 @@ export const Homeportfolio = () => {
       projectStartDate: "2022-09-08",
       projectEndDate: "2023-07-13",
       projectStatus: "END",
-      member_name: "팀원 정보를 알려주세요",
+      member_name: "이 정보 어디서 가져와",
     },
     {
       projectName: "Jaxbean",
