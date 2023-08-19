@@ -247,7 +247,7 @@ const ProjectInfo = ({ onOpen }) => {
         </Buttons>
       </Details>
       <Setting>
-        <Link to="/">
+        <Link to={`/${projectId}/edit`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
