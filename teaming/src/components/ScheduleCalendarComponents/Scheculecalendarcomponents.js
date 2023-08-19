@@ -1,4 +1,5 @@
 import React, { useState, Fragment, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Schedulecalendarcomponents.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
@@ -133,8 +134,10 @@ export const Schedulecalendarcomponents = () => {
   return (
     <div className="SchedulecalendarApp pt-10">
       <div className="Calendartxt">
+      <Link to="/">
         <FontAwesomeIcon icon={faHouse} />
         &#62;일정 달력
+      </Link>
       </div>
       <div className="mx-auto md:max-w-4xl mt-10">
         <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
