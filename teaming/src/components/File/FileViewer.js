@@ -26,8 +26,9 @@ const FileViewer = () => {
     )
   );
   const [downloadURL, setDownloadUrl] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
-    if (downloadURL === null) {
+    if (file) {
       axios({
         method: "GET",
         url: `${process.env.REACT_APP_API_URL}/files/${memberId}/${projectId}/files/${fileId}/download`,
@@ -37,12 +38,13 @@ const FileViewer = () => {
           const blob = new Blob([response.data]);
           const link = window.URL.createObjectURL(blob);
           setDownloadUrl(link);
+          setIsLoaded(true);
         })
         .catch((error) => {
           console.error(error);
         });
     }
-  }, [downloadURL]);
+  }, [memberId, projectId, fileId, file]);
 
   const docs = [
     {
@@ -52,11 +54,9 @@ const FileViewer = () => {
     },
   ];
 
-  console.log(downloadURL);
-
   return (
     <Wrapper>
-      {downloadURL !== null ? (
+      {isLoaded ? (
         <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />
       ) : (
         <p>Loading...</p>
@@ -64,4 +64,4 @@ const FileViewer = () => {
     </Wrapper>
   );
 };
-export default FileViewer;
+export default React.memo(FileViewer);
