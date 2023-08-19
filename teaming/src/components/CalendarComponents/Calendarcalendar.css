@@ -2,6 +2,7 @@
   background-image: url("../../../public/img/backgroundImgs/web_bg1.png");
   background-repeat: no-repeat;
   background-size: cover;
+  flex-direction: column;
 }
 
 /* 달력 관련 스타일 */
@@ -81,16 +82,12 @@
 }
 
 /* newlist 영역 */
-.newlist {
-  display: flex;
-  flex-direction: column;
-}
-.newlist .newlisttxt {
-  float: left;
-  margin-left: 200px;
+
+.newlisttxt {
+  margin-left: 50px;
   font-size: 15px;
   color: #527ff5;
-  margin-top: 20px;
+  margin-top: 50px;
 }
 
 .newlist .newlistcontent {
