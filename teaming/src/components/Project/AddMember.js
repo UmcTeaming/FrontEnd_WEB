@@ -113,7 +113,7 @@ const AddMember = ({ onClose }) => {
         console.log(response);
         queryClient.invalidateQueries("project");
       })
-      .catch((error) => console.log(error));
+      .catch((error) => alert(error.response.data?.message));
   };
   const onValid = (email) => {
     console.log(email);
