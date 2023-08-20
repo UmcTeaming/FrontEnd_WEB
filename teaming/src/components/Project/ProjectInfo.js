@@ -131,14 +131,25 @@ const Check = styled.button`
 `;
 
 const Close = styled.button`
-  background-color: #527ff5;
+  background-color: ${(props) =>
+    props.status === "ING"
+      ? "#527ff5"
+      : props.status === "END"
+      ? "#d3d3d3"
+      : null};
   color: white;
   width: 145px;
   height: 33px;
   border-radius: 23px;
   font-weight: 700;
   font-size: 12px;
-  border: 2px solid #527ff5;
+  border: 2px solid
+    ${(props) =>
+      props.status === "ING"
+        ? "#527ff5"
+        : props.status === "END"
+        ? "#d3d3d3"
+        : null};
   cursor: pointer;
   text-decoration: none;
   font-family: "GmarketSans";
@@ -242,7 +253,13 @@ const ProjectInfo = ({ onOpen }) => {
             <Check>팀플 일정 확인하기</Check>
           </Link>
           <Link to={`/${projectId}/end`}>
-            <Close>프로젝트 마감하기</Close>
+            {project.projectStatus === "END" ? (
+              <Close status={project.projectStatus} disabled>
+                프로젝트 마감하기
+              </Close>
+            ) : project.projectStatus === "ING" ? (
+              <Close status={project.projectStatus}>프로젝트 마감하기</Close>
+            ) : null}
           </Link>
         </Buttons>
       </Details>
