@@ -21,8 +21,7 @@ import { EffectCoverflow, Pagination, Navigation } from "swiper";
 // 데이터 적용 관련
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { memberIdState,nickNameState} from "../../components/atom";
-
+import { memberIdState, nickNameState } from "../../components/atom";
 
 // datas > home.json데이터 가져와야 함
 
@@ -37,9 +36,10 @@ export const Homebanner = () => {
       .get(`${process.env.REACT_APP_API_URL}/member/${memberId}/home`)
       .then((response) => {
         const data = response.data.data;
-        
+
         // setMemberId(data.memberId);
-        setRecentlyProjects(data.recentlyProject);
+        if (data.recentlyProject !== null)
+          setRecentlyProjects(data.recentlyProject);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -68,10 +68,10 @@ export const Homebanner = () => {
   // ];
 
   // const items = ['item1', 'item2', 'item3']; // 리스트에 내용이 있는 경우
-
+  console.log(recentlyProjects);
   return (
     <div className="BannerApp">
-      {recentlyProjects.length === 0 ? (
+      {recentlyProjects?.length === 0 ? (
         <div className="Bannerempty">
           <div className="emptycontent">
             <div className="emptytitle">
@@ -117,7 +117,7 @@ export const Homebanner = () => {
               modules={[EffectCoverflow, Pagination, Navigation]}
               spaceBetween={5}
             >
-              {recentlyProjects.map((item, index) => (
+              {recentlyProjects?.map((item, index) => (
                 <SwiperSlide key={index}>
                   <div className="contentdisplay_inline">
                     <div className="content">
