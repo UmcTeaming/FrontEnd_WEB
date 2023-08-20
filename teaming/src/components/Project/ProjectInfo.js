@@ -253,12 +253,12 @@ const ProjectInfo = ({ onOpen }) => {
             <Check>팀플 일정 확인하기</Check>
           </Link>
           <Link to={`/${projectId}/end`}>
-            {project.projectStatus === "END" ? (
-              <Close status={project.projectStatus} disabled>
+            {project?.projectStatus === "END" ? (
+              <Close status={project?.projectStatus} disabled>
                 프로젝트 마감하기
               </Close>
-            ) : project.projectStatus === "ING" ? (
-              <Close status={project.projectStatus}>프로젝트 마감하기</Close>
+            ) : project?.projectStatus === "ING" ? (
+              <Close status={project?.projectStatus}>프로젝트 마감하기</Close>
             ) : null}
           </Link>
         </Buttons>
