@@ -43,19 +43,22 @@ const PortfolioList = () => {
     const nickName = useRecoilState(nickNameState);
 
     useEffect(() => {
-        console.log("API 호출이 실행됐습니다.");
         axios
             .get(`${process.env.REACT_APP_API_URL}/member/${memberId}/portfolio`)
             .then((response) => {
-                // 프로젝트 시작 날짜(projectStartDate)를 기준으로 오름차순 정렬
-                const sortedPortfolioData = response.data.data.portfolio.sort((a, b) =>
-                    new Date(a.projectStartDate) - new Date(b.projectStartDate)
-                );
-                setPortfolioData(sortedPortfolioData);
-                console.log(response);
+                if (response.data && response.data.data && response.data.data.portfolio) {
+                    // 포트폴리오 데이터가 있는 경우 정렬
+                    const sortedPortfolioData = response.data.data.portfolio.sort((a, b) =>
+                        new Date(a.projectStartDate) - new Date(b.projectStartDate)
+                    );
+                    setPortfolioData(sortedPortfolioData);
+                    console.log(response);
+                } else {
+                    setPortfolioData([]);
+                }
             })
             .catch((error) => {
-                console.error("Error fetching portfolio data:", error);
+                console.error("포트폴리오 데이터 가져오기 오류:", error);
             });
     }, [memberId]);
     
