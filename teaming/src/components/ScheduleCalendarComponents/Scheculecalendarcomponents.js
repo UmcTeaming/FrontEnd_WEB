@@ -76,11 +76,11 @@ export const Schedulecalendarcomponents = () => {
     },
     {
       id: 6,
-      name: "Michael Foster",
-      imageUrl:
-        "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      startDatetime: "2023-08-18T09:00",
-      endDatetime: "2023-08-20T11:30",
+      name: "왜 안 뜨냐고 ",
+      dailyscrum: "00교양 조별 과제",
+      startDatetime: "2023-08-12T13:00",
+      endDatetime: "2023-08-15T14:30",
+      project_color: "#FFD008",
     },
   ]);
 
@@ -108,8 +108,24 @@ export const Schedulecalendarcomponents = () => {
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
 
+  // 시작과 끝 일정 사이에 관련된 코드
+  // 주어진 startDate와 endDate 사이의 날짜 배열을 반환하는 함수
+  const daysBetween = (startDate, endDate) => {
+    const days = [];
+    let currentDate = startDate;
+    while (currentDate <= endDate) {
+      days.push(currentDate);
+      currentDate = add(currentDate, { days: 1 });
+    }
+    return days;
+  };
+
   let selectedDayMeetings = meetings.filter((meeting) =>
-    isSameDay(parseISO(meeting.startDatetime), selectedDay)
+    // isSameDay(parseISO(meeting.startDatetime), selectedDay)
+    daysBetween(
+      parseISO(meeting.startDatetime),
+      parseISO(meeting.endDatetime)
+    ).some((d) => isSameDay(d, selectedDay))
   );
 
   const handleDelete = (meetingId) => {
@@ -134,10 +150,10 @@ export const Schedulecalendarcomponents = () => {
   return (
     <div className="SchedulecalendarApp pt-10">
       <div className="Calendartxt">
-      <Link to="/">
-        <FontAwesomeIcon icon={faHouse} />
-        &#62;일정 달력
-      </Link>
+        <Link to="/">
+          <FontAwesomeIcon icon={faHouse} />
+          &#62;일정 달력
+        </Link>
       </div>
       <div className="mx-auto md:max-w-4xl mt-10">
         <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
@@ -215,11 +231,15 @@ export const Schedulecalendarcomponents = () => {
                   </button>
 
                   <div className="w-1 h-1 mx-auto mt-1">
-                    {/* {meetings?.map((meeting) =>
-                      isSameDay(parseISO(date.date_list), day) ? (
-                        <div className="w-1 h-1 rounded-full bg-sky-500"></div>
-                      ) : null
-                    )} */}
+                    {/* 날짜 별로 일정이 있는 부분에 점을 찍도록 함 */}
+                    {meetings.some((meeting) =>
+                      daysBetween(
+                        parseISO(meeting.startDatetime),
+                        parseISO(meeting.endDatetime)
+                      ).some((d) => isSameDay(d, day))
+                    ) && (
+                      <div className="w-1 h-1 rounded-full bg-sky-500"></div>
+                    )}
                   </div>
                 </div>
               ))}
