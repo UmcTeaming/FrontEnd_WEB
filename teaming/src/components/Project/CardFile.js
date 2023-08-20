@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { MdUpload } from "react-icons/md";
 import { Link, useMatch, useParams } from "react-router-dom";
-import { useQuery, useQueryClient } from "react-query";
+import { useQueryClient } from "react-query";
 import axios from "axios";
 import { memberIdState } from "../atom";
 import { useRecoilValue } from "recoil";

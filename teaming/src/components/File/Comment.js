@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import styled from "styled-components";
 import { getComments, getProfile } from "../../api";

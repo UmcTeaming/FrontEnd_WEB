@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import { Link, useMatch, useParams } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import { getProject } from "../../api";
 import { useQuery } from "react-query";
 import { memberIdState, tokenState } from "../atom";
