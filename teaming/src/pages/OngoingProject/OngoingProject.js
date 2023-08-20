@@ -51,11 +51,19 @@ export const OngoingProject = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/member/${memberId}/progressProjects`)
       .then((res) => {
-        // 프로젝트 시작 날짜(projectStartDate)를 기준으로 오름차순 정렬
-        const sortedProjects = res.data.data.progressProjects.sort((a, b) => {
-          return new Date(a.projectStartDate) - new Date(b.projectStartDate);
-        });
-        setProjects(sortedProjects);
+        // API 응답에서 프로젝트 데이터 확인
+        const responseData = res.data.data;
+  
+        if (responseData && responseData.progressProjects) {
+          // 프로젝트 데이터가 있는 경우 정렬하고 상태 업데이트
+          const sortedProjects = responseData.progressProjects.sort((a, b) => {
+            return new Date(a.projectStartDate) - new Date(b.projectStartDate);
+          });
+          setProjects(sortedProjects);
+        } else {
+          // 프로젝트 데이터가 없는 경우 빈 배열 설정
+          setProjects([]);
+        }
       })
       .catch((err) => console.log(err));
   }, [memberId]);

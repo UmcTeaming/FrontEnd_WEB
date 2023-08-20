@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import { useMatch } from "react-router";
 import { useRecoilValue } from "recoil";

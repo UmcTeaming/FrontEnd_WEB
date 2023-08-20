@@ -6,6 +6,7 @@ import { faStar } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
 
 const OPjLine = ({ projects }) => {
+
   return (
     <div className="elementLineView">
       {projects.map((project) => (

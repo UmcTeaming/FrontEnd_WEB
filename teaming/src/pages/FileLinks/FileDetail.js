@@ -7,6 +7,8 @@ import { getProject } from "../../api";
 import { useQuery } from "react-query";
 import { useRecoilValue } from "recoil";
 import { memberIdState, tokenState } from "../../components/atom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Wrapper = styled.div`
   font-family: "GmarketSans";
@@ -44,10 +46,31 @@ const Col = styled.div`
 const Details = () => {
   const memberId = useRecoilValue(memberIdState);
   const accessToken = useRecoilValue(tokenState);
-  const { projectId } = useParams();
+  const { projectId, fileId } = useParams();
   const { data: project } = useQuery(["project"], () =>
     getProject(memberId.toString(), projectId.toString(), accessToken)
   );
+
+  const [downloadURL, setDownloadUrl] = useState(null);
+  useEffect(() => {
+    if (downloadURL) {
+      window.URL.revokeObjectURL(downloadURL);
+    }
+    axios({
+      method: "GET",
+      url: `${process.env.REACT_APP_API_URL}/files/${memberId}/${projectId}/files/${fileId}/download`,
+      responseType: "blob",
+    })
+      .then((response) => {
+        const blob = new Blob([response.data]);
+        const link = window.URL.createObjectURL(blob);
+        setDownloadUrl(link);
+        console.log(downloadURL);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <Wrapper>
@@ -74,11 +97,11 @@ const Details = () => {
             &gt;<Link to="/ongoingProject">진행중인 프로젝트</Link>&gt;
             {project?.name}
           </Path>
-          <FileInfo />
+          <FileInfo url={downloadURL ? downloadURL : null} />
         </InfoCotainer>
       </Main>
       <Col>
-        <FileViewer />
+        <FileViewer url={downloadURL ? downloadURL : null} />
         <Comment />
       </Col>
     </Wrapper>
