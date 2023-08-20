@@ -22,7 +22,8 @@ export const Homeongoingproject = () => {
         const data = response.data.data;
 
         // setMemberId(data.memberId);
-        setprogressProject(data.progressProject);
+        if (data.progressProject !== null)
+          setprogressProject(data.progressProject);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -93,7 +94,7 @@ export const Homeongoingproject = () => {
   return (
     <div className="OngoingProjApp">
       <div className="OngoingProjtitle">
-      <Link to="/ongoingProject">진행중인 프로젝트 &#62;</Link>
+        <Link to="/ongoingProject">진행중인 프로젝트 &#62;</Link>
       </div>
       <div className="OngoingProjsubtitle">
         프로젝트의 상태가 '진행중인' 프로젝트입니다

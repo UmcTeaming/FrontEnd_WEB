@@ -23,7 +23,7 @@ export const Homeportfolio = () => {
         const data = response.data.data;
 
         // setMemberId(data.memberId);
-        setportfolio(data.portfolio);
+        if (data.portfolio !== null) setportfolio(data.portfolio);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
