@@ -105,7 +105,7 @@ export const Homeongoingproject = () => {
         <div className="Ongoingempty">
           <div className="Ongoingemptycontent">
             <div className="emptytitle">
-              <span className="emptytitlelineone">마감된</span>
+              <span className="emptytitlelineone">진행 중인</span>
               <br />
               프로젝트가 없어요
             </div>

@@ -86,8 +86,8 @@ export const Calendarcalendar = () => {
       id: 6,
       name: "왜 안 뜨냐고 ",
       dailyscrum: "00교양 조별 과제",
-      startDatetime: "2023-08-11T13:00",
-      endDatetime: "2023-08-13T14:30",
+      startDatetime: "2023-08-12T13:00",
+      endDatetime: "2023-08-15T14:30",
       project_color: "#FFD008",
     },
   ]);
@@ -119,8 +119,24 @@ export const Calendarcalendar = () => {
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
 
+  // 시작과 끝 일정 사이에 관련된 코드
+  // 주어진 startDate와 endDate 사이의 날짜 배열을 반환하는 함수
+  const daysBetween = (startDate, endDate) => {
+    const days = [];
+    let currentDate = startDate;
+    while (currentDate <= endDate) {
+      days.push(currentDate);
+      currentDate = add(currentDate, { days: 1 });
+    }
+    return days;
+  };
+
   let selectedDayMeetings = meetings.filter((meeting) =>
-    isSameDay(parseISO(meeting.startDatetime), selectedDay)
+    // isSameDay(parseISO(meeting.startDatetime), selectedDay) 가 기존 코드
+    daysBetween(
+      parseISO(meeting.startDatetime),
+      parseISO(meeting.endDatetime)
+    ).some((d) => isSameDay(d, selectedDay))
   );
 
   const handleDelete = (meetingId) => {
@@ -257,14 +273,13 @@ export const Calendarcalendar = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(selectedDayMeetings);
   return (
     <div className="SchedulecalendarApp pt-10">
       <div className="Calendartxt">
-      <Link to="/">
-        <FontAwesomeIcon icon={faHouse} />
-        &#62;일정 달력
-      </Link>
+        <Link to="/">
+          <FontAwesomeIcon icon={faHouse} />
+          &#62;일정 달력
+        </Link>
       </div>
 
       <div className="mx-auto md:max-w-4xl mt-10">
@@ -341,12 +356,15 @@ export const Calendarcalendar = () => {
                       {format(day, "d")}
                     </time>
                   </button>
-
                   <div className="w-1 h-1 mx-auto mt-1">
-                    {dateList?.map((date) =>
-                      isSameDay(parseISO(date.date_list), day) ? (
-                        <div className="w-1 h-1 rounded-full bg-sky-500"></div>
-                      ) : null
+                    {/* 날짜 별로 일정이 있는 부분에 점을 찍도록 함 */}
+                    {meetings.some((meeting) =>
+                      daysBetween(
+                        parseISO(meeting.startDatetime),
+                        parseISO(meeting.endDatetime)
+                      ).some((d) => isSameDay(d, day))
+                    ) && (
+                      <div className="w-1 h-1 rounded-full bg-sky-500"></div>
                     )}
                   </div>
                 </div>
@@ -388,8 +406,10 @@ export const Calendarcalendar = () => {
             justifyContent: "center",
           }}
         >
-          <div className="newlisttxt">
-            <FontAwesomeIcon icon={faCirclePlus} /> 새 일정 만들기
+          <div>
+            <div className="newlisttxt" onClick={handleCreateButton}>
+              <FontAwesomeIcon icon={faCirclePlus} /> 새 일정 만들기
+            </div>
           </div>
           <div className="newlistcontent ">
             <div className="calendarScheduletitle">
