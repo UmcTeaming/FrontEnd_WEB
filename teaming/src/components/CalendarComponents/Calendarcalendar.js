@@ -86,7 +86,7 @@ export const Calendarcalendar = () => {
       id: 6,
       name: "왜 안 뜨냐고 ",
       dailyscrum: "00교양 조별 과제",
-      startDatetime: "2023-08-12T13:00",
+      startDatetime: "2023-08-13T13:00",
       endDatetime: "2023-08-15T14:30",
       project_color: "#FFD008",
     },
@@ -118,7 +118,7 @@ export const Calendarcalendar = () => {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
-
+  console.log("Meetings after adding newMeeting2:", meetings);
   // 시작과 끝 일정 사이에 관련된 코드
   // 주어진 startDate와 endDate 사이의 날짜 배열을 반환하는 함수
   const daysBetween = (startDate, endDate) => {
@@ -156,8 +156,13 @@ export const Calendarcalendar = () => {
   // Click handler for the 생성 button
   const handleCreateButton = () => {
     const title = newlisttextRef.current.value;
-    const startDateTime = `${getFormattedDate(selectedDate1)} ${selectedTime1}`;
-    const endDateTime = `${getFormattedDate(selectedDate2)} ${selectedTime2}`;
+    // 네번째 제이의 수정
+    // const startDateTime = `${getFormattedDate(selectedDate1)} ${selectedTime1}`;
+    // const endDateTime = `${getFormattedDate(selectedDate2)} ${selectedTime2}`;
+    const startDateTime = `${format(selectedDate1, "yyyy-MM-dd")}T${selectedTime1}`;
+    const endDateTime = `${format(selectedDate2, "yyyy-MM-dd")}T${selectedTime2}`;
+  
+
     if (title === "") return;
     const newMeeting = {
       id: meetings.length + 1,
@@ -167,6 +172,13 @@ export const Calendarcalendar = () => {
       endDatetime: endDateTime,
       project_color: "#FF008", // 수정 가능
     };
+
+    // 다음 부분을 추가하여 해당 날짜에 생성된 일정을 보여줍니다.
+    const newDay = parseISO(startDateTime);
+    setSelectedDay(newDay);
+
+    // 새로운 일정을 기존 meetings 배열에 추가
+    // setMeetings([...meetings, newMeeting]); 이 부분 잠시 생략
 
     // 콘솔에서 확인하고 싶은 경우(final)
     console.log("새 일정의 제목:", title);
@@ -178,7 +190,6 @@ export const Calendarcalendar = () => {
     // console.log("시작 일정:", getFormattedDate(selectedDate1));
     // console.log("마감 일정:", getFormattedDate(selectedDate2));
 
-    setMeetings([...meetings, newMeeting]); // 새로운 일정을 기존 meetings 배열에 추가
     setSelectedDay(selectedDate1); // 새 회의의 시작 날짜로 선택한 날짜 업데이트
     newlisttextRef.current.value = ""; // 입력 필드 초기화
     setSelectedDate1(new Date());
@@ -192,16 +203,34 @@ export const Calendarcalendar = () => {
 
       data: {
         schedule_name: title,
-        schedule_start: startDateTime.slice(0, 10).replaceAll(".", "-"),
-        schedule_end: endDateTime.slice(0, 10).replaceAll(".", "-"),
-        schedule_start_time: startDateTime.slice(11, 16) + ":00",
-        schedule_end_time: endDateTime.slice(11, 16) + ":00",
+        schedule_start: startDateTime,
+        schedule_end: endDateTime,
+        schedule_start_time: selectedTime1 + ":00", // 변경 없음
+        schedule_end_time: selectedTime2 + ":00", // 변경 없음
+
+        // 두번째 제이의 수정안
+        // schedule_start: startDateTime.replaceAll(".", "-"), // 수정된 부분
+        // schedule_end: endDateTime.replaceAll(".", "-"), // 수정된 부분
+        // schedule_start_time: startDateTime.slice(11, 16) + ":00",
+        // schedule_end_time: endDateTime.slice(11, 16) + ":00",
+
+        //첫번째 샌디의 수정안
+        // schedule_start: startDateTime.slice(0, 10).replaceAll(".", "-"),
+        // schedule_end: endDateTime.slice(0, 10).replaceAll(".", "-"),
+        // schedule_start_time: startDateTime.slice(11, 16) + ":00",
+        // schedule_end_time: endDateTime.slice(11, 16) + ":00",
       },
     })
       .then((res) => {
         console.log(res);
       })
       .catch((err) => console.log(err));
+
+    // 기존 meetings 배열을 업데이트하는 방식 변경
+    setMeetings((prevMeetings) => [...prevMeetings, newMeeting]);
+
+    // 제대로 추가되었는지 확인용
+    console.log("Meetings after adding newMeeting:", meetings);
   };
 
   const handleDateChange1 = (date) => {
