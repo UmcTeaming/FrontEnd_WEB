@@ -50,7 +50,7 @@ const NewProject = () => {
   const [selectedDay1, setSelectedDay1] = useState(date1.clone());
   const [selectedDay2, setSelectedDay2] = useState(date2.clone());
 
-  const [logoNum, setLogoNum] = useState(0);
+  const [logoNum, setLogoNum] = useState();
   const [projectName, setProjectName] = useState("");
 
   const [memberId, setMemberId] = useRecoilState(memberIdState);
@@ -64,7 +64,7 @@ const NewProject = () => {
     watch,
     formState: { errors },
   } = useForm();
-  const [file, setFile] = useState();
+  const [file, setFile] = useState(null);
   const handleMonth = (x, num) => {
     num === 1
       ? x
@@ -205,30 +205,40 @@ const NewProject = () => {
     setLogoNum(i);
   };
 
-  const onValid = (data) => {
-    const formData = new FormData();
-    formData.append("project_name", data.projectName);
-    formData.append("project_image", file);
-    formData.append("start_date", selectedDay1.format("YYYY-MM-DD"));
-    formData.append("end_date", selectedDay2.format("YYYY-MM-DD"));
-    formData.append("project_color", colorCode[logoNum]);
+  const onValid = async (data) => {
+    try {
+      const formData = new FormData();
+      formData.append("project_name", data.projectName);
 
-    axios({
-      method: "patch",
-      url: `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/modifyProject`,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      data: formData,
-      transformRequest: (data, headers) => {
-        return data;
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        navigate(`/${res.data.data.project_id}/project-files`);
-      })
-      .catch((err) => console.log(err));
+      const imageUrl = previewImg;
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const imageFile = new File([blob], "project_image.jpg", {
+        type: "image/jpeg",
+      });
+      formData.append("project_image", imageFile);
+
+      formData.append("start_date", selectedDay1.format("YYYY-MM-DD"));
+      formData.append("end_date", selectedDay2.format("YYYY-MM-DD"));
+      formData.append("project_color", colorCode[logoNum]);
+
+      const res = await axios({
+        method: "post",
+        url: `${process.env.REACT_APP_API_URL}/projects/${memberId}/create`,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        data: formData,
+        transformRequest: (data, headers) => {
+          return data;
+        },
+      });
+
+      console.log(res);
+      navigate(`/${res.data.data.project_id}/project-files`);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -240,6 +250,10 @@ const NewProject = () => {
         const startDate = res.data.data.startDate;
         setSelectedDay1(moment(startDate.replaceAll("-", "")));
         setPreviewImg(res.data.data.image);
+        const index = colorCode.findIndex(
+          (color) => res.data.data.projectColor === color
+        );
+        setLogoNum(index);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -272,7 +286,10 @@ const NewProject = () => {
               <label htmlFor="img">
                 <div className="flex justify-center items-center bg-[#F4F4F4] text-gray-400 h-80 w-96">
                   {previewImg !== undefined ? (
-                    <img src={previewImg} className="object-cover " />
+                    <img
+                      src={previewImg}
+                      className="object-cover w-full h-full"
+                    />
                   ) : (
                     <span className="">대표 이미지 추가하기</span>
                   )}
@@ -292,8 +309,8 @@ const NewProject = () => {
               <input
                 {...register("projectName", {
                   required: "프로젝트명을 입력해주세요!",
-                  value: projectName,
                 })}
+                defaultValue={projectName}
                 placeholder="프로젝트 명을 입력해주세요."
                 className="placeholder:text-gray-400 placeholder:opacity-50 border-b-[1.5px] border-mainColor"
               />
@@ -306,10 +323,8 @@ const NewProject = () => {
               <div className="space-y-4">
                 <div className="flex items-center space-x-2">
                   <div
-                    className={cls(
-                      "h-5 w-5 rounded-full ",
-                      `bg-[${colorCode[logoNum]}]`
-                    )}
+                    className="h-5 w-5 rounded-full "
+                    style={{ backgroundColor: colorCode[logoNum] }}
                   ></div>
                   <span className="pt-1">해당 색상으로 선택하시겟습니까?</span>
                 </div>
