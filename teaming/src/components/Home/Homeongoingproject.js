@@ -123,33 +123,34 @@ export const Homeongoingproject = () => {
           <div className="grid-container">
             {progressProject.slice(0, maxItemsToShow).map((item, index) => (
               <div key={index} className="content">
-                {item.projectStatus === "ING" ? (
-                  <span className="contentprogress">
-                    진행중{" "}
-                    <FontAwesomeIcon
-                      icon={faCircle}
-                      style={{ color: "blue" }}
-                    />
-                  </span>
-                ) : (
-                  <span className="contentprogress">
-                    마감{" "}
-                    <FontAwesomeIcon
-                      icon={faCircle}
-                      style={{ color: "yellow" }}
-                    />
-                  </span>
-                )}
-                <div className="contentimgs">
-                  {item.projectImage && (
-                    <img src={item.projectImage} alt={item.projectName} />
+                <Link to={`/${item.projectId}/final-files`}>
+                  {item.projectStatus === "ING" ? (
+                    <span className="contentprogress">
+                      진행중{" "}
+                      <FontAwesomeIcon
+                        icon={faCircle}
+                        style={{ color: "blue" }}
+                      />
+                    </span>
+                  ) : (
+                    <span className="contentprogress">
+                      마감{" "}
+                      <FontAwesomeIcon
+                        icon={faCircle}
+                        style={{ color: "yellow" }}
+                      />
+                    </span>
                   )}
-                </div>
-                <div className="contenttxt">
-                  <div className="contenttitle">{item.projectName}</div>
-                  <div className="contentsubtitle">{`${item.projectStartDate} ~ ${item.projectEndDate}`}</div>
-                  <div className="contentmember">팀원 정보를 알려주세요</div>
-                </div>
+                  <div className="contentimgs">
+                    {item.projectImage && (
+                      <img src={item.projectImage} alt={item.projectName} />
+                    )}
+                  </div>
+                  <div className="contenttxt">
+                    <div className="contenttitle">{item.projectName}</div>
+                    <div className="contentsubtitle">{`${item.projectStartDate} ~ ${item.projectEndDate}`}</div>
+                  </div>
+                </Link>
               </div>
             ))}
           </div>

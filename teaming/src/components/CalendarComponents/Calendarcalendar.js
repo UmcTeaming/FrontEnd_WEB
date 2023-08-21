@@ -7,6 +7,7 @@ import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { CalendarIcon } from "@heroicons/react/solid";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { Menu, Transition } from "@headlessui/react";
 import { DotsVerticalIcon } from "@heroicons/react/outline";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
@@ -44,7 +45,7 @@ export const Calendarcalendar = () => {
   const [meetings, setMeetings] = useState([
     {
       id: 1,
-      name: "티밍 전체 대면 회의 - 중구 퇴계로",
+      name: "티밍 전체 대면 회의1 - 중구 퇴계로",
       dailyscrum: "00교양 조별 과제",
       startDatetime: "2023-08-11T13:00",
       endDatetime: "2023-08-13T14:30",
@@ -52,7 +53,7 @@ export const Calendarcalendar = () => {
     },
     {
       id: 2,
-      name: "티밍 전체 대면 회의 - 중구 퇴계로",
+      name: "티밍 전체 대면 회의2 - 중구 퇴계로",
       dailyscrum: "00교양 조별 과제",
       startDatetime: "2023-08-11T13:00",
       endDatetime: "2023-08-13T14:30",
@@ -60,7 +61,7 @@ export const Calendarcalendar = () => {
     },
     {
       id: 3,
-      name: "티밍 전체 대면 회의 - 중구 퇴계로",
+      name: "티밍 전체 대면 회의3 - 중구 퇴계로",
       dailyscrum: "00교양 조별 과제",
       startDatetime: "2023-08-11T13:00",
       endDatetime: "2023-08-13T14:30",
@@ -68,7 +69,7 @@ export const Calendarcalendar = () => {
     },
     {
       id: 4,
-      name: "프로젝트 회의",
+      name: "프로젝트 회의4",
       dailyscrum: "티밍 회의",
       startDateTime: "2023-08-13T14:00",
       endDateTime: "2023-08-15T16:30",
@@ -76,7 +77,7 @@ export const Calendarcalendar = () => {
     },
     {
       id: 5,
-      name: "티밍 전체 대면 회의 - 송파구 퇴계로",
+      name: "티밍 전체 대면 회의5 - 송파구 퇴계로",
       dailyscrum: "00교양 조별 과제",
       startDatetime: "2023-08-11T13:00",
       endDatetime: "2023-08-13T14:30",
@@ -84,7 +85,7 @@ export const Calendarcalendar = () => {
     },
     {
       id: 6,
-      name: "왜 안 뜨냐고 ",
+      name: "왜 안 뜨냐고6 ",
       dailyscrum: "00교양 조별 과제",
       startDatetime: "2023-08-13T13:00",
       endDatetime: "2023-08-15T14:30",
@@ -159,9 +160,14 @@ export const Calendarcalendar = () => {
     // 네번째 제이의 수정
     // const startDateTime = `${getFormattedDate(selectedDate1)} ${selectedTime1}`;
     // const endDateTime = `${getFormattedDate(selectedDate2)} ${selectedTime2}`;
-    const startDateTime = `${format(selectedDate1, "yyyy-MM-dd")}T${selectedTime1}`;
-    const endDateTime = `${format(selectedDate2, "yyyy-MM-dd")}T${selectedTime2}`;
-  
+    const startDateTime = `${format(
+      selectedDate1,
+      "yyyy-MM-dd"
+    )}T${selectedTime1}`;
+    const endDateTime = `${format(
+      selectedDate2,
+      "yyyy-MM-dd"
+    )}T${selectedTime2}`;
 
     if (title === "") return;
     const newMeeting = {
@@ -307,7 +313,8 @@ export const Calendarcalendar = () => {
       <div className="Calendartxt">
         <Link to="/">
           <FontAwesomeIcon icon={faHouse} />
-          &#62;일정 달력
+          <FontAwesomeIcon icon={faChevronRight} />
+          진행 중인 프로젝트
         </Link>
       </div>
 
