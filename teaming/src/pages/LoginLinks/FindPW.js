@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { Input, InputDiv, InputNameSpan } from "./Signup";
 import { TiDelete } from "react-icons/ti";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const FindPW = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -37,9 +38,12 @@ const FindPW = () => {
             </span>
           </div>
 
-          <div className="bg-mainColor text-center text-white rounded-full py-2 w-full">
+          <Link
+            to="/"
+            className="bg-mainColor text-center text-white rounded-full py-2 w-full"
+          >
             로그인 페이지로 돌아가기
-          </div>
+          </Link>
         </div>
       ) : (
         <div>
