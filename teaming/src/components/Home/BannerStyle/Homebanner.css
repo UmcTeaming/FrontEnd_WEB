@@ -80,7 +80,7 @@
   list-style-type: none;
 }
 
-.swiper-container {
+.swiper_container {
   width: 100%;
   padding: 20px;
 }
@@ -115,9 +115,9 @@
 
 
 .BannerContent .content {
-  padding-left: 20px;
   margin-top: 10px;
   margin-right: 0px;
+  margin-bottom: 20px;
   width: 343px;
   height: 343px;
   background-color: #fff;

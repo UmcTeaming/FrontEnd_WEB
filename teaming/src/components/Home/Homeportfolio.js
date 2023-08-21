@@ -123,6 +123,7 @@ export const Homeportfolio = () => {
           <div className="grid-container">
             {portfolio.slice(0, maxItemsToShow).map((item, index) => (
               <div key={index} className="content">
+                <Link to={`/${item.projectId}/final-files`}>
                 {item.projectStatus === "ING" ? (
                   <span className="contentprogress">
                     진행중{" "}
@@ -148,11 +149,12 @@ export const Homeportfolio = () => {
                 <div className="contenttxt">
                   <div className="contenttitle">{item.projectName}</div>
                   <div className="contentsubtitle">{`${item.projectStartDate} ~ ${item.projectEndDate}`}</div>
-                  <div className="contentmember">팀원 정보를 알려주세요!</div>
                 </div>
+                </Link>
               </div>
             ))}
           </div>
+          
         </div>
       )}
     </div>
