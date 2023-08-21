@@ -62,7 +62,8 @@ const NewProject = () => {
     watch,
     formState: { errors },
   } = useForm();
-  const [file, setFile] = useState();
+  const [file, setFile] = useState(null);
+
   const handleMonth = (x, num) => {
     num === 1
       ? x
@@ -203,30 +204,44 @@ const NewProject = () => {
     setLogoNum(i);
   };
 
-  const onValid = (data) => {
-    const formData = new FormData();
-    formData.append("project_name", data.projectName);
-    formData.append("project_image", file);
-    formData.append("start_date", selectedDay1.format("YYYY-MM-DD"));
-    formData.append("end_date", selectedDay2.format("YYYY-MM-DD"));
-    formData.append("project_color", colorCode[logoNum]);
+  const onValid = async (data) => {
+    try {
+      const formData = new FormData();
+      formData.append("project_name", data.projectName);
 
-    axios({
-      method: "post",
-      url: `${process.env.REACT_APP_API_URL}/projects/${memberId}/create`,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      data: formData,
-      transformRequest: (data, headers) => {
-        return data;
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        navigate(`/${res.data.data.project_id}/project-files`);
-      })
-      .catch((err) => console.log(err));
+      if (file === null) {
+        const imageUrl = "/img/projectImg/project_img.jpg";
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        const imageFile = new File([blob], "project_image.jpg", {
+          type: "image/jpeg",
+        });
+        formData.append("project_image", imageFile);
+      } else {
+        formData.append("project_image", file);
+      }
+
+      formData.append("start_date", selectedDay1.format("YYYY-MM-DD"));
+      formData.append("end_date", selectedDay2.format("YYYY-MM-DD"));
+      formData.append("project_color", colorCode[logoNum]);
+
+      const res = await axios({
+        method: "post",
+        url: `${process.env.REACT_APP_API_URL}/projects/${memberId}/create`,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        data: formData,
+        transformRequest: (data, headers) => {
+          return data;
+        },
+      });
+
+      console.log(res);
+      navigate(`/${res.data.data.project_id}/project-files`);
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <div className="flex justify-center items-center">
@@ -257,7 +272,10 @@ const NewProject = () => {
               <label htmlFor="img">
                 <div className="flex justify-center items-center bg-[#F4F4F4] text-gray-400 h-80 w-96">
                   {previewImg !== undefined ? (
-                    <img src={previewImg} className="object-cover " />
+                    <img
+                      src={previewImg}
+                      className="object-cover w-full h-full"
+                    />
                   ) : (
                     <span className="">대표 이미지 추가하기</span>
                   )}
@@ -292,10 +310,8 @@ const NewProject = () => {
               <div className="space-y-4">
                 <div className="flex items-center space-x-2">
                   <div
-                    className={cls(
-                      "h-5 w-5 rounded-full ",
-                      `bg-[${colorCode[logoNum]}]`
-                    )}
+                    className={"h-5 w-5 rounded-full "}
+                    style={{ backgroundColor: colorCode[logoNum] }}
                   ></div>
                   <span className="pt-1">해당 색상으로 선택하시겟습니까?</span>
                 </div>
