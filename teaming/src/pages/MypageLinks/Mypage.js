@@ -89,29 +89,33 @@ const Mypage = () => {
       .catch((err) => console.log(err));
   };
 
-  const onClickBasikImg = () => {
-    const profileImg = new File([basicProfile], "프로필_기본.jpg", {
-      type: "image/jpeg",
-    });
-    const formData = new FormData();
-    formData.append("change_image_file", profileImg);
-    console.log(profileImg);
-    axios({
-      method: "patch",
-      url: `${process.env.REACT_APP_API_URL}/member/${memberId}/mypage/change-image`,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      data: formData,
-      transformRequest: (data, headers) => {
-        return data;
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        setPreviewImg(res.data.data);
-      })
-      .catch((err) => console.log(err));
+  const onClickBasikImg = async () => {
+    try {
+      const formData = new FormData();
+      const imageUrl = "/img/projectImg/profile_default_img.jpg";
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const imageFile = new File([blob], "project_image.jpg", {
+        type: "image/jpeg",
+      });
+      formData.append("change_image_file", imageFile);
+
+      const res = await axios({
+        method: "patch",
+        url: `${process.env.REACT_APP_API_URL}/member/${memberId}/mypage/change-image`,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        data: formData,
+        transformRequest: (data, headers) => {
+          return data;
+        },
+      });
+      console.log(res);
+      setPreviewImg(res.data.data);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
@@ -155,11 +159,7 @@ const Mypage = () => {
             <label htmlFor="img">
               <div className="h-32 w-32 bg-[#D9D9D9] text-gray-400 rounded-full shadow-xl flex justify-center items-center text-sm overflow-hidden">
                 {previewImg !== null ? (
-                  <img
-                    alt=""
-                    src={previewImg === null ? basicProfile : previewImg}
-                    className="object-cover "
-                  />
+                  <img alt="" src={previewImg} className="object-cover " />
                 ) : (
                   <span className="">이미지</span>
                 )}
@@ -175,7 +175,10 @@ const Mypage = () => {
               onChange={(e) => insertImg(e)}
             />
 
-            <div className="text-sm text-gray-300" onClick={onClickBasikImg}>
+            <div
+              className="text-sm text-gray-300 cursor-pointer"
+              onClick={onClickBasikImg}
+            >
               기본 이미지로 변경
             </div>
           </div>

@@ -208,15 +208,13 @@ const NewProject = () => {
   const onValid = async (data) => {
     try {
       const formData = new FormData();
-      formData.append("project_name", data.projectName);
+      if (data.projectName === "") {
+        formData.append("project_name", projectName);
+      } else {
+        formData.append("project_name", data.projectName);
+      }
 
-      const imageUrl = previewImg;
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-      const imageFile = new File([blob], "project_image.jpg", {
-        type: "image/jpeg",
-      });
-      formData.append("project_image", imageFile);
+      formData.append("project_image", file);
 
       formData.append("start_date", selectedDay1.format("YYYY-MM-DD"));
       formData.append("end_date", selectedDay2.format("YYYY-MM-DD"));
@@ -248,7 +246,9 @@ const NewProject = () => {
         console.log(res);
         setProjectName(res.data.data.name);
         const startDate = res.data.data.startDate;
+        const endDate = res.data.data.endDate;
         setSelectedDay1(moment(startDate.replaceAll("-", "")));
+        setSelectedDay2(moment(endDate.replaceAll("-", "")));
         setPreviewImg(res.data.data.image);
         const index = colorCode.findIndex(
           (color) => res.data.data.projectColor === color
@@ -307,16 +307,11 @@ const NewProject = () => {
             <div className="pt-3 pb-10 flex flex-col space-y-3 relative">
               <Span>프로젝트 명</Span>
               <input
-                {...register("projectName", {
-                  required: "프로젝트명을 입력해주세요!",
-                })}
+                {...register("projectName")}
                 defaultValue={projectName}
                 placeholder="프로젝트 명을 입력해주세요."
                 className="placeholder:text-gray-400 placeholder:opacity-50 border-b-[1.5px] border-mainColor"
               />
-              <span className="absolute bottom-4 text-sm text-red-400">
-                {errors.projectName?.message}
-              </span>
             </div>
             <div className="flex space-x-3">
               <Span className="pt-1">색상</Span>
