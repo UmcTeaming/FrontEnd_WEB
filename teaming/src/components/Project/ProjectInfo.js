@@ -35,6 +35,7 @@ const Img = styled.img`
   height: 200px;
   border: solid 1px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
+  object-fit: cover;
 `;
 
 const Details = styled.div`

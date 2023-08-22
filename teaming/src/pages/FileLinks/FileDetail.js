@@ -12,7 +12,7 @@ import axios from "axios";
 
 const Wrapper = styled.div`
   font-family: "GmarketSans";
-  background: linear-gradient(rgba(3, 63, 255, 0.5) 0%, white 30%);
+  background: linear-gradient(rgba(3, 63, 255, 0.5) 0%, white 35%);
 `;
 
 const Main = styled.div`

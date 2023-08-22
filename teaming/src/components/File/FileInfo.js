@@ -2,12 +2,10 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 import { getFile, getProject } from "../../api";
 import { MdUpload } from "react-icons/md";
-import { useLocation } from "react-router";
 import { memberIdState, tokenState } from "../atom";
 import { useRecoilValue } from "recoil";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import React, { useMemo } from "react";
+import React from "react";
 
 const Wrapper = styled.div`
   display: flex;
@@ -97,8 +95,6 @@ const Download = styled.button`
 
 function FileInfo({ url }) {
   const downloadURL = url;
-  const location = useLocation();
-  const parts = location.pathname.split("/");
   const memberId = useRecoilValue(memberIdState);
   const accessToken = useRecoilValue(tokenState);
   const { projectId, fileId } = useParams();
@@ -127,9 +123,9 @@ function FileInfo({ url }) {
       <ImgContainer>
         <Img
           src={
-            parts.includes("project-files")
+            project?.projectStatus === "ING"
               ? "../../img/fileImg/project_file.png"
-              : parts.includes("final-files")
+              : project?.projectStatus === "END"
               ? "../../img/fileImg/final_file.png"
               : null
           }
