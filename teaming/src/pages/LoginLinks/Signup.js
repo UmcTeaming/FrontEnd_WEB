@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
 import { BsCheckLg, BsEyeSlash, BsEye } from "react-icons/bs";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const InputDiv = tw.div`
 flex flex-col h-28
@@ -264,9 +264,12 @@ const Signup = () => {
               <span className="text-gray-400">
                 [필수] 이용약관 및 개인정보 수집 동의
               </span>
-              <span className="text-mainColor underline text-sm cursor-pointer">
+              <Link
+                to="https://firebasestorage.googleapis.com/v0/b/tab-website-a3588.appspot.com/o/%5B%EB%A1%9C%ED%8F%BC%5D%EC%84%9C%EB%B9%84%EC%8A%A4%EC%9D%B4%EC%9A%A9%EC%95%BD%EA%B4%80(%EC%9E%90%EC%82%AC%20%EC%A0%9C%ED%92%88%2C%20%EC%84%9C%EB%B9%84%EC%8A%A4%20%EA%B3%B5%EA%B8%89%EC%9A%A9).pdf?alt=media&token=f7a43c68-d7bb-4877-b44e-2b2490cb906e"
+                className="text-mainColor underline text-sm cursor-pointer"
+              >
                 내용보기
-              </span>
+              </Link>
             </div>
             <div className="h-8">
               <ErrorSpan>{errors.checkbox?.message}</ErrorSpan>
