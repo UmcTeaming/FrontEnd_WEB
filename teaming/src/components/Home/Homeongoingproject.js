@@ -129,7 +129,7 @@ export const Homeongoingproject = () => {
                       진행중{" "}
                       <FontAwesomeIcon
                         icon={faCircle}
-                        style={{ color: "blue" }}
+                        color="#527FF5"
                       />
                     </span>
                   ) : (
