@@ -117,6 +117,9 @@ const AddMember = ({ onClose }) => {
   };
   const onValid = (email) => {
     console.log(email);
+    if (!email) {
+      return; // Don't submit if email is empty
+    }
     onSubmit(email);
     reset();
   };

@@ -29,8 +29,7 @@
 }
 
 /* 버튼 기본 값 없애기 */
-button, 
-button:focus {
+button {
     border: none;
     cursor: pointer;
     outline: none;
