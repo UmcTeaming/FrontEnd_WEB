@@ -4,14 +4,28 @@ import { useQuery } from "react-query";
 import { getFile } from "../../api";
 import { memberIdState, tokenState } from "../atom";
 import { useRecoilValue } from "recoil";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
 const Wrapper = styled.div`
   width: 670px;
+  height: 941px;
 `;
 
 const FileViewer = ({ url }) => {
+  const types = [
+    "bmp",
+    "csv",
+    "gif",
+    "htm",
+    "html",
+    "jpg",
+    "jpeg",
+    "pdf",
+    "png",
+    "tiff",
+    "txt",
+  ];
   const downloadURL = url;
   const [isLoad, setIsLoad] = useState(false);
   const [docs, setDocs] = useState([]);
@@ -26,6 +40,8 @@ const FileViewer = ({ url }) => {
       accessToken
     )
   );
+  const location = useLocation();
+  const parts = location.pathname.split("/");
 
   useEffect(() => {
     if (downloadURL) {
@@ -43,7 +59,19 @@ const FileViewer = ({ url }) => {
   return (
     <Wrapper>
       {isLoad ? (
-        <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />
+        types.some((type) => file?.file_type === type) ? (
+          <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />
+        ) : (
+          <img
+            src={
+              parts.includes("project-files")
+                ? "../../img/viewerImg/project.jpg"
+                : parts.includes("final-files")
+                ? "../../img/viewerImg/final.jpg"
+                : null
+            }
+          />
+        )
       ) : (
         <p>Loading...</p>
       )}
