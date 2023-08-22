@@ -30,8 +30,8 @@ const months = [
 
 const colorCode = [
   "#F98984",
-  "#FFD008",
   "#FFAA00",
+  "#FFD008",
   "#B5EC3E",
   "#8DD773",
   "#527FF5",
