@@ -221,8 +221,8 @@ const NewProject = () => {
       formData.append("project_color", colorCode[logoNum]);
 
       const res = await axios({
-        method: "post",
-        url: `${process.env.REACT_APP_API_URL}/projects/${memberId}/create`,
+        method: "patch",
+        url: `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/modifyProject`,
         headers: {
           "Content-Type": "multipart/form-data",
         },
