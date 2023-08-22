@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./BannerStyle/Homebanner.css";
 // 아이콘 관련
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -121,34 +122,39 @@ export const Homebanner = () => {
                 <SwiperSlide key={index}>
                   <div className="contentdisplay_inline">
                     <div className="content">
-                      {item.projectStatus === "ING" ? (
-                        <span className="contentprogress2">
-                          진행중{" "}
-                          <FontAwesomeIcon
-                            icon={faCircle}
-                            style={{ color: "blue" }}
-                          />
-                        </span>
-                      ) : (
-                        <span className="contentprogress2">
-                          마감{" "}
-                          <FontAwesomeIcon
-                            icon={faCircle}
-                            style={{ color: "yellow" }}
-                          />
-                        </span>
-                      )}
-                      <div className="contentimgs">
-                        {item.projectImage && (
-                          <img src={item.projectImage} alt={item.projectName} />
+                      <Link to={`/${item.projectId}/final-files`}>
+                        {item.projectStatus === "ING" ? (
+                          <span className="contentprogress2">
+                            진행중{" "}
+                            <FontAwesomeIcon
+                              icon={faCircle}
+                              style={{ color: "blue" }}
+                            />
+                          </span>
+                        ) : (
+                          <span className="contentprogress2">
+                            마감{" "}
+                            <FontAwesomeIcon
+                              icon={faCircle}
+                              style={{ color: "yellow" }}
+                            />
+                          </span>
                         )}
-                      </div>
-                      <div className="contenttitle">{item.projectName}</div>
+                        <div className="contentimgs">
+                          {item.projectImage && (
+                            <img
+                              src={item.projectImage}
+                              alt={item.projectName}
+                            />
+                          )}
+                        </div>
+                        <div className="contenttitle">{item.projectName}</div>
 
-                      <div className="contentdescription">
-                        {item.projectCreatedDate}
-                      </div>
-                      <div className="contentmember">{item.member_name}</div>
+                        <div className="contentdescription">
+                          {item.projectCreatedDate}
+                        </div>
+                        <div className="contentmember">{item.member_name}</div>
+                      </Link>
                     </div>
                   </div>
                 </SwiperSlide>

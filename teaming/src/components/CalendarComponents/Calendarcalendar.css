@@ -94,11 +94,12 @@
   align-items: center;
   margin-top: 15px;
   margin-left: 50px;
+  margin-bottom: 30px;
   width: 980px;
   height: 400px;
   background-color: #fff;
   border-radius: 10px;
-  box-shadow: 4px 4px 1px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .newlist .newlistcontent {

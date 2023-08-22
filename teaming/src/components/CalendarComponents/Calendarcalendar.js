@@ -34,6 +34,7 @@ import "react-calendar/dist/Calendar.css";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { memberIdState } from "../atom";
+import { id } from "date-fns/locale";
 
 // className함수는 여러 개의 클래스 이름들을 받아들이고, 조건에 따라 필터링하여 결합한 문자열을 반환함
 function classNames(...classes) {
@@ -43,56 +44,15 @@ function classNames(...classes) {
 export const Calendarcalendar = () => {
   // 일정 데이터를 받는 부분_해당 내용들은 예시
   const [meetings, setMeetings] = useState([
-    {
-      id: 1,
-      name: "티밍 전체 대면 회의1 - 중구 퇴계로",
-      dailyscrum: "00교양 조별 과제",
-      startDatetime: "2023-08-11T13:00",
-      endDatetime: "2023-08-13T14:30",
-      project_color: "#d79ac3",
-    },
-    {
-      id: 2,
-      name: "티밍 전체 대면 회의2 - 중구 퇴계로",
-      dailyscrum: "00교양 조별 과제",
-      startDatetime: "2023-08-11T13:00",
-      endDatetime: "2023-08-13T14:30",
-      project_color: "#d79ac3",
-    },
-    {
-      id: 3,
-      name: "티밍 전체 대면 회의3 - 중구 퇴계로",
-      dailyscrum: "00교양 조별 과제",
-      startDatetime: "2023-08-11T13:00",
-      endDatetime: "2023-08-13T14:30",
-      project_color: "#d79ac3",
-    },
-    {
-      id: 4,
-      name: "프로젝트 회의4",
-      dailyscrum: "티밍 회의",
-      startDateTime: "2023-08-13T14:00",
-      endDateTime: "2023-08-15T16:30",
-      project_color: "#FFD008",
-    },
-    {
-      id: 5,
-      name: "티밍 전체 대면 회의5 - 송파구 퇴계로",
-      dailyscrum: "00교양 조별 과제",
-      startDatetime: "2023-08-11T13:00",
-      endDatetime: "2023-08-13T14:30",
-      project_color: "#FFD008",
-    },
-    {
-      id: 6,
-      name: "왜 안 뜨냐고6 ",
-      dailyscrum: "00교양 조별 과제",
-      startDatetime: "2023-08-13T13:00",
-      endDatetime: "2023-08-15T14:30",
-      project_color: "#FFD008",
-    },
+    // {
+    //   id: 1,
+    //   name: "티밍 전체 대면 회의1 - 중구 퇴계로",
+    //   dailyscrum: "00교양 조별 과제",
+    //   startDatetime: "2023-08-11T13:00",
+    //   endDatetime: "2023-08-13T14:30",
+    //   project_color: "#d79ac3",
+    // },
   ]);
-
   let today = startOfToday();
   let [selectedDay, setSelectedDay] = useState(today); //selectDay상태와 setCount 함수를 선언
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
@@ -110,6 +70,7 @@ export const Calendarcalendar = () => {
 
   const [dateList, setDateList] = useState();
   const [daymeetings, setDayMeetings] = useState();
+
   function previousMonth() {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
@@ -119,6 +80,7 @@ export const Calendarcalendar = () => {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
+
   console.log("Meetings after adding newMeeting2:", meetings);
   // 시작과 끝 일정 사이에 관련된 코드
   // 주어진 startDate와 endDate 사이의 날짜 배열을 반환하는 함수
@@ -170,73 +132,90 @@ export const Calendarcalendar = () => {
     )}T${selectedTime2}`;
 
     if (title === "") return;
-    const newMeeting = {
-      id: meetings.length + 1,
-      name: title,
-      dailyscrum: "티밍", // 수정 가능
-      startDatetime: startDateTime,
-      endDatetime: endDateTime,
-      project_color: "#FF008", // 수정 가능
+
+    // 0822수정
+    const requestData = {
+      schedule_name: title,
+      schedule_start: format(selectedDate1, "yyyy-MM-dd"),
+      schedule_end: format(selectedDate2, "yyyy-MM-dd"),
+      schedule_start_time: `${selectedTime1}:00`,
+      schedule_end_time: `${selectedTime2}:00`,
     };
-
-    // 다음 부분을 추가하여 해당 날짜에 생성된 일정을 보여줍니다.
-    const newDay = parseISO(startDateTime);
-    setSelectedDay(newDay);
-
-    // 새로운 일정을 기존 meetings 배열에 추가
-    // setMeetings([...meetings, newMeeting]); 이 부분 잠시 생략
-
-    // 콘솔에서 확인하고 싶은 경우(final)
-    console.log("새 일정의 제목:", title);
-    console.log("시작 일정:", startDateTime);
-    console.log("마감 일정:", endDateTime);
-
-    // 콘솔에서 확인하고 싶은 경우(ver.1)
-    // console.log("새 일정의 제목:", newlisttextRef.current.value);
-    // console.log("시작 일정:", getFormattedDate(selectedDate1));
-    // console.log("마감 일정:", getFormattedDate(selectedDate2));
-
-    setSelectedDay(selectedDate1); // 새 회의의 시작 날짜로 선택한 날짜 업데이트
-    newlisttextRef.current.value = ""; // 입력 필드 초기화
-    setSelectedDate1(new Date());
-    setSelectedDate2(new Date());
-    setSelectedTime1("00:00");
-    setSelectedTime2("00:00");
 
     axios({
       method: "post",
       url: `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/schedule`,
 
-      data: {
-        schedule_name: title,
-        schedule_start: startDateTime,
-        schedule_end: endDateTime,
-        schedule_start_time: selectedTime1 + ":00", // 변경 없음
-        schedule_end_time: selectedTime2 + ":00", // 변경 없음
+      data: requestData,
+      // {
+      // schedule_id: id,
+      // schedule_name: title,
+      // schedule_start: startDateTime,
+      // schedule_end: endDateTime,
+      // schedule_start_time: selectedTime1,
+      // schedule_end_time: selectedTime2,
 
-        // 두번째 제이의 수정안
-        // schedule_start: startDateTime.replaceAll(".", "-"), // 수정된 부분
-        // schedule_end: endDateTime.replaceAll(".", "-"), // 수정된 부분
-        // schedule_start_time: startDateTime.slice(11, 16) + ":00",
-        // schedule_end_time: endDateTime.slice(11, 16) + ":00",
-
-        //첫번째 샌디의 수정안
-        // schedule_start: startDateTime.slice(0, 10).replaceAll(".", "-"),
-        // schedule_end: endDateTime.slice(0, 10).replaceAll(".", "-"),
-        // schedule_start_time: startDateTime.slice(11, 16) + ":00",
-        // schedule_end_time: endDateTime.slice(11, 16) + ":00",
-      },
+      //첫번째 샌디의 수정안
+      // schedule_start: startDateTime.slice(0, 10).replaceAll(".", "-"),
+      // schedule_end: endDateTime.slice(0, 10).replaceAll(".", "-"),
+      // schedule_start_time: startDateTime.slice(11, 16) + ":00",
+      // schedule_end_time: endDateTime.slice(11, 16) + ":00",
+      // },
     })
-      .then((res) => {
-        console.log(res);
+      // .then((res) => {
+      //   console.log(res);
+      //   const newMeeting = {
+      //     id: res.data.data.scheduleId,
+      //     name: title,
+      //     dailyscrum: "", // 예시에서는 dailyscrum이 누락된 것 같아 추가
+      //     startDatetime: startDateTime,
+      //     endDatetime: endDateTime,
+      //     project_color: "#d79ac3"
+      //   };
+      .then((response) => {
+        const newMeeting = {
+          id: response.data.data.scheduleId,
+          name: title,
+          dailyscrum: "",
+          startDatetime: startDateTime,
+          endDatetime: endDateTime,
+          project_color: "#d79ac3",
+        };
+
+        // 기존 meetings 배열을 업데이트하는 방식 변경
+        setMeetings((prevMeetings) => [...prevMeetings, newMeeting]);
+
+        // 다음 부분을 추가하여 해당 날짜에 생성된 일정을 보여줍니다.
+        const newDay = parseISO(startDateTime);
+        setSelectedDay(newDay);
+
+        // 콘솔에서 확인하고 싶은 경우(final)
+        console.log("새 일정의 제목:", title);
+        console.log("시작 일정:", startDateTime);
+        console.log("마감 일정:", endDateTime);
+
+        setSelectedDay(selectedDate1); // 새 회의의 시작 날짜로 선택한 날짜 업데이트
+        newlisttextRef.current.value = ""; // 입력 필드 초기화
+        setSelectedDate1(new Date());
+        setSelectedDate2(new Date());
+        setSelectedTime1("00:00");
+        setSelectedTime2("00:00");
       })
       .catch((err) => console.log(err));
 
-    // 기존 meetings 배열을 업데이트하는 방식 변경
-    setMeetings((prevMeetings) => [...prevMeetings, newMeeting]);
-
-    // 제대로 추가되었는지 확인용
-    console.log("Meetings after adding newMeeting:", meetings);
+    // 두 번째 axios 요청 (일정 가져오기)
+    axios({
+      method: "get",
+      url: `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/schedule`,
+    })
+      .then((response) => {
+        const data = response.data; // 가져온 데이터는 response.data에 저장됨
+        console.log(data); // 데이터 확인
+        // 가져온 데이터를 가공 또는 처리하는 로직을 추가할 수 있음
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   };
 
   const handleDateChange1 = (date) => {
