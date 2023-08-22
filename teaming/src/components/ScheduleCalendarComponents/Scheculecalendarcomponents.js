@@ -135,17 +135,17 @@ export const Schedulecalendarcomponents = () => {
     setMeetings(updatedMeetings);
   };
 
-  /*  useEffect(() => {
-    axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/schedule`
-      )
-      .then((res) => {
-        console.log(res);
-        setMeetings(res.data.data);
-      })
-      .catch((err) => console.log(err));
-  }, []); */
+  //  useEffect(() => {
+  //   axios
+  //     .get(
+  //       `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/schedule`
+  //     )
+  //     .then((res) => {
+  //       console.log(res);
+  //       setMeetings(res.data.data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []); 
 
   return (
     <div className="SchedulecalendarApp pt-10">
