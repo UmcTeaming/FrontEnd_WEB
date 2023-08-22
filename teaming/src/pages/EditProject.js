@@ -214,7 +214,7 @@ const NewProject = () => {
         formData.append("project_name", data.projectName);
       }
 
-      formData.append("project_image", file);
+      if (file !== null) formData.append("project_image", file);
 
       formData.append("start_date", selectedDay1.format("YYYY-MM-DD"));
       formData.append("end_date", selectedDay2.format("YYYY-MM-DD"));
