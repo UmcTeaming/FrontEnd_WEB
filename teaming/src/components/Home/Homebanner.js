@@ -102,7 +102,7 @@ export const Homebanner = () => {
               grabCursor={true}
               centeredSlides={true}
               loop={true}
-              slidesPerView={1}
+              slidesPerView={3}
               coverflowEffect={{
                 rotate: 0,
                 stretch: 0,

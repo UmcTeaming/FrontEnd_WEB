@@ -36,51 +36,51 @@ export const Schedulecalendarcomponents = () => {
   const [meetings, setMeetings] = useState([
     {
       id: 1,
-      name: "티밍 전체 대면 회의 - 중구 퇴계로",
-      dailyscrum: "00교양 조별 과제",
-      startDatetime: "2023-08-11T13:00",
-      endDatetime: "2023-08-13T14:30",
-      project_color: "#d79ac3",
+      name: "티밍 final 대면 회의",
+      dailyscrum: "티밍 프로젝트 스터디",
+      startDatetime: "2023-08-13T13:00",
+      endDatetime: "2023-08-21T10:30",
+      project_color: "#FFAA00",
     },
     {
       id: 2,
-      name: "티밍 전체 대면 회의 - 중구 퇴계로",
-      dailyscrum: "00교양 조별 과제",
+      name: "티밍 web 온라인 회의",
+      dailyscrum: "티밍 프로젝트 스터디",
       startDatetime: "2023-08-11T13:00",
       endDatetime: "2023-08-13T14:30",
-      project_color: "#d79ac3",
+      project_color: "#FFAA00",
     },
     {
       id: 3,
-      name: "티밍 전체 대면 회의 - 중구 퇴계로",
-      dailyscrum: "00교양 조별 과제",
+      name: "시연 영상 찍기",
+      dailyscrum: "GURU ",
       startDatetime: "2023-08-11T13:00",
       endDatetime: "2023-08-13T14:30",
-      project_color: "#d79ac3",
+      project_color: "#BB92FF",
     },
     {
       id: 4,
-      name: "프로젝트 회의",
-      dailyscrum: "티밍 회의",
-      startDateTime: "2023-08-13T14:00",
-      endDateTime: "2023-08-15T16:30",
-      project_color: "#FFD008",
+      name: "발표회",
+      dailyscrum: "GURU",
+      startDateTime: "2023-08-20T14:00",
+      endDateTime: "2023-08-20T16:30",
+      project_color: "#BB92FF",
     },
     {
       id: 5,
-      name: "티밍 전체 대면 회의 - 송파구 퇴계로",
-      dailyscrum: "00교양 조별 과제",
-      startDatetime: "2023-08-11T13:00",
-      endDatetime: "2023-08-13T14:30",
-      project_color: "#FFD008",
+      name: "React스터디",
+      dailyscrum: "데일리 스터디",
+      startDatetime: "2023-08-21T13:00",
+      endDatetime: "2023-08-25T14:30",
+      project_color: "#D9D9D9",
     },
     {
       id: 6,
-      name: "왜 안 뜨냐고 ",
-      dailyscrum: "00교양 조별 과제",
-      startDatetime: "2023-08-12T13:00",
-      endDatetime: "2023-08-15T14:30",
-      project_color: "#FFD008",
+      name: "디자인 팀 회의",
+      dailyscrum: "GURU",
+      startDateTime: "2023-08-08T14:00",
+      endDateTime: "2023-08-08T16:30",
+      project_color: "#BB92FF",
     },
   ]);
 
@@ -107,7 +107,7 @@ export const Schedulecalendarcomponents = () => {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
-
+  console.log("시작 일정:", format(selectedDay, "yyyy-MM-dd"));
   // 시작과 끝 일정 사이에 관련된 코드
   // 주어진 startDate와 endDate 사이의 날짜 배열을 반환하는 함수
   const daysBetween = (startDate, endDate) => {

@@ -193,6 +193,7 @@ export const Calendarcalendar = () => {
         console.log("새 일정의 제목:", title);
         console.log("시작 일정:", startDateTime);
         console.log("마감 일정:", endDateTime);
+        console.log("주소값:",)
 
         setSelectedDay(selectedDate1); // 새 회의의 시작 날짜로 선택한 날짜 업데이트
         newlisttextRef.current.value = ""; // 입력 필드 초기화
