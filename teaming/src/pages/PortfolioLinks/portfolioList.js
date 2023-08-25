@@ -13,6 +13,8 @@ import styled from "styled-components";
 import axios from 'axios';
 import { useRecoilState } from "recoil";
 import { memberIdState, nickNameState } from "../../components/atom";
+import { useQuery, useQueryClient } from 'react-query';
+import { fetchPortfolioData  } from "./usePortfolio";
 
 const CardBtn = styled.div`
   border: none;
@@ -38,28 +40,27 @@ const ListBtn = styled.div`
 
 const PortfolioList = () => {
     const [viewBox, setViewBox] = useState(true);
-    const [portfolioData, setPortfolioData] = useState([]);
     const [memberId] = useRecoilState(memberIdState);
     const nickName = useRecoilState(nickNameState);
-
+    const { data: portfolioData, refetch } = useQuery(
+        ["portfolio", memberId],
+        () => fetchPortfolioData(memberId),console.log("useQuery 실행"),
+        {
+          enabled: true
+        }
+      );
+      
     useEffect(() => {
-        axios
-            .get(`${process.env.REACT_APP_API_URL}/member/${memberId}/portfolio`)
-            .then((response) => {
-                if (response.data && response.data.data && response.data.data.portfolio) {
-                    // 포트폴리오 데이터가 있는 경우 정렬
-                    const sortedPortfolioData = response.data.data.portfolio.sort((a, b) =>
-                        new Date(a.projectStartDate) - new Date(b.projectStartDate)
-                    );
-                    setPortfolioData(sortedPortfolioData);
-                    console.log(response);
-                } else {
-                    setPortfolioData([]);
-                }
-            })
-            .catch((error) => {
-                console.error("포트폴리오 데이터 가져오기 오류:", error);
-            });
+        async function fetchData() {
+            const response = await fetchPortfolioData(memberId);
+            console.log(response); // response로부터 데이터 확인
+            if (portfolioData.length < response.length) {
+                console.log("새로운 데이터가 추가");        
+                refetch(); // 데이터를 다시 불러옴
+            }
+        }
+        console.log("데이터를 비동기적으로 불러옴");
+        fetchData(); // 데이터를 비동기적으로 불러옴
     }, [memberId]);
     
     return (
@@ -124,8 +125,17 @@ const PortfolioList = () => {
                                     </CardBtn>
                                 </button>
                             </div>
-                            {viewBox ? <PjBoxes projects={portfolioData} /> : <PjLines projects={portfolioData} />}
-                        </div>
+                                {portfolioData ? (
+                                    viewBox ? 
+                                    <PjBoxes projects={portfolioData} /> 
+                                    : 
+                                    <PjLines projects={portfolioData} />) 
+                                    : 
+                                (
+                                    // 데이터가 없는 경우에 대한 처리
+                                    <div>Loading...</div>
+                                )}
+                            </div>
                     </div>
                 </div>
             </div>
