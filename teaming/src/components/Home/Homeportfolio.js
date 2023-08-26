@@ -30,64 +30,6 @@ export const Homeportfolio = () => {
       });
   }, []);
 
-  // const items = [
-  //   {
-  //     projectName: "Skynoodle",
-  //     projectStartDate: "2022-09-08",
-  //     projectEndDate: "2023-07-13",
-  //     projectStatus: "END",
-  //     member_name: "이 정보 어디서 가져와",
-  //   },
-  //   {
-  //     projectName: "Jaxbean",
-  //     projectStartDate: "2023-05-16",
-  //     projectEndDate: "2023-06-13",
-  //     projectStatus: "END",
-  //     member_name: "팀원 정보를 알려주세요",
-  //   },
-  //   {
-  //     projectName: "Flashdog",
-  //     projectStartDate: "2023-03-26",
-  //     projectEndDate: "2023-04-14",
-  //     projectStatus: "END",
-  //     member_name: "팀원 정보를 알려주세요",
-  //   },
-  //   {
-  //     projectName: "Eadel",
-  //     projectStartDate: "2023-03-26",
-  //     projectEndDate: "2023-04-14",
-  //     projectStatus: "END",
-  //     member_name: "팀원 정보를 알려주세요",
-  //   },
-  //   {
-  //     projectName: "Thoughtbridge",
-  //     projectStartDate: "2023-05-12",
-  //     projectEndDate: "2023-01-26",
-  //     projectStatus: "END",
-  //     member_name: "팀원 정보를 알려주세요",
-  //   },
-  //   {
-  //     projectName: "PQuinu",
-  //     projectStartDate: "2022-09-05",
-  //     projectEndDate: "2022-11-20",
-  //     projectStatus: "ING",
-  //     member_name: "팀원 정보를 알려주세요",
-  //   },
-  //   {
-  //     projectName: "Voomm",
-  //     projectStartDate: "2022-11-26",
-  //     projectEndDate: "2022-11-12",
-  //     projectStatus: "END",
-  //     member_name: "팀원 정보를 알려주세요",
-  //   },
-  //   {
-  //     projectName: "Yabox",
-  //     projectStartDate: "2022-10-05",
-  //     projectEndDate: "2022-08-18",
-  //     projectStatus: "END",
-  //     member_name: "팀원 정보를 알려주세요",
-  //   }
-  // ];
 
   const maxItemsToShow = 8; // 최대로 보여줄 아이템 개수
 
@@ -147,7 +89,10 @@ export const Homeportfolio = () => {
                   )}
                 </div>
                 <div className="contenttxt">
-                  <div className="contenttitle">{item.projectName}</div>
+                  <div className="contenttitle">                      {" "}
+                      {item.projectName.length > 9
+                        ? `${item.projectName.slice(0, 9)}...`
+                        : item.projectName}</div>
                   <div className="contentsubtitle">{`${item.projectStartDate} ~ ${item.projectEndDate}`}</div>
                 </div>
                 </Link>
