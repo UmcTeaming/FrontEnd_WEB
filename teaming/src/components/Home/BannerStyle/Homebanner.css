@@ -80,9 +80,10 @@
   list-style-type: none;
 }
 
+
 .swiper_container {
   width: 100%;
-  padding: 20px;
+  padding: 40px;
 }
 
 .swiper-slide {
@@ -92,6 +93,16 @@
   /* 가로 가운데 정렬 */
   align-items: center;
   /* 세로 가운데 정렬 */
+}
+
+.swiper-slide-shadow-left,
+.swiper-slide-shadow-right {
+  display: none;
+}
+
+.swiper-slide-prev,
+.swiper-slide-next {
+  filter: blur(2px);
 }
 
 
@@ -190,3 +201,4 @@
   color: #808080;
   line-height: .5;
 }
+

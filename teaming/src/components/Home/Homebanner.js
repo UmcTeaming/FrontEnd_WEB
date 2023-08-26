@@ -31,6 +31,7 @@ export const Homebanner = () => {
   const [memberId, setMemberId] = useRecoilState(memberIdState);
   const [recentlyProjects, setRecentlyProjects] = useState([]);
 
+
   useEffect(() => {
     // 여기서 외부 데이터를 가져오고 recentlyProjects 상태를 설정하세요
     axios
@@ -47,28 +48,6 @@ export const Homebanner = () => {
       });
   }, []);
 
-  // const items = [
-  //   {
-  //     projectName: "Auto-Encoder 머신러닝 프로젝트",
-  //     projectDate: "2023-09-01",
-  //     projectStatus: "ING",
-  //     member_name: "팀원 정보를 알려주세요",
-  //   },
-  //   {
-  //     projectName: "스토리텔링 팀 프로젝트",
-  //     projectDate: "2023-09-01",
-  //     projectStatus: "ING",
-  //     member_name: "팀원 정보를 알려주세요",
-  //   },
-  //   {
-  //     projectName: "연출학개론 팀 프로젝트",
-  //     projectDate: "2023-09-01",
-  //     projectStatus: "ING",
-  //     member_name: "팀원 정보를 알려주세요",
-  //   },
-  // ];
-
-  // const items = ['item1', 'item2', 'item3']; // 리스트에 내용이 있는 경우
   console.log(recentlyProjects);
   return (
     <div className="BannerApp">
@@ -101,7 +80,6 @@ export const Homebanner = () => {
               effect={"coverflow"}
               grabCursor={true}
               centeredSlides={true}
-              loop={true}
               slidesPerView={3}
               coverflowEffect={{
                 rotate: 0,
@@ -111,18 +89,19 @@ export const Homebanner = () => {
               }}
               pagination={{ el: "swiper-pagination", clickable: true }}
               navigation={{
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
                 clickable: true,
               }}
+              loop={true}
               modules={[EffectCoverflow, Pagination, Navigation]}
-              spaceBetween={10}
+              spaceBetween={-50}
             >
               {recentlyProjects?.map((item, index) => (
                 <SwiperSlide key={index}>
                   <div className="contentdisplay_inline">
                     <div className="content">
-                      <Link to={`/${item.projectId}/final-files`}>
+                      <Link to={`/${item.projectId}/project-files`}>
                         {item.projectStatus === "ING" ? (
                           <span className="contentprogress2">
                             진행중{" "}
