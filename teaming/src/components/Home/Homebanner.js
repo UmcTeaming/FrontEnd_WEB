@@ -8,6 +8,8 @@ import {
   faChevronLeft,
   faCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { IonIcon } from '@ionic/react';
+import {  arrowForwardCircleOutline,arrowBackCircleOutline, chevronForwardOutline, chevronBackOutline} from 'ionicons/icons';
 
 // 배너 슬라이더 관련
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -47,28 +49,6 @@ export const Homebanner = () => {
       });
   }, []);
 
-  // const items = [
-  //   {
-  //     projectName: "Auto-Encoder 머신러닝 프로젝트",
-  //     projectDate: "2023-09-01",
-  //     projectStatus: "ING",
-  //     member_name: "팀원 정보를 알려주세요",
-  //   },
-  //   {
-  //     projectName: "스토리텔링 팀 프로젝트",
-  //     projectDate: "2023-09-01",
-  //     projectStatus: "ING",
-  //     member_name: "팀원 정보를 알려주세요",
-  //   },
-  //   {
-  //     projectName: "연출학개론 팀 프로젝트",
-  //     projectDate: "2023-09-01",
-  //     projectStatus: "ING",
-  //     member_name: "팀원 정보를 알려주세요",
-  //   },
-  // ];
-
-  // const items = ['item1', 'item2', 'item3']; // 리스트에 내용이 있는 경우
   console.log(recentlyProjects);
   return (
     <div className="BannerApp">
@@ -99,9 +79,9 @@ export const Homebanner = () => {
             <Swiper
               className="swiper_container"
               effect={"coverflow"}
+              initialSlide={1}
               grabCursor={true}
               centeredSlides={true}
-              loop={true}
               slidesPerView={3}
               coverflowEffect={{
                 rotate: 0,
@@ -115,21 +95,19 @@ export const Homebanner = () => {
                 prevEl: ".swiper-button-prev",
                 clickable: true,
               }}
+              loop={true}
               modules={[EffectCoverflow, Pagination, Navigation]}
-              spaceBetween={10}
+              spaceBetween={-50}
             >
               {recentlyProjects?.map((item, index) => (
                 <SwiperSlide key={index}>
                   <div className="contentdisplay_inline">
                     <div className="content">
-                      <Link to={`/${item.projectId}/final-files`}>
+                      <Link to={`/${item.projectId}/project-files`}>
                         {item.projectStatus === "ING" ? (
                           <span className="contentprogress2">
                             진행중{" "}
-                            <FontAwesomeIcon
-                              icon={faCircle}
-                              color="#527FF5"
-                            />
+                            <FontAwesomeIcon icon={faCircle} color="#527FF5" />
                           </span>
                         ) : (
                           <span className="contentprogress2">
@@ -162,10 +140,11 @@ export const Homebanner = () => {
 
               <div className="slider-controler">
                 <div className="swiper-button-prev slider-arrow">
-                  <ion-icon name="arrow-back-outline"></ion-icon>
+                  <IonIcon icon={chevronBackOutline} style={{ fontSize: '30px' }}></IonIcon>
                 </div>
                 <div className="swiper-button-next slider-arrow">
-                  <ion-icon name="arrow-forward-outline"></ion-icon>
+                  <IonIcon icon={chevronForwardOutline} style={{ fontSize: '30px' }}></IonIcon>
+                  
                 </div>
                 <div className="swiper-pagination"></div>
               </div>
