@@ -102,7 +102,7 @@ export const Homebanner = () => {
               grabCursor={true}
               centeredSlides={true}
               loop={true}
-              slidesPerView={3}
+              slidesPerView={1}
               coverflowEffect={{
                 rotate: 0,
                 stretch: 0,
@@ -116,7 +116,7 @@ export const Homebanner = () => {
                 clickable: true,
               }}
               modules={[EffectCoverflow, Pagination, Navigation]}
-              spaceBetween={5}
+              spaceBetween={10}
             >
               {recentlyProjects?.map((item, index) => (
                 <SwiperSlide key={index}>
