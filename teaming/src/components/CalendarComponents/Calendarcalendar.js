@@ -42,17 +42,111 @@ function classNames(...classes) {
 }
 
 export const Calendarcalendar = () => {
+  const [memberId, setMemebrId] = useRecoilState(memberIdState);
+  const { projectId } = useParams();
+  const [dateList, setDateList] = useState();
+  const [daymeetings, setDayMeetings] = useState();
+
   // 일정 데이터를 받는 부분_해당 내용들은 예시
   const [meetings, setMeetings] = useState([
+    {
+      schedule_id: 22,
+      schedule_name: "티밍 기획서 이다다",
+      schedule_start: "2023-07-07",
+      schedule_start_time: "10:30:00",
+      schedule_end: "2023-07-07",
+      schedule_end_time: "14:30:00",
+    },
     // {
     //   id: 1,
     //   name: "티밍 전체 대면 회의1 - 중구 퇴계로",
-    //   dailyscrum: "00교양 조별 과제",
+    //   project_name: "00교양 조별 과제",
     //   startDatetime: "2023-08-11T13:00",
     //   endDatetime: "2023-08-13T14:30",
     //   project_color: "#d79ac3",
     // },
   ]);
+
+  // 일정 추가
+  const ScheduleCreate = () => {
+    const title = newlisttextRef.current.value; //새 일정의 제목을 입력하는 부분에서 얻어온 값
+    // 선택된 날짜와 시간을 이용하여 시간 및 종료 날짜와 시간을 문자열로 생성
+    const startDateTime = `${format(
+      selectedDate1,
+      "yyyy-MM-dd"
+    )}T${selectedTime1}`;
+    const endDateTime = `${format(
+      selectedDate2,
+      "yyyy-MM-dd"
+    )}T${selectedTime2}`;
+
+    // 만약 일정 제목이 빈 문자열이라면 함수 실행을 중지하고 반환합니다
+    if (title === "") return;
+
+    // 새 일정을 생성하기 위해 서버로 보낼 요청 데이터 객체로 일정 이름, 시작, 종료 날자 및 시간이 포함된다
+    const requestData = {
+      schedule_id: id,
+      schedule_name: title,
+      schedule_start: format(selectedDate1, "yyyy-MM-dd"),
+      schedule_end: format(selectedDate2, "yyyy-MM-dd"),
+      schedule_start_time: `${selectedTime1}:00`,
+      schedule_end_time: `${selectedTime2}:00`,
+    };
+
+    //Axios를 사용하여 서버에 POST 요청을 보낸다. 요청 URL에 requestData를 함께 보내어 새 일정을 생성한다
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/schedule`,
+        requestData
+      )
+      .then((response) => {
+        const data = response.data;
+        console.log(data);
+        const newMeeting = {
+          id: response.data.data.scheduleId,
+          name: title,
+          startDatetime: startDateTime,
+          endDatetime: endDateTime,
+        };
+
+        // setMeetings 함수를 사용하여 기존 meetings 배열에 새 일정을 추가한다
+        setMeetings((prevMeetings) => [...prevMeetings, newMeeting]);
+
+        // 다음 부분을 추가하여 해당 날짜에 생성된 일정을 보여줍니다.
+        const newDay = parseISO(startDateTime);
+        setSelectedDay(newDay);
+
+        setSelectedDay(selectedDate1); // 새 회의의 시작 날짜로 선택한 날짜 업데이트
+
+        // 이 부분은 생성 버튼을 눌렀을 때 입력필드, 날짜, 시간 선택을 초기화한다
+        newlisttextRef.current.value = "";
+        setSelectedDate1(new Date());
+        setSelectedDate2(new Date());
+        setSelectedTime1("00:00");
+        setSelectedTime2("00:00");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  // 일정 삭제
+  const ScheduleDelete = (scheduleId) => {
+    axios
+      .delete(
+        `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/${scheduleId}`
+      )
+      .then((response) => {
+        const data = response.data;
+        console.log(data);
+        const updatedMeetings = meetings.filter(
+          (meeting) => meeting.id !== scheduleId
+        );
+        setMeetings(updatedMeetings);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
+
   let today = startOfToday();
   let [selectedDay, setSelectedDay] = useState(today); //selectDay상태와 setCount 함수를 선언
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
@@ -65,11 +159,16 @@ export const Calendarcalendar = () => {
     end: endOfMonth(firstDayCurrentMonth),
   });
 
-  const [memberId, setMemebrId] = useRecoilState(memberIdState);
-  const { projectId } = useParams();
-
-  const [dateList, setDateList] = useState();
-  const [daymeetings, setDayMeetings] = useState();
+  // 시작과 끝 일정 사이에 관련된 코드로 주어진 startDate와 endDate 사이의 날짜 배열을 반환하는 함수
+  const daysBetween = (startDate, endDate) => {
+    const days = [];
+    let currentDate = startDate;
+    while (currentDate <= endDate) {
+      days.push(currentDate);
+      currentDate = add(currentDate, { days: 1 });
+    }
+    return days;
+  };
 
   function previousMonth() {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
@@ -81,33 +180,74 @@ export const Calendarcalendar = () => {
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
 
-  console.log("Meetings after adding newMeeting2:", meetings);
-  // 시작과 끝 일정 사이에 관련된 코드
-  // 주어진 startDate와 endDate 사이의 날짜 배열을 반환하는 함수
-  const daysBetween = (startDate, endDate) => {
-    const days = [];
-    let currentDate = startDate;
-    while (currentDate <= endDate) {
-      days.push(currentDate);
-      currentDate = add(currentDate, { days: 1 });
-    }
-    return days;
-  };
+  function Meeting({ meeting, onDelete }) {
+    let startDateTime = parseISO(meeting.startDatetime);
+    let endDateTime = parseISO(meeting.endDatetime);
+    // project_color 값을 가져와서 스타일로 적용
+    const colorStyle = {
+      backgroundColor: meeting.project_color,
+    };
+
+    // 프로젝트 전체 스케줄 확인
+    // useEffect(() => {
+    //   axios
+    //     .get(`${process.env.REACT_APP_API_URL}/projects/${projectId}/schedule`)
+    //     .then((response) => {
+    //       const data = response.data;
+    //       console.log(data);
+    //       setMeetings(data);
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error fetching schedule data:", error);
+    //     });
+    // }, []);
+    return (
+      <div className="schedulecomponents ">
+        <li className="flex items-center border border-white-300 mb-2 bg-white px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-10 hover:bg-gray-10">
+          <div className="colorbar" style={colorStyle}></div>
+          <div className="flex-auto">
+            <div className="flex">
+              <div className="content text-black-900">{meeting.name}</div>
+              <FontAwesomeIcon
+                className="delete"
+                icon={faXmark}
+                onClick={() => onDelete(meeting.id)}
+              />
+            </div>
+            <div className="contentdateperiod mt-0.5">
+              <time dateTime={meeting.startDatetime}>
+                {format(startDateTime, "yyy.MM.dd")}
+              </time>{" "}
+              ~{" "}
+              <time dateTime={meeting.endDatetime}>
+                {format(endDateTime, "yyy.MM.dd")}
+              </time>
+            </div>
+            <div className="flex">
+              <div className="contenttimeperiod" style={colorStyle}>
+                <div className="timeperiod">
+                  <time dateTime={meeting.startDatetime}>
+                    {format(startDateTime, "H:mm")}
+                  </time>{" "}
+                  -{" "}
+                  <time dateTime={meeting.endDatetime}>
+                    {format(endDateTime, "H:mm")}
+                  </time>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </div>
+    );
+  }
 
   let selectedDayMeetings = meetings.filter((meeting) =>
-    // isSameDay(parseISO(meeting.startDatetime), selectedDay) 가 기존 코드
     daysBetween(
       parseISO(meeting.startDatetime),
       parseISO(meeting.endDatetime)
     ).some((d) => isSameDay(d, selectedDay))
   );
-
-  const handleDelete = (meetingId) => {
-    const updatedMeetings = meetings.filter(
-      (meeting) => meeting.id !== meetingId
-    );
-    setMeetings(updatedMeetings);
-  };
 
   // newlist에 해당하는 변수들
   const [newMeetingTitle, setNewMeetingTitle] = useState("");
@@ -115,109 +255,6 @@ export const Calendarcalendar = () => {
   const [selectedDate2, setSelectedDate2] = useState(new Date());
   const [selectedTime1, setSelectedTime1] = useState("00:00");
   const [selectedTime2, setSelectedTime2] = useState("00:00");
-
-  // Click handler for the 생성 button
-  const handleCreateButton = () => {
-    const title = newlisttextRef.current.value;
-    // 네번째 제이의 수정
-    // const startDateTime = `${getFormattedDate(selectedDate1)} ${selectedTime1}`;
-    // const endDateTime = `${getFormattedDate(selectedDate2)} ${selectedTime2}`;
-    const startDateTime = `${format(
-      selectedDate1,
-      "yyyy-MM-dd"
-    )}T${selectedTime1}`;
-    const endDateTime = `${format(
-      selectedDate2,
-      "yyyy-MM-dd"
-    )}T${selectedTime2}`;
-
-    if (title === "") return;
-
-    // 0822수정
-    const requestData = {
-      schedule_name: title,
-      schedule_start: format(selectedDate1, "yyyy-MM-dd"),
-      schedule_end: format(selectedDate2, "yyyy-MM-dd"),
-      schedule_start_time: `${selectedTime1}:00`,
-      schedule_end_time: `${selectedTime2}:00`,
-    };
-
-    axios({
-      method: "post",
-      url: `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/schedule`,
-
-      data: requestData,
-      // {
-      // schedule_id: id,
-      // schedule_name: title,
-      // schedule_start: startDateTime,
-      // schedule_end: endDateTime,
-      // schedule_start_time: selectedTime1,
-      // schedule_end_time: selectedTime2,
-
-      //첫번째 샌디의 수정안
-      // schedule_start: startDateTime.slice(0, 10).replaceAll(".", "-"),
-      // schedule_end: endDateTime.slice(0, 10).replaceAll(".", "-"),
-      // schedule_start_time: startDateTime.slice(11, 16) + ":00",
-      // schedule_end_time: endDateTime.slice(11, 16) + ":00",
-      // },
-    })
-      // .then((res) => {
-      //   console.log(res);
-      //   const newMeeting = {
-      //     id: res.data.data.scheduleId,
-      //     name: title,
-      //     dailyscrum: "", // 예시에서는 dailyscrum이 누락된 것 같아 추가
-      //     startDatetime: startDateTime,
-      //     endDatetime: endDateTime,
-      //     project_color: "#d79ac3"
-      //   };
-      .then((response) => {
-        const newMeeting = {
-          id: response.data.data.scheduleId,
-          name: title,
-          dailyscrum: "",
-          startDatetime: startDateTime,
-          endDatetime: endDateTime,
-          project_color: "#d79ac3",
-        };
-
-        // 기존 meetings 배열을 업데이트하는 방식 변경
-        setMeetings((prevMeetings) => [...prevMeetings, newMeeting]);
-
-        // 다음 부분을 추가하여 해당 날짜에 생성된 일정을 보여줍니다.
-        const newDay = parseISO(startDateTime);
-        setSelectedDay(newDay);
-
-        // 콘솔에서 확인하고 싶은 경우(final)
-        console.log("새 일정의 제목:", title);
-        console.log("시작 일정:", startDateTime);
-        console.log("마감 일정:", endDateTime);
-        console.log("주소값:",)
-
-        setSelectedDay(selectedDate1); // 새 회의의 시작 날짜로 선택한 날짜 업데이트
-        newlisttextRef.current.value = ""; // 입력 필드 초기화
-        setSelectedDate1(new Date());
-        setSelectedDate2(new Date());
-        setSelectedTime1("00:00");
-        setSelectedTime2("00:00");
-      })
-      .catch((err) => console.log(err));
-
-    // 두 번째 axios 요청 (일정 가져오기)
-    axios({
-      method: "get",
-      url: `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/schedule`,
-    })
-      .then((response) => {
-        const data = response.data; // 가져온 데이터는 response.data에 저장됨
-        console.log(data); // 데이터 확인
-        // 가져온 데이터를 가공 또는 처리하는 로직을 추가할 수 있음
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  };
 
   const handleDateChange1 = (date) => {
     setSelectedDate1(date);
@@ -254,38 +291,10 @@ export const Calendarcalendar = () => {
     return date.getDate();
   };
 
-  // Refs to hold input values
   const newlisttextRef = useRef(null);
 
   useEffect(() => {
     console.log(format(today, "yyyy-MM-dd"));
-    axios({
-      method: "post",
-      url: `${process.env.REACT_APP_API_URL}/member/${memberId}/date_list`,
-
-      data: {
-        date_request: format(today, "yyyy-MM-dd"),
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        setDateList(res.data.data);
-      })
-      .catch((err) => console.log(err));
-
-    axios({
-      method: "post",
-      url: `${process.env.REACT_APP_API_URL}/member/${memberId}/schedule_start`,
-
-      data: {
-        schedule_start: format(selectedDate1, "yyyy-MM-dd"),
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        setDayMeetings(res.data.data);
-      })
-      .catch((err) => console.log(err));
   }, []);
 
   return (
@@ -401,7 +410,7 @@ export const Calendarcalendar = () => {
                   <Meeting
                     meeting={meeting}
                     key={meeting.id}
-                    onDelete={handleDelete}
+                    onDelete={ScheduleDelete}
                   />
                 ))
               ) : (
@@ -423,7 +432,7 @@ export const Calendarcalendar = () => {
           }}
         >
           <div>
-            <div className="newlisttxt" onClick={handleCreateButton}>
+            <div className="newlisttxt" onClick={ScheduleCreate}>
               <FontAwesomeIcon icon={faCirclePlus} /> 새 일정 만들기
             </div>
           </div>
@@ -434,7 +443,7 @@ export const Calendarcalendar = () => {
                 ref={newlisttextRef} // Ref to capture the input value
                 placeholder="새 일정의 제목을 적어주세요,,,"
               />
-              <button className="newlistbtn" onClick={handleCreateButton}>
+              <button className="newlistbtn" onClick={ScheduleCreate}>
                 생성
               </button>
             </div>
@@ -492,55 +501,6 @@ export const Calendarcalendar = () => {
     </div>
   );
 };
-function Meeting({ meeting, onDelete }) {
-  let startDateTime = parseISO(meeting.startDatetime);
-  let endDateTime = parseISO(meeting.endDatetime);
-  // project_color 값을 가져와서 스타일로 적용
-  const colorStyle = {
-    backgroundColor: meeting.project_color,
-  };
-  return (
-    <div className="schedulecomponents ">
-      <li className="flex items-center border border-white-300 mb-2 bg-white px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-10 hover:bg-gray-10">
-        {/* flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100 */}
-        <div className="colorbar" style={colorStyle}></div>
-        <div className="flex-auto">
-          <div className="flex">
-            <div className="content text-black-900">{meeting.name}</div>
-            <FontAwesomeIcon
-              className="delete"
-              icon={faXmark}
-              onClick={() => onDelete(meeting.id)}
-            />
-          </div>
-          <div className="contentdateperiod mt-0.5">
-            <time dateTime={meeting.startDatetime}>
-              {format(startDateTime, "yyy.MM.dd")}
-            </time>{" "}
-            ~{" "}
-            <time dateTime={meeting.endDatetime}>
-              {format(endDateTime, "yyy.MM.dd")}
-            </time>
-          </div>
-          <div className="flex">
-            <div className="contentdescription">{meeting.dailyscrum}</div>
-            <div className="contenttimeperiod" style={colorStyle}>
-              <div className="timeperiod">
-                <time dateTime={meeting.startDatetime}>
-                  {format(startDateTime, "H:mm")}
-                </time>{" "}
-                -{" "}
-                <time dateTime={meeting.endDatetime}>
-                  {format(endDateTime, "H:mm")}
-                </time>
-              </div>
-            </div>
-          </div>
-        </div>
-      </li>
-    </div>
-  );
-}
 
 let colStartClasses = [
   "",
