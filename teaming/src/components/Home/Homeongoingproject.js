@@ -123,7 +123,7 @@ export const Homeongoingproject = () => {
           <div className="grid-container">
             {progressProject.slice(0, maxItemsToShow).map((item, index) => (
               <div key={index} className="content">
-                <Link to={`/${item.projectId}/final-files`}>
+                <Link to={`/${item.projectId}/project-files`}>
                   {item.projectStatus === "ING" ? (
                     <span className="contentprogress">
                       진행중{" "}
