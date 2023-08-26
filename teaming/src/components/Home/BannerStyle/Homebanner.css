@@ -86,13 +86,16 @@
 }
 
 .swiper-slide {
-  display: flex; /* flex 컨테이너로 설정 */
-  justify-content: center; /* 가로 가운데 정렬 */
-  align-items: center; /* 세로 가운데 정렬 */
+  display: flex;
+  /* flex 컨테이너로 설정 */
+  justify-content: center;
+  /* 가로 가운데 정렬 */
+  align-items: center;
+  /* 세로 가운데 정렬 */
 }
 
 
-.BannerContent{
+.BannerContent {
   /* display: flex;
   gap:10px; */
   height: 300px;
@@ -113,13 +116,6 @@
   align-items: center;
 }
 
-.swiper-3d .swiper-slide-shadow-left {
-  background-image: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
-}
-
-.swiper-3d .swiper-slide-shadow-right{
-  background-image: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
-}
 
 .BannerContent .content {
   margin-top: 10px;
@@ -146,15 +142,15 @@
   width: 280.24px;
   height: 179.51px;
   margin-top: 20px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 15px;
+  margin-right: 15px;
   overflow: hidden;
   border-radius: 10px;
 }
 
-.contentprogress2{
+.contentprogress2 {
   position: absolute;
-  transform: translate(320%, 100%);
+  transform: translate(310%, 100%);
 }
 
 .contentimgs img {
@@ -186,7 +182,7 @@
   color: #808080;
 }
 
-.BannerContent .content .contentmember{
+.BannerContent .content .contentmember {
   text-align: left;
   margin-left: 30px;
   margin-top: 10px;
