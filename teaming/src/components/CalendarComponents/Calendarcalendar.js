@@ -189,18 +189,18 @@ export const Calendarcalendar = () => {
     };
 
     // 프로젝트 전체 스케줄 확인
-    // useEffect(() => {
-    //   axios
-    //     .get(`${process.env.REACT_APP_API_URL}/projects/${projectId}/schedule`)
-    //     .then((response) => {
-    //       const data = response.data;
-    //       console.log(data);
-    //       setMeetings(data);
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error fetching schedule data:", error);
-    //     });
-    // }, []);
+    useEffect(() => {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/projects/${projectId}/schedule`)
+        .then((response) => {
+          const data = response.data;
+          console.log(data);
+          setMeetings(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching schedule data:", error);
+        });
+    }, []);
     return (
       <div className="schedulecomponents ">
         <li className="flex items-center border border-white-300 mb-2 bg-white px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-10 hover:bg-gray-10">

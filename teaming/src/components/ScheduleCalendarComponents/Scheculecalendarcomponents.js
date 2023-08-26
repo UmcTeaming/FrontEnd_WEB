@@ -34,54 +34,14 @@ function classNames(...classes) {
 export const Schedulecalendarcomponents = () => {
   // 일정 데이터를 받는 부분_해당 내용들은 예시
   const [meetings, setMeetings] = useState([
-    {
-      id: 1,
-      name: "티밍 final 대면 회의",
-      dailyscrum: "티밍 프로젝트 스터디",
-      startDatetime: "2023-08-13T13:00",
-      endDatetime: "2023-08-21T10:30",
-      project_color: "#FFAA00",
-    },
-    {
-      id: 2,
-      name: "티밍 web 온라인 회의",
-      dailyscrum: "티밍 프로젝트 스터디",
-      startDatetime: "2023-08-11T13:00",
-      endDatetime: "2023-08-13T14:30",
-      project_color: "#FFAA00",
-    },
-    {
-      id: 3,
-      name: "시연 영상 찍기",
-      dailyscrum: "GURU ",
-      startDatetime: "2023-08-11T13:00",
-      endDatetime: "2023-08-13T14:30",
-      project_color: "#BB92FF",
-    },
-    {
-      id: 4,
-      name: "발표회",
-      dailyscrum: "GURU",
-      startDateTime: "2023-08-20T14:00",
-      endDateTime: "2023-08-20T16:30",
-      project_color: "#BB92FF",
-    },
-    {
-      id: 5,
-      name: "React스터디",
-      dailyscrum: "데일리 스터디",
-      startDatetime: "2023-08-21T13:00",
-      endDatetime: "2023-08-25T14:30",
-      project_color: "#D9D9D9",
-    },
-    {
-      id: 6,
-      name: "디자인 팀 회의",
-      dailyscrum: "GURU",
-      startDateTime: "2023-08-08T14:00",
-      endDateTime: "2023-08-08T16:30",
-      project_color: "#BB92FF",
-    },
+    // {
+    //   id: 1,
+    //   name: "티밍 final 대면 회의",
+    //   dailyscrum: "티밍 프로젝트 스터디",
+    //   startDatetime: "2023-08-13T13:00",
+    //   endDatetime: "2023-08-21T10:30",
+    //   project_color: "#FFAA00",
+    // },
   ]);
 
   const [memberId, setMemberId] = useRecoilState(memberIdState);
