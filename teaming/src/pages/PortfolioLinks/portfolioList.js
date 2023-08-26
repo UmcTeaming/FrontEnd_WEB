@@ -54,7 +54,9 @@ const PortfolioList = () => {
         async function fetchData() {
             const response = await fetchPortfolioData(memberId);
             console.log(response); // response로부터 데이터 확인
-            if (portfolioData.length < response.length) {
+            // if (portfolioData.length < response.length) 
+            if (portfolioData && portfolioData.length < response.length) 
+            {
                 console.log("새로운 데이터가 추가");        
                 refetch(); // 데이터를 다시 불러옴
             }
