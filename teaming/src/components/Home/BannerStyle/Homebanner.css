@@ -71,19 +71,17 @@
 
 /* 컨텐츠 */
 
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  list-style-type: none;
+.swiper_container {
+  /* width: 100%; */
+  display: flex;
+  justify-content: center; /* 수평 중앙 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
 }
 
 
-.swiper_container {
-  width: 100%;
-  padding: 40px;
+.swiper-wrapper {
+  display: flex;
+  align-items: center; /* 수직 중앙 정렬 */
 }
 
 .swiper-slide {
@@ -106,14 +104,58 @@
 }
 
 
+
 .BannerContent {
-  /* display: flex;
-  gap:10px; */
   height: 300px;
   width: 800px;
   border-radius: 10px;
   font-size: 24px;
   color: #333;
+}
+
+
+.swiper-slide {
+  width: 37rem;
+  height: 42rem;
+  position: relative;
+}
+
+.slider-controler {
+  position: relative;
+  bottom: 12rem;
+  display: flex;
+}
+
+.slider-controler .swiper-button-next {
+  left: 98% !important;
+  transform: translateX(-58%) !important;
+}
+.slider-controler .slider-arrow {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  left: 2%;
+  transform: translateX(-42%);
+  filter: drop-shadow(0px 8px 24px rgba(18, 28, 53, 0.1));
+}
+
+.slider-controler .slider-arrow ion-icon {
+  font-size: 2rem;
+  color: #fff;
+}
+
+.slider-controler .slider-arrow::after {
+  content: '';
+}
+
+.swiper-pagination {
+  position: relative;
+  width: 15rem !important;
+  bottom: 1rem;
+}
+
+.swiper-pagination .swiper-pagination-bullet {
+  filter: drop-shadow(0px 8px 24px rgba(18, 28, 53, 0.1));
 }
 
 /* .BannerContent .contentdisplay_inline{

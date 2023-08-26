@@ -8,6 +8,8 @@ import {
   faChevronLeft,
   faCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { IonIcon } from '@ionic/react';
+import {  arrowForwardCircleOutline,arrowBackCircleOutline, chevronForwardOutline, chevronBackOutline} from 'ionicons/icons';
 
 // 배너 슬라이더 관련
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -30,7 +32,6 @@ export const Homebanner = () => {
   const [nickName, setNickName] = useRecoilState(nickNameState);
   const [memberId, setMemberId] = useRecoilState(memberIdState);
   const [recentlyProjects, setRecentlyProjects] = useState([]);
-
 
   useEffect(() => {
     // 여기서 외부 데이터를 가져오고 recentlyProjects 상태를 설정하세요
@@ -78,6 +79,7 @@ export const Homebanner = () => {
             <Swiper
               className="swiper_container"
               effect={"coverflow"}
+              initialSlide={1}
               grabCursor={true}
               centeredSlides={true}
               slidesPerView={3}
@@ -89,8 +91,8 @@ export const Homebanner = () => {
               }}
               pagination={{ el: "swiper-pagination", clickable: true }}
               navigation={{
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
                 clickable: true,
               }}
               loop={true}
@@ -105,10 +107,7 @@ export const Homebanner = () => {
                         {item.projectStatus === "ING" ? (
                           <span className="contentprogress2">
                             진행중{" "}
-                            <FontAwesomeIcon
-                              icon={faCircle}
-                              color="#527FF5"
-                            />
+                            <FontAwesomeIcon icon={faCircle} color="#527FF5" />
                           </span>
                         ) : (
                           <span className="contentprogress2">
@@ -141,10 +140,11 @@ export const Homebanner = () => {
 
               <div className="slider-controler">
                 <div className="swiper-button-prev slider-arrow">
-                  <ion-icon name="arrow-back-outline"></ion-icon>
+                  <IonIcon icon={chevronBackOutline} style={{ fontSize: '30px' }}></IonIcon>
                 </div>
                 <div className="swiper-button-next slider-arrow">
-                  <ion-icon name="arrow-forward-outline"></ion-icon>
+                  <IonIcon icon={chevronForwardOutline} style={{ fontSize: '30px' }}></IonIcon>
+                  
                 </div>
                 <div className="swiper-pagination"></div>
               </div>
