@@ -30,7 +30,6 @@ export const Homeportfolio = () => {
       });
   }, []);
 
-
   const maxItemsToShow = 8; // 최대로 보여줄 아이템 개수
 
   return (
@@ -66,40 +65,41 @@ export const Homeportfolio = () => {
             {portfolio.slice(0, maxItemsToShow).map((item, index) => (
               <div key={index} className="content">
                 <Link to={`/${item.projectId}/final-files`}>
-                {item.projectStatus === "ING" ? (
-                  <span className="contentprogress">
-                    진행중{" "}
-                    <FontAwesomeIcon
-                      icon={faCircle}
-                      style={{ color: "blue" }}
-                    />
-                  </span>
-                ) : (
-                  <span className="contentprogress">
-                    마감{" "}
-                    <FontAwesomeIcon
-                      icon={faCircle}
-                      style={{ color: "yellow" }}
-                    />
-                  </span>
-                )}
-                <div className="contentimgs">
-                  {item.projectImage && (
-                    <img src={item.projectImage} alt={item.projectName} />
+                  {item.projectStatus === "ING" ? (
+                    <span className="contentprogress">
+                      진행중{" "}
+                      <FontAwesomeIcon
+                        icon={faCircle}
+                        style={{ color: "blue" }}
+                      />
+                    </span>
+                  ) : (
+                    <span className="contentprogress">
+                      마감{" "}
+                      <FontAwesomeIcon
+                        icon={faCircle}
+                        style={{ color: "yellow" }}
+                      />
+                    </span>
                   )}
-                </div>
-                <div className="contenttxt">
-                  <div className="contenttitle">                      {" "}
+                  <div className="contentimgs">
+                    {item.projectImage && (
+                      <img src={item.projectImage} alt={item.projectName} />
+                    )}
+                  </div>
+                  <div className="contenttxt">
+                    <div className="contenttitle">
+                      {" "}
                       {item.projectName.length > 9
                         ? `${item.projectName.slice(0, 9)}...`
-                        : item.projectName}</div>
-                  <div className="contentsubtitle">{`${item.projectStartDate} ~ ${item.projectEndDate}`}</div>
-                </div>
+                        : item.projectName}
+                    </div>
+                    <div className="contentsubtitle">{`${item.projectStartDate} ~ ${item.projectEndDate}`}</div>
+                  </div>
                 </Link>
               </div>
             ))}
           </div>
-          
         </div>
       )}
     </div>
