@@ -67,6 +67,42 @@ export const Calendarcalendar = () => {
     // },
   ]);
 
+  // 프로젝트 전체 스케줄 확인
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/schedule`
+      )
+      .then((response) => {
+        const data = response.data;
+        console.log(data);
+        // 배열 내의 각 스케줄 정보를 출력
+        data.data.forEach((schedule) => {
+          console.log("Schedule Name:", schedule.schedule_name);
+          console.log("Start Date:", schedule.schedule_start);
+          console.log("End Date:", schedule.schedule_end);
+
+          const newMeeting = {
+            id: schedule.schedule_id,
+            name: schedule.schedule_name,
+            startDatetime: schedule.schedule_start,
+            endDatetime: schedule.schedule_end,
+          };
+          // setMeetings 함수를 사용하여 기존 meetings 배열에 새 일정을 추가한다
+          setMeetings((prevMeetings) => [...prevMeetings, newMeeting]);
+        });
+
+        // 첫 번째 스케줄의 시작 날짜를 선택한 날짜로 설정
+        if (data.data.length > 0) {
+          const newDay = parseISO(data.data[0].schedule_start);
+          setSelectedDay(newDay);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching schedule data:", error);
+      });
+  }, []);
+
   // 일정 추가
   const ScheduleCreate = () => {
     const title = newlisttextRef.current.value; //새 일정의 제목을 입력하는 부분에서 얻어온 값
@@ -188,19 +224,6 @@ export const Calendarcalendar = () => {
       backgroundColor: meeting.project_color,
     };
 
-    // 프로젝트 전체 스케줄 확인
-    useEffect(() => {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/projects/${projectId}/schedule`)
-        .then((response) => {
-          const data = response.data;
-          console.log(data);
-          setMeetings(data);
-        })
-        .catch((error) => {
-          console.error("Error fetching schedule data:", error);
-        });
-    }, []);
     return (
       <div className="schedulecomponents ">
         <li className="flex items-center border border-white-300 mb-2 bg-white px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-10 hover:bg-gray-10">
