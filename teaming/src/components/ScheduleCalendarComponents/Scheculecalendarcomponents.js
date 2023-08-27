@@ -1,5 +1,6 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "./Schedulecalendarcomponents.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
@@ -32,19 +33,62 @@ function classNames(...classes) {
 }
 
 export const Schedulecalendarcomponents = () => {
-  // 일정 데이터를 받는 부분_해당 내용들은 예시
+  const [memberId, setMemberId] = useRecoilState(memberIdState);
+  const { projectId } = useParams();
   const [meetings, setMeetings] = useState([
+    //   {
+    //     "schedule_name": "티밍 입니다다",
+    //     "schedule_start": "2023-07-08",
+    //     "schedule_start_time": "10:30:00",
+    //     "schedule_end": "2023-07-10",
+    //     "schedule_end_time": "14:30:00",
+    //     "project_color": "#d79ac3"
+    // },
     // {
     //   id: 1,
-    //   name: "티밍 final 대면 회의",
-    //   dailyscrum: "티밍 프로젝트 스터디",
-    //   startDatetime: "2023-08-13T13:00",
-    //   endDatetime: "2023-08-21T10:30",
-    //   project_color: "#FFAA00",
+    //   name: "티밍 전체 대면 회의1 - 중구 퇴계로",
+    //   project_name: "00교양 조별 과제",
+    //   startDatetime: "2023-08-11T13:00",
+    //   endDatetime: "2023-08-13T14:30",
+    //   project_color: "#d79ac3",
     // },
   ]);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const [memberId, setMemberId] = useRecoilState(memberIdState);
+  useEffect(() => {
+    const requestData = {
+      schedule_start: selectedDate,
+    };
+
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/member/${memberId}/schedule_start`,
+        requestData
+      )
+      .then((response) => {
+        const data = response.data;
+        console.log(response);
+        console.log("일단 절반 성공");
+        console.log(data);
+        data.data.forEach((schedule) => {
+          console.log("Schedule Name:", schedule.schedule_name);
+          console.log("Start Date:", schedule.schedule_start);
+          console.log("End Date:", schedule.schedule_end);
+
+          const newMeeting = {
+            id: schedule.schedule_id,
+            name: schedule.schedule_name,
+            startDatetime: schedule.schedule_start,
+            endDatetime: schedule.schedule_end,
+            project_color: schedule.project_color            ,
+          };
+          // setMeetings 함수를 사용하여 기존 meetings 배열에 새 일정을 추가한다
+          setMeetings((prevMeetings) => [...prevMeetings, newMeeting]);
+        });
+        // setMeetings(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   let today = startOfToday();
   let [selectedDay, setSelectedDay] = useState(today); //selectDay상태와 setCount 함수를 선언
@@ -68,8 +112,8 @@ export const Schedulecalendarcomponents = () => {
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
   console.log("시작 일정:", format(selectedDay, "yyyy-MM-dd"));
-  // 시작과 끝 일정 사이에 관련된 코드
-  // 주어진 startDate와 endDate 사이의 날짜 배열을 반환하는 함수
+
+  // 시작과 끝 일정 사이에 관련된 코드로 주어진 startDate와 endDate 사이의 날짜 배열을 반환하는 함수
   const daysBetween = (startDate, endDate) => {
     const days = [];
     let currentDate = startDate;
@@ -80,6 +124,54 @@ export const Schedulecalendarcomponents = () => {
     return days;
   };
 
+  function Meeting({ meeting }) {
+    let startDateTime = parseISO(meeting.startDatetime);
+    let endDateTime = parseISO(meeting.endDatetime);
+
+    // project_color 값을 가져와서 스타일로 적용
+    const colorStyle = {
+      backgroundColor: meeting.project_color,
+    };
+
+    return (
+      <div className="schedulecomponents ">
+        <li className="flex items-center border border-white-300 mb-2 bg-white px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-10 hover:bg-gray-10">
+          {/* flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100 */}
+          <div className="colorbar" style={colorStyle}></div>
+          <div className="flex-auto">
+            <div className="flex">
+              <div className="content text-black-900">{meeting.name}</div>
+            </div>
+
+            <div className="contentdateperiod mt-0.5">
+              <time dateTime={meeting.startDatetime}>
+                {format(startDateTime, "yyy.MM.dd")}
+              </time>{" "}
+              ~{" "}
+              <time dateTime={meeting.endDatetime}>
+                {format(endDateTime, "yyy.MM.dd")}
+              </time>
+            </div>
+            <div className="flex">
+              <div className="contentdescription">{meeting.dailyscrum}</div>
+              <div className="contenttimeperiod" style={colorStyle}>
+                <div className="timeperiod">
+                  <time dateTime={meeting.startDatetime}>
+                    {format(startDateTime, "H:mm")}
+                  </time>{" "}
+                  -{" "}
+                  <time dateTime={meeting.endDatetime}>
+                    {format(endDateTime, "H:mm")}
+                  </time>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </div>
+    );
+  }
+
   let selectedDayMeetings = meetings.filter((meeting) =>
     // isSameDay(parseISO(meeting.startDatetime), selectedDay)
     daysBetween(
@@ -87,25 +179,6 @@ export const Schedulecalendarcomponents = () => {
       parseISO(meeting.endDatetime)
     ).some((d) => isSameDay(d, selectedDay))
   );
-
-  const handleDelete = (meetingId) => {
-    const updatedMeetings = meetings.filter(
-      (meeting) => meeting.id !== meetingId
-    );
-    setMeetings(updatedMeetings);
-  };
-
-  //  useEffect(() => {
-  //   axios
-  //     .get(
-  //       `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/schedule`
-  //     )
-  //     .then((res) => {
-  //       console.log(res);
-  //       setMeetings(res.data.data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []); 
 
   return (
     <div className="SchedulecalendarApp pt-10">
@@ -216,11 +289,7 @@ export const Schedulecalendarcomponents = () => {
             <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500 max-h-80 overflow-y-auto">
               {selectedDayMeetings.length > 0 ? (
                 selectedDayMeetings.map((meeting) => (
-                  <Meeting
-                    meeting={meeting}
-                    key={meeting.id}
-                    onDelete={handleDelete}
-                  />
+                  <Meeting meeting={meeting} key={meeting.id} />
                 ))
               ) : (
                 <p>등록된 일정이 없습니다</p>
@@ -232,59 +301,6 @@ export const Schedulecalendarcomponents = () => {
     </div>
   );
 };
-
-function Meeting({ meeting, onDelete }) {
-  let startDateTime = parseISO(meeting.startDatetime);
-  let endDateTime = parseISO(meeting.endDatetime);
-
-  // project_color 값을 가져와서 스타일로 적용
-  const colorStyle = {
-    backgroundColor: meeting.project_color,
-  };
-
-  return (
-    <div className="schedulecomponents ">
-      <li className="flex items-center border border-white-300 mb-2 bg-white px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-10 hover:bg-gray-10">
-        {/* flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100 */}
-        <div className="colorbar" style={colorStyle}></div>
-        <div className="flex-auto">
-          <div className="flex">
-            <div className="content text-black-900">{meeting.name}</div>
-            <FontAwesomeIcon
-              className="delete"
-              icon={faXmark}
-              onClick={() => onDelete(meeting.id)}
-            />
-          </div>
-
-          <div className="contentdateperiod mt-0.5">
-            <time dateTime={meeting.startDatetime}>
-              {format(startDateTime, "yyy.MM.dd")}
-            </time>{" "}
-            ~{" "}
-            <time dateTime={meeting.endDatetime}>
-              {format(endDateTime, "yyy.MM.dd")}
-            </time>
-          </div>
-          <div className="flex">
-            <div className="contentdescription">{meeting.dailyscrum}</div>
-            <div className="contenttimeperiod" style={colorStyle}>
-              <div className="timeperiod">
-                <time dateTime={meeting.startDatetime}>
-                  {format(startDateTime, "H:mm")}
-                </time>{" "}
-                -{" "}
-                <time dateTime={meeting.endDatetime}>
-                  {format(endDateTime, "H:mm")}
-                </time>
-              </div>
-            </div>
-          </div>
-        </div>
-      </li>
-    </div>
-  );
-}
 
 let colStartClasses = [
   "",
