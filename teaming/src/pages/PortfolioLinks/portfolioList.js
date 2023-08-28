@@ -15,6 +15,8 @@ import { useRecoilState } from "recoil";
 import { memberIdState, nickNameState } from "../../components/atom";
 import { useQuery, useQueryClient } from 'react-query';
 import { fetchPortfolioData  } from "./usePortfolio";
+import { BiHome } from 'react-icons/bi';
+import { GoChevronRight } from 'react-icons/go';
 
 const CardBtn = styled.div`
   border: none;
@@ -73,17 +75,16 @@ const PortfolioList = () => {
                         <div className="route">
                             <span>
                                 <Link to="/">
-                                    <FontAwesomeIcon icon={faHouse} />
+                                    <BiHome size="13" />
                                 </Link>           
-                                <FontAwesomeIcon icon={faChevronRight} />
-                                포트폴리오
+                                <GoChevronRight size="13"/>
+                                <p>포트폴리오</p>
                             </span>
                         </div>
 
                         <div className="Name">
-                            <br />
-                            <span className="userName">{nickName}님의 포트폴리오</span><br />
-                            <span className="ment">지금까지의 프로젝트를 한눈에 모아보세요!</span>
+                            <span className="userName">{nickName}님의 완료된 프로젝트</span>
+                            <span className="ment">지금까지의 프로젝트를 한 눈에 모아보세요!</span>
                         </div>
                     </div>
 
