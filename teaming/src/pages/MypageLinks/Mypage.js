@@ -273,7 +273,7 @@ const Mypage = () => {
               </Link>
               <Link>
                 <LinkDiv>
-                  <span>자주 묻는 질문</span>
+                  <span>이용약관</span>
                   <span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
