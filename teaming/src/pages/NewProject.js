@@ -244,8 +244,8 @@ const NewProject = () => {
     }
   };
   return (
-    <div className="flex justify-center items-center">
-      <form onSubmit={handleSubmit(onValid)} className="flex space-x-6">
+    <div className="flex justify-center items-center mt-20">
+      <form onSubmit={handleSubmit(onValid)} className="flex space-x-12">
         <div>
           <div className="flex text-mainDeepColor items-center space-x-1">
             <Link to="/">
@@ -270,7 +270,7 @@ const NewProject = () => {
           <div className="mt-2">
             <div>
               <label htmlFor="img">
-                <div className="flex justify-center items-center bg-[#F4F4F4] text-gray-400 h-80 w-96">
+                <div className="flex justify-center items-center bg-[#F4F4F4] text-gray-400 h-56 w-96 rounded-md">
                   {previewImg !== undefined ? (
                     <img
                       src={previewImg}
@@ -286,20 +286,19 @@ const NewProject = () => {
                 type="file"
                 accept=".gif, .jpg, .png"
                 id="img"
-                type="file"
                 {...register("img")}
                 className="hidden"
                 onChange={(e) => insertImg(e)}
               />
             </div>
-            <div className="pt-3 pb-10 flex flex-col space-y-3 relative">
+            <div className="pt-4 pb-10 flex flex-col space-y-1 relative">
               <Span>프로젝트 명</Span>
               <input
                 {...register("projectName", {
                   required: "프로젝트명을 입력해주세요!",
                 })}
                 placeholder="프로젝트 명을 입력해주세요."
-                className="placeholder:text-gray-400 placeholder:opacity-50 border-b-[1.5px] border-mainColor"
+                className="placeholder:text-gray-400 placeholder:opacity-50 border rounded-md p-2 border-mainColor focus:outline-mainColor"
               />
               <span className="absolute bottom-4 text-sm text-red-400">
                 {errors.projectName?.message}
@@ -334,21 +333,21 @@ const NewProject = () => {
         </div>
         <div className="mt-10 space-y-3">
           <div className="">
-            <div className="flex flex-col space-y-2">
+            <div className="flex flex-col ">
               <Span>날짜</Span>
               <span className="text-gray-400 opacity-50">
                 프로젝트의 예상 진행 날짜를 입력해주세요.
               </span>
             </div>
             <div className="space-y-2">
-              <div className="flex justify-center items-center text-gray-400">
-                <span className="px-3 py-1 border-b border-mainColor">
+              <div className="flex justify-center items-center text-mainMoreDeepColor space-x-3">
+                <div className="w-40 text-center py-1 border border-mainColor rounded-md text-sm">
                   {selectedDay1.format("YYYY-MM-DD")}
-                </span>
-                <span className="font-bold text-mainDeepColor">~</span>
-                <span className="px-3 py-1 border-b border-mainColor">
+                </div>
+                <div className="font-bold text-mainDeepColor">~</div>
+                <div className="w-40 text-center py-1 border border-mainColor rounded-md text-sm">
                   {selectedDay2.format("YYYY-MM-DD")}
-                </span>
+                </div>
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <div>{buildCalendar(1)}</div>
@@ -356,10 +355,8 @@ const NewProject = () => {
               </div>
             </div>
           </div>
-          <div className="bg-mainColor flex justify-center rounded-full mx-10">
-            <button className=" text-white pt-2 pb-1  w-full">
-              프로젝트 생성하기
-            </button>
+          <div className="bg-mainColor flex justify-center rounded-full mx-10 hover:bg-white hover:text-mainColor transition-all text-white border-mainColor border-[1px]">
+            <button className="  pt-2 pb-1  w-full">프로젝트 생성하기</button>
           </div>
         </div>
       </form>
