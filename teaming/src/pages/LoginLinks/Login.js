@@ -13,7 +13,7 @@ import {
 } from "../../components/atom";
 
 const Input = tw.input`
-h-12 w-96  outline-none placeholder:text-mainColor p-2 bg-[#e9eefe] rounded-xl
+h-12 w-96  outline-none placeholder:text-mainDeepColor p-2 bg-[#e9eefe] rounded-xl
 `;
 const FormSpan = tw.span`
 px-2
