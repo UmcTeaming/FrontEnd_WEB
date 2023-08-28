@@ -10,19 +10,12 @@ import { useRecoilState } from "recoil";
 import { memberIdState, nickNameState } from "../../components/atom";
 import basicProfile from "./프로필_기본.jpg";
 
-/* axios.interceptors.request.use(
-  function (config) {
-    const token = localStorage.getItem("token");
-    config.headers.Authorization = `Bearer ${token}`;
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
-  }
-); */
-
 const Div = tw.div`
 flex space-x-2
+`;
+
+const LinkDiv = tw.div`
+flex justify-between items-center py-3 pl-6 border-b border-gray-400 cursor-pointer text-gray-600 font-medium
 `;
 const Mypage = () => {
   const [editState, setEditState] = useState(false);
@@ -32,7 +25,14 @@ const Mypage = () => {
   const [nickName, setNickName] = useRecoilState(nickNameState);
   const [email, setEmail] = useState();
 
-  const { handleSubmit, register, reset, watch } = useForm();
+  const {
+    handleSubmit,
+    register,
+    reset,
+    watch,
+    formState: { errors },
+    setError,
+  } = useForm();
 
   const [memberId, setMemberId] = useRecoilState(memberIdState);
 
@@ -51,10 +51,11 @@ const Mypage = () => {
         console.log(res);
 
         setNickName(data.nickName);
+        alert("닉네임이 변경되었습니다.");
         setEditState(false);
       })
       .catch((err) => {
-        alert(err.response.data.message);
+        setError("nickName", { message: "중복되는 닉네임이 있어요" });
         console.log(err.response.data.message);
       });
   };
@@ -132,31 +133,20 @@ const Mypage = () => {
       });
   }, [nickName]);
   return (
-    <div className="flex flex-col justify-center items-center mt-20 space-y-10">
+    <div
+      className="flex  justify-center pt-20 space-y-10 h-screen"
+      style={{
+        background:
+          "linear-gradient(180deg, rgba(3, 63, 255, 0.50) 0%, rgba(3, 63, 255, 0.00) 100%)",
+      }}
+    >
       <div className="space-y-8">
-        <div className="flex text-mainDeepColor items-center space-x-1 text-sm mb-3">
-          <Link to="/">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
-              />
-            </svg>
-          </Link>
-
-          <span className="pt-1">&#62; 마이페이지</span>
+        <div className="flex text-white items-center  mb-3">
+          <span className="font-extrabold text-lg"> 마이페이지</span>
         </div>
-        <div className="flex items-end space-x-14">
-          <div className="flex flex-col items-center space-y-3">
-            <label htmlFor="img">
+        <div className="flex ">
+          <div className="flex space-x-14 pr-10  h-full ">
+            <div className="flex flex-col items-center space-y-3">
               <div className="h-32 w-32 bg-[#D9D9D9] text-gray-400 rounded-full shadow-xl flex justify-center items-center text-sm overflow-hidden">
                 {previewImg !== null ? (
                   <img alt="" src={previewImg} className="object-cover " />
@@ -164,88 +154,147 @@ const Mypage = () => {
                   <span className="">이미지</span>
                 )}
               </div>
-            </label>
-            <input
-              {...register("img")}
-              type="file"
-              accept=".gif, .jpg, .png"
-              id="img"
-              {...register("img")}
-              className="hidden"
-              onChange={(e) => insertImg(e)}
-            />
+            </div>
 
-            <div
-              className="text-sm text-gray-300 cursor-pointer"
-              onClick={onClickBasikImg}
-            >
-              기본 이미지로 변경
+            <div className="py-3 space-y-5  flex flex-col justify-between w-44">
+              <div className=" ">
+                {editState ? (
+                  <form
+                    onSubmit={handleSubmit(onValidNickName)}
+                    className="relative flex flex-col"
+                  >
+                    <input
+                      {...register("nickName")}
+                      placeholder=""
+                      className="bg-transparent border w-full rounded-md border-mainColor  outline-none text-2xl font-extrabold pl-2 text-[#02207F]"
+                    />
+                    <div className="h-5">
+                      {watch("nickName") && !errors.nickName?.message ? (
+                        <span className="text-xs text-mainColor pt-1">
+                          좋은닉네임이에요 :0
+                        </span>
+                      ) : (
+                        <span className=" text-xs text-red-400">
+                          {errors.nickName?.message}
+                        </span>
+                      )}
+                    </div>
+
+                    <button className="absolute right-2 bg-mainColor rounded-full text-white px-2  top-2 text-xs focus:bg-mainColor">
+                      확인
+                    </button>
+                  </form>
+                ) : (
+                  <div>
+                    <div className="flex items-center justify-between ">
+                      <span className="text-white font-extrabold text-2xl">
+                        {nickName}
+                      </span>
+
+                      <HiOutlinePencil color="gray" onClick={onClick} />
+                    </div>
+                    <span className="text-white text-sm">{email}</span>
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <input
+                  {...register("img")}
+                  type="file"
+                  accept=".gif, .jpg, .png"
+                  id="img"
+                  {...register("img")}
+                  className="hidden"
+                  onChange={(e) => insertImg(e)}
+                />
+                <label
+                  htmlFor="img"
+                  className="text-[#02207F] font-semibold cursor-pointer"
+                >
+                  프로필 이미지 변경
+                </label>
+                <div
+                  className="text-sm text-gray-500 cursor-pointer"
+                  onClick={onClickBasikImg}
+                >
+                  기본 이미지로 변경
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="py-3 space-y-5">
-            <div className="">
-              {editState ? (
-                <form
-                  onSubmit={handleSubmit(onValidNickName)}
-                  className="relative flex flex-col"
-                >
-                  <input
-                    {...register("nickName")}
-                    placeholder=""
-                    className="border-b-2 border-mainColor w-44 outline-none"
-                  />
-                  {watch("nickName") ? (
-                    <span className="text-xs text-mainColor pt-1">
-                      좋은닉네임이에요 :0
-                    </span>
-                  ) : (
-                    <div className="h-5"></div>
-                  )}
-
-                  <button className="absolute right-0 bg-mainColor rounded-full text-white px-2 pt-1 bottom-6 text-sm focus:bg-mainColor">
-                    확인
-                  </button>
-                </form>
-              ) : (
-                <div className="flex items-center space-x-1 mb-5">
-                  <span className="pt-1">
-                    <span className="text-mainColor">{nickName}</span>님
+          <div className="pl-10 space-y-2 border-l-2 border-white pb-5">
+            <span className="text-xs text-white pl-3">
+              문의 사항은 test@gmail.com 으로 보내주시면 감사하겠습니다
+            </span>
+            <div className="flex flex-col">
+              <Link>
+                <LinkDiv>
+                  <span>자주 묻는 질문</span>
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="3"
+                      stroke="currentColor"
+                      className="w-4 h-4 text-gray-400"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                      />
+                    </svg>
                   </span>
-
-                  <HiOutlinePencil color="gray" onClick={onClick} />
-                </div>
-              )}
-
-              <span className="text-gray-400">{email}</span>
+                </LinkDiv>
+              </Link>
+              <Link to="changePW">
+                <LinkDiv>
+                  <span>비밀번호 변경</span>
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="3"
+                      stroke="currentColor"
+                      className="w-4 h-4 text-gray-400"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                      />
+                    </svg>
+                  </span>
+                </LinkDiv>
+              </Link>
+              <Link>
+                <LinkDiv>
+                  <span>이용약관</span>
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="3"
+                      stroke="currentColor"
+                      className="w-4 h-4 text-gray-400"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                      />
+                    </svg>
+                  </span>
+                </LinkDiv>
+              </Link>
             </div>
-
-            <Link to="changePw">
-              <div className="flex space-x-2 items-center text-gray-400 cursor-pointer">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                  />
-                </svg>
-                <span className="pt-1">비밀번호 변경하기</span>
-              </div>
-            </Link>
           </div>
         </div>
-      </div>
-      <div className="text-xs text-gray-400">
-        문의 사항은
-        <span className="text-mainColor underline pr-1">test@gmail.com</span>
-        으로 보내주시면 감사하겠습니다
       </div>
     </div>
   );

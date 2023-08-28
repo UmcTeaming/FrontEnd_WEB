@@ -27,7 +27,7 @@ const FindPW = () => {
       });
   };
   return (
-    <div className="flex justify-center py-20">
+    <div className="flex justify-center py-28">
       {isSubmit ? (
         <div className="flex flex-col justify-center items-center space-y-8">
           <img src="/img/passwordImgs/email.png" />
@@ -59,23 +59,23 @@ const FindPW = () => {
               비밀번호 재설정을 위한 이메일을 보내드리겠습니다.
             </div>
           </div>
-          <form onSubmit={handleSubmit(onValid)} className="mt-20">
+          <form onSubmit={handleSubmit(onValid)} className="mt-10">
             <InputDiv className="relative">
-              <InputNameSpan>이메일</InputNameSpan>
-              <Input {...register("email")} placeholder="이메일 입력" />
+              <Input
+                className="h-10"
+                {...register("email")}
+                placeholder="이메일 입력"
+              />
               <div
-                className="absolute right-1 top-8 cursor-pointer"
+                className="absolute right-1 top-2 cursor-pointer"
                 onClick={onClickX}
               >
                 <TiDelete color="lightgray" size="24" />
               </div>
-              <span className="text-mainColor pt-3">
-                대소문자를 구분하여 입력해주세요
-              </span>
             </InputDiv>
 
-            <div className="mt-10 flex justify-center bg-mainColor cursor-pointer mx-12 pt-3 pb-2 rounded-full">
-              <button className=" text-white   h-full w-full  text-center text-xl">
+            <div className="mt-4 flex justify-center bg-mainColor cursor-pointer mx-12 pt-3 pb-2 rounded-full hover:bg-white hover:text-mainColor transition-all text-white border-mainColor border-[1px]">
+              <button className="   h-full w-full  text-center text-xl">
                 비밀번호 재설정
               </button>
             </div>

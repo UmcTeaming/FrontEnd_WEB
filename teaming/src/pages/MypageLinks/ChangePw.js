@@ -11,13 +11,13 @@ const InputSpan = tw.span`
 text-mainMoreDeepColor font-bold pb-2
 `;
 const Input = tw.input`
-border-b-[1.5px] border-mainColor outline-none placeholder:font-thin 
+border border-mainColor outline-none placeholder:font-thin p-3 rounded-md
 `;
 const InputDiv = tw.div`
 flex flex-col text-sm  relative
 `;
 const EmojiWrap = tw.div`
-absolute right-0 top-6 cursor-pointer
+absolute right-2 top-3 cursor-pointer 
 `;
 const ChangePw = () => {
   const {
@@ -121,8 +121,6 @@ const ChangePw = () => {
             <div className=" h-48  ">
               <div className="space-y-5">
                 <InputDiv>
-                  <InputSpan>비밀번호</InputSpan>
-
                   <Input
                     type={isEyeClickNewPW1 ? "text" : "password"}
                     {...register("newPW1", {
@@ -141,7 +139,7 @@ const ChangePw = () => {
                           "영문,숫자,특수문자를 혼합하여 8~20자로 입력해주세요.",
                       },
                     })}
-                    placeholder="영문, 숫자, 특수문자를 혼합하여 8~20자로 입력해주세요."
+                    placeholder="비밀번호"
                   />
                   <EmojiWrap className="flex items-center space-x-1">
                     <BsCheckLg
@@ -156,13 +154,21 @@ const ChangePw = () => {
                       )}
                     </div>
                   </EmojiWrap>
+                  <div className="pt-1 text-gray-400 text-sm">
+                    {errors.newPW1?.message ? (
+                      <span className="text-red-300">
+                        {errors.newPW1?.message}
+                      </span>
+                    ) : (
+                      "비밀번호는 영문 대소문자, 숫자, 특수문자(.!@#$%)를 혼합하여 8~20자로 입력해주세요"
+                    )}
+                  </div>
                 </InputDiv>
                 <InputDiv>
-                  <InputSpan>비밀번호 확인</InputSpan>
                   <Input
                     type={isEyeClickNewPW2 ? "text" : "password"}
                     {...register("newPW2")}
-                    placeholder="영문, 숫자, 특수문자를 혼합하여 8~20자로 입력해주세요."
+                    placeholder="비밀번호확인"
                   />
                   <EmojiWrap className="flex items-center space-x-1">
                     <BsCheckLg
@@ -201,7 +207,7 @@ const ChangePw = () => {
               />
               <EmojiWrap
                 onClick={onClickEye}
-                className="absolute right-0 top-6 cursor-pointer"
+                className="absolute right-2 top-10 cursor-pointer"
               >
                 {isEyeClick ? (
                   <BsEye size="18" color="#033FFF" />

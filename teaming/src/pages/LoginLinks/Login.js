@@ -13,7 +13,7 @@ import {
 } from "../../components/atom";
 
 const Input = tw.input`
-h-14 w-96 border-b-[1px] border-mainDeepColor outline-none placeholder:text-mainColor p-2
+h-12 w-96  outline-none placeholder:text-mainDeepColor p-2 bg-[#e9eefe] rounded-xl
 `;
 const FormSpan = tw.span`
 px-2
@@ -42,32 +42,22 @@ const Login = () => {
   };
 
   return (
-    <div className=" flex justify-center lg:justify-between ">
-      <div className="space-y-2 ">
-        <div className="absolute left-56 top-56 hidden lg:block space-y-2 z-10">
-          <div className=" font-bold text-3xl space-y-5 ">
-            <div>
-              <span className="text-mainDeepColor">티밍</span>에서 효율적인 팀
-              프로젝트를
-            </div>
-
-            <div>기록해보세요!</div>
-          </div>
-          <div className="text-sm text-gray-400">
-            sns로 빠른 로그인이 가능합니다.
-          </div>
-        </div>
-
-        <img
-          className="absolute bottom-0 left-10 z-0"
-          src="/img/logo/loginMLogo.png"
-        />
-      </div>
+    <div className=" flex mx-24 lg:justify-between mt-32 justify-center">
       <form
         onSubmit={handleSubmit(onValid)}
-        className="flex flex-col mt-36 lg:mt-44 lg:mr-56 z-10 "
+        className="flex flex-col p-20  z-10 "
       >
-        <Input placeholder="email" {...register("email")} />
+        <div className="space-y-5 pb-5">
+          <div
+            className="w-20 h-2 bg-mainColor "
+            style={{
+              background:
+                "linear-gradient(169deg, #527FF5 0%, rgba(82, 127, 245, 0.00) 100%)",
+            }}
+          />
+          <div className="text-mainColor font-bold text-4xl">Log In</div>
+        </div>
+        <Input placeholder="email" className="mb-4" {...register("email")} />
         <Input
           autoComplete=""
           placeholder="password"
@@ -88,6 +78,9 @@ const Login = () => {
           로그인
         </button>
       </form>
+      <div className="hidden lg:block">
+        <img className="z-0" src="/img/logo/loginMLogo.png" />
+      </div>
     </div>
   );
 };
