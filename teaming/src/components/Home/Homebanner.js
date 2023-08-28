@@ -8,8 +8,6 @@ import {
   faChevronLeft,
   faCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { IonIcon } from '@ionic/react';
-import {  arrowForwardCircleOutline,arrowBackCircleOutline, chevronForwardOutline, chevronBackOutline} from 'ionicons/icons';
 
 // 배너 슬라이더 관련
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -140,11 +138,10 @@ export const Homebanner = () => {
 
               <div className="slider-controler">
                 <div className="swiper-button-prev slider-arrow">
-                  <IonIcon icon={chevronBackOutline} style={{ fontSize: '30px' }}></IonIcon>
+                  <ion-icon name="arrow-back-outline"></ion-icon>
                 </div>
                 <div className="swiper-button-next slider-arrow">
-                  <IonIcon icon={chevronForwardOutline} style={{ fontSize: '30px' }}></IonIcon>
-                  
+                  <ion-icon name="arrow-forward-outline"></ion-icon>
                 </div>
                 <div className="swiper-pagination"></div>
               </div>
