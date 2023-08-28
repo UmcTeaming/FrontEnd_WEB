@@ -36,13 +36,12 @@ button {
     background-color:transparent;
 }
 
-/* 메인 로고 */
+/* header
+//메인로고
 .mainLogo{
   float: left;
   margin-top: 5px;
 }
-
-/* header */
 .header{
   display: flex;
   padding: var(--padding-large);
@@ -68,7 +67,7 @@ button {
     padding-left: var(--padding-medium);
     padding-right: var(--padding-medium);
   }
-}
+}*/
 
 /* main */
 .main {
@@ -82,22 +81,32 @@ button {
   /* component */
   .component{
     .route {
-      padding: var(--padding-large);
+      >span{
+        display: flex;
+        >p{
+          margin-top: -2px;
+        }
+      }
+      display: flex;
+      padding: 30px;
       padding-top: 50px;
       color: white;
-      font-size: var(--font-small);
+      font-size: 12px;
       font-weight: lighter;
     }
     .Name{
+      display: grid;
       .userName{
-        font-size: var(--font-large);
+        font-size: 32px;
         color: white;
         font-weight: bold;
+        padding-left:17px;
       }
       .ment{
-        font-size: var(--font-small);
+        font-size: 12px;
         color: white;
         font-weight: lighter;
+        padding-left:22px;
       }
     }
   }
@@ -151,7 +160,7 @@ button {
         position: relative;
         .thumbNailPic{
           width: 185px;
-          height: 100px;
+          height: 110px;
           border-radius: 15px;
           padding: 8px;
         }
@@ -170,6 +179,7 @@ button {
         padding-top: 0px;
         .h4{
           font-size: var(--font-medium);
+          font-weight: bold;
           color: #000000CC;
         }
         .p{
@@ -190,7 +200,7 @@ button {
       padding:13px;
       margin-bottom: 15px;
       padding-left: 24px;
-      padding-right: 24px;
+      padding-right: 20px;
       background-color: white;
       border-radius: 16px;
       width: 820px;
@@ -213,7 +223,7 @@ button {
           color: gray;
         }
         .circle2{
-          font-size: 15px;
+          font-size: 12px;
           color: #FFD008;
         }
       }

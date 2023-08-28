@@ -25,6 +25,13 @@
   margin-top: -32px;
 }
 
+.opname{
+  padding-top: 40px;
+}
+ .opment{
+  padding-top: 6px;
+} 
+
 .main .temp .component .opname .opusername {
   color: #527ff5;
   font-size: 32px;

@@ -15,6 +15,9 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { memberIdState, nickNameState } from "../../components/atom";
 
+import { BiHome } from 'react-icons/bi';
+import { GoChevronRight } from 'react-icons/go';
+
 import "../PortfolioLinks/portfolioList.css";
 
 const CardBtn = styled.div`
@@ -77,20 +80,17 @@ export const OngoingProject = () => {
             <div className="route oproute">
               <span>
                 <Link to="/">
-                  <FontAwesomeIcon icon={faHouse} />
+                  <BiHome size="13" />
                 </Link>
-                <FontAwesomeIcon icon={faChevronRight} />
-                진행 중인 프로젝트
+                <GoChevronRight size="13"/>
+                  <p>진행 중인 프로젝트</p>
               </span>
             </div>
 
             <div className="Name opname">
-              <br />
-              <br />
               <span className="userName opusername">
-                {nickName}님의 팀 프로젝트
+                {nickName}님의 진행중인 프로젝트
               </span>
-              <br />
               <span className="ment opment">
                 현재 진행 중인 프로젝트를 한 눈에 모아보세요!
               </span>
