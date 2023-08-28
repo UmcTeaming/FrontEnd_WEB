@@ -64,7 +64,7 @@ const PortfolioList = () => {
             }
         }
         console.log("데이터를 비동기적으로 불러옴");
-        fetchData(); // 데이터를 비동기적으로 불러옴
+        fetchData(); //데이터를 비동기적으로 불러옴
     }, [memberId]);
     
     return (
