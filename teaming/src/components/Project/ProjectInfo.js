@@ -127,7 +127,7 @@ const Check = styled.button`
   font-size: 12px;
   border: 1px solid #527ff5;
   cursor: pointer;
-  font-family: "Pretendard-Regular";
+  font-family: "Pretendard";
 `;
 
 const Close = styled.button`
@@ -152,7 +152,7 @@ const Close = styled.button`
         : null};
   cursor: pointer;
   text-decoration: none;
-  font-family: "Pretendard-Regular";
+  font-family: "Pretendard";
 `;
 
 const Setting = styled.div`

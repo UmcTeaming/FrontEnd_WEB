@@ -87,7 +87,7 @@ const Calendars = styled.div`
 `;
 
 const CalendarItem = styled(Calendar)`
-  font-family: "Pretendard-Regular";
+  font-family: "Pretendard";
 
   border: none;
   width: 231px;
