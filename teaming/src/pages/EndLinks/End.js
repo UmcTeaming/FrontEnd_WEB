@@ -22,13 +22,11 @@ const Main = styled.div`
 const Path = styled.div`
   display: flex;
   align-items: center;
+  gap: 3px;
   color: white;
   font-size: 12px;
   margin-bottom: 45px;
-  svg {
-    margin-right: 3px;
-  }
-  padding-left: 23rem;
+  padding-left: 23em;
 `;
 
 const Col = styled.div`
@@ -89,10 +87,9 @@ const Calendars = styled.div`
 `;
 
 const CalendarItem = styled(Calendar)`
-  font-family: "GmarketSans";
+  font-family: "Pretendard-Regular";
 
   border: none;
-  border-radius: 5px;
   width: 231px;
 
   .react-calendar__tile--active {
@@ -109,7 +106,7 @@ const CalendarItem = styled(Calendar)`
   }
 
   .react-calendar__month-view__weekdays {
-    background: rgba(151, 151, 151, 0.2);
+    background: #f5f7fa;
   }
 
   .react-calendar__navigation {
@@ -212,7 +209,7 @@ const End = () => {
           </svg>
           &gt;<Link to="/onGoingProject">진행중인 프로젝트</Link>&gt;
           <Link to={`/${projectId}/project-files`}>{project?.name}</Link> &gt;
-          프로젝트 마감
+          <span>프로젝트 마감</span>
         </Path>
         <Col>
           <Illust>

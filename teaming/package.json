@@ -25,6 +25,7 @@
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.9",
     "framer-motion": "^10.15.1",
+    "hwp.js": "^0.0.3",
     "ionicons": "^7.1.2",
     "moment": "^2.29.4",
     "react": "^18.2.0",

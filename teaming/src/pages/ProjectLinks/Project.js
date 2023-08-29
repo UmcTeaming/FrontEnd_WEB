@@ -30,6 +30,7 @@ const InfoCotainer = styled.div`
 const Path = styled.div`
   display: flex;
   align-items: center;
+  gap: 3px;
   color: white;
   font-size: 12px;
   margin-bottom: 10px;
@@ -58,7 +59,8 @@ const Tabs = styled.div`
   width: 271px;
   height: 26px;
   border-radius: 33px;
-  background-color: #d9d9d9;
+  background-color: #ececec;
+  box-shadow: inset 2px 2px 2px rgba(0, 0, 0, 0.2);
 `;
 
 const Tab = styled.div`
@@ -74,6 +76,8 @@ const Tab = styled.div`
   background-color: ${(props) => (props.isActive ? "white" : "transparent")};
   text-decoration: none;
   color: ${(props) => (props.isActive ? "black" : "rgba(0, 0, 0, 0.5)")};
+  box-shadow: ${(props) =>
+    props.isActive ? "2px 2px 2px rgba(0, 0, 0, 0.2)" : null};
 `;
 
 const Layout = styled.div`
@@ -162,7 +166,7 @@ const Project = () => {
               </svg>
             </Link>
             &gt;<Link to="/ongoingProject">진행중인 프로젝트</Link>&gt;
-            {project?.name}
+            <span>{project?.name}</span>
           </Path>
           <ProjectInfo onOpen={() => openModal()} />
         </InfoCotainer>
@@ -180,7 +184,6 @@ const Project = () => {
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="2"
-              class="w-6 h-6"
               width="17px"
               height="17px"
             >
@@ -198,7 +201,6 @@ const Project = () => {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
-              className="w-5 h-5"
               width="15px"
               height="15px"
             >
