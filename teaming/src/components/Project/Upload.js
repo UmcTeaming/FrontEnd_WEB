@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: "GmarketSans";
+  font-family: "Pretendard-Regular";
   width: 752px;
   height: 141px;
   background-color: #e6e6e6;

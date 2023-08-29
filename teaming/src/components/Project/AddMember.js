@@ -6,6 +6,7 @@ import { useQuery, useQueryClient } from "react-query";
 import { memberIdState, tokenState } from "../atom";
 import { useRecoilValue } from "recoil";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 
 const Wrapper = styled.div`
   display: flex;
@@ -22,9 +23,9 @@ const Wrapper = styled.div`
 `;
 
 const Delete = styled.div`
-  margin-left: 530px;
-  margin-top: 5px;
-  margin-bottom: 45px;
+  margin-left: 520px;
+  margin-top: 10px;
+  margin-bottom: 35px;
   cursor: pointer;
 `;
 
@@ -32,19 +33,19 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 60px;
+  margin-bottom: 45px;
 `;
 
 const Title = styled.span`
   font-size: 12px;
   font-weight: 700;
   color: #194ac2;
-  margin-right: 338px;
-  margin-bottom: 10px;
+  margin-right: 352px;
+  margin-bottom: 8px;
 `;
 
 const Form = styled.form`
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 `;
 
 const Label = styled.label`
@@ -52,22 +53,28 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-  border: none;
-  border-bottom: solid 1px #527ff5;
-  width: 400px;
-  height: 30px;
+  border: solid 1px #527ff5;
+  border-radius: 5px;
+  width: 401px;
+  height: 36px;
   outline: none;
+  font-size: 11px;
+  padding-left: 5px;
+  &::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 11px;
+  }
 `;
 
 const Button = styled.button`
-  color: white;
-  background-color: #527ff5;
-  border: none;
+  color: #527ff5;
+  background-color: white;
+  border: solid 1px #527ff5;
   border-radius: 30px;
   font-size: 12px;
-  width: 45px;
+  width: 38.8px;
   height: 19px;
-  font-family: "GmarketSans";
+  font-family: "Pretendard-Regular";
   cursor: pointer;
   position: absolute;
   top: 0;
@@ -92,7 +99,15 @@ const Member = styled.span`
   vertical-align: middle;
 `;
 
+const Error = styled.div`
+  font-size: 11px;
+  color: rgba(255, 79, 79, 0.5);
+  margin-top: 3px;
+  padding-left: 10px;
+`;
+
 const AddMember = ({ onClose }) => {
+  const [invalidEmail, setInvalidEmail] = useState(false);
   const memberId = useRecoilValue(memberIdState);
   const accessToken = useRecoilValue(tokenState);
   const { projectId } = useParams();
@@ -101,7 +116,13 @@ const AddMember = ({ onClose }) => {
   );
   const queryClient = useQueryClient();
 
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
   const onSubmit = async (email) => {
     console.log(email);
     axios
@@ -113,15 +134,15 @@ const AddMember = ({ onClose }) => {
         console.log(response);
         queryClient.invalidateQueries("project");
       })
-      .catch((error) => alert(error.response.data?.message));
+      .catch((error) => setInvalidEmail(true));
   };
+
   const onValid = (email) => {
     console.log(email);
-    if (!email) {
-      return; // Don't submit if email is empty
-    }
+
     onSubmit(email);
     reset();
+    setInvalidEmail(false);
   };
 
   return (
@@ -133,7 +154,6 @@ const AddMember = ({ onClose }) => {
           viewBox="0 0 24 24"
           stroke-width="2"
           stroke="#bcbcbc"
-          class="w-6 h-6"
           width="20px"
           height="20px"
         >
@@ -148,7 +168,15 @@ const AddMember = ({ onClose }) => {
         <Title>팀원 추가</Title>
         <Form onSubmit={handleSubmit(onValid)}>
           <Label>
-            <Input type="email" {...register("email")} />
+            <Input
+              {...register("email", { required: true })}
+              placeholder="이메일을 입력해주세요."
+            />
+            {errors.email?.type === "required" || invalidEmail ? (
+              <Error>
+                이메일에 오류가 있거나 팀원이 티밍에 가입하지 않았어요.
+              </Error>
+            ) : null}
             <Button>추가</Button>
           </Label>
         </Form>

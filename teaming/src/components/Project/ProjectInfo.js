@@ -125,9 +125,9 @@ const Check = styled.button`
   border-radius: 30px;
   font-weight: 700;
   font-size: 12px;
-  border: 2px solid #527ff5;
+  border: 1px solid #527ff5;
   cursor: pointer;
-  font-family: "GmarketSans";
+  font-family: "Pretendard-Regular";
 `;
 
 const Close = styled.button`
@@ -143,7 +143,7 @@ const Close = styled.button`
   border-radius: 23px;
   font-weight: 700;
   font-size: 12px;
-  border: 2px solid
+  border: 1px solid
     ${(props) =>
       props.status === "ING"
         ? "#527ff5"
@@ -152,7 +152,7 @@ const Close = styled.button`
         : null};
   cursor: pointer;
   text-decoration: none;
-  font-family: "GmarketSans";
+  font-family: "Pretendard-Regular";
 `;
 
 const Setting = styled.div`

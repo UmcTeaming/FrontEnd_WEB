@@ -79,7 +79,7 @@ const Download = styled.button`
   padding: 0;
   background-color: #527ff5;
   border-radius: 30px;
-  font-family: "GmarketSans";
+  font-family: "Pretendard-Regular";
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;

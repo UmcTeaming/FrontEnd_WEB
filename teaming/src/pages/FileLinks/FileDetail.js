@@ -29,6 +29,7 @@ const InfoCotainer = styled.div`
 const Path = styled.div`
   display: flex;
   align-items: center;
+  gap: 3px;
   color: white;
   font-size: 12px;
   margin-bottom: 10px;
@@ -95,7 +96,7 @@ const Details = () => {
               </svg>
             </Link>
             &gt;<Link to="/ongoingProject">진행중인 프로젝트</Link>&gt;
-            {project?.name}
+            <span>{project?.name}</span>
           </Path>
           <FileInfo url={downloadURL ? downloadURL : null} />
         </InfoCotainer>
