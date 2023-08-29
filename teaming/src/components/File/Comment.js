@@ -32,7 +32,7 @@ const Input = styled.input`
   border: solid 1px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   font-size: 12px;
-  font-family: "Pretendard-Regular";
+  font-family: "Pretendard";
   background-color: transparent;
   padding-left: 10px;
 `;
@@ -52,7 +52,7 @@ const CancleBtn = styled.button`
   padding: 0;
   background-color: white;
   border-radius: 30px;
-  font-family: "Pretendard-Regular";
+  font-family: "Pretendard";
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
@@ -67,7 +67,7 @@ const AddBtn = styled.button`
   padding: 0;
   background-color: #527ff5;
   border-radius: 30px;
-  font-family: "Pretendard-Regular";
+  font-family: "Pretendard";
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;

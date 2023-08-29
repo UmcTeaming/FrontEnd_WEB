@@ -74,7 +74,7 @@ const Button = styled.button`
   font-size: 12px;
   width: 38.8px;
   height: 19px;
-  font-family: "Pretendard-Regular";
+  font-family: "Pretendard";
   cursor: pointer;
   position: absolute;
   top: 0;
