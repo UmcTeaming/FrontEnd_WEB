@@ -49,21 +49,21 @@ export const Calendarcalendar = () => {
 
   // 일정 데이터를 받는 부분_해당 내용들은 예시
   const [meetings, setMeetings] = useState([
-    {
-      schedule_id: 22,
-      schedule_name: "티밍 기획서 이다다",
-      schedule_start: "2023-07-07",
-      schedule_start_time: "10:30:00",
-      schedule_end: "2023-07-07",
-      schedule_end_time: "14:30:00",
-    },
     // {
-    //   id: 1,
-    //   name: "티밍 전체 대면 회의1 - 중구 퇴계로",
-    //   project_name: "00교양 조별 과제",
-    //   startDatetime: "2023-08-11T13:00",
-    //   endDatetime: "2023-08-13T14:30",
-    //   project_color: "#d79ac3",
+    //   schedule_id: 22,
+    //   schedule_name: "티밍 기획서 이다다",
+    // schedule_start: "2023-07-07",
+    // schedule_start_time: "10:30:00",
+    // schedule_end: "2023-07-07",
+    // schedule_end_time: "14:30:00",
+    // },
+    // {
+    // id: 1,
+    // name: "티밍 전체 대면 회의1 - 중구 퇴계로",
+    // project_name: "00교양 조별 과제",
+    // startDatetime: "2023-08-11T13:00",
+    // endDatetime: "2023-08-13T14:30",
+    // project_color: "#d79ac3",
     // },
   ]);
 
@@ -81,12 +81,16 @@ export const Calendarcalendar = () => {
           console.log("Schedule Name:", schedule.schedule_name);
           console.log("Start Date:", schedule.schedule_start);
           console.log("End Date:", schedule.schedule_end);
+          console.log("Schedule Start Time:", schedule.schedule_start_time);
+          console.log("Schedule End Time:", schedule.schedule_end_time);
 
           const newMeeting = {
             id: schedule.schedule_id,
             name: schedule.schedule_name,
-            startDatetime: schedule.schedule_start,
-            endDatetime: schedule.schedule_end,
+            // startDatetime: schedule.schedule_start,
+            // endDatetime: schedule.schedule_end,
+            startDatetime: `${schedule.schedule_start}T${schedule.schedule_start_time}`,
+            endDatetime: `${schedule.schedule_end}T${schedule.schedule_end_time}`,
           };
           // setMeetings 함수를 사용하여 기존 meetings 배열에 새 일정을 추가한다
           setMeetings((prevMeetings) => [...prevMeetings, newMeeting]);
@@ -250,6 +254,7 @@ export const Calendarcalendar = () => {
               <div className="contenttimeperiod" style={colorStyle}>
                 <div className="timeperiod">
                   <time dateTime={meeting.startDatetime}>
+                  {/* <time dateTime={format(startDateTime, "yyyy-MM-dd'T'HH:mm:ss")}> */}
                     {format(startDateTime, "H:mm")}
                   </time>{" "}
                   -{" "}

@@ -78,8 +78,10 @@ export const Schedulecalendarcomponents = () => {
           const newMeeting = {
             id: schedule.schedule_id,
             name: schedule.schedule_name,
-            startDatetime: schedule.schedule_start,
-            endDatetime: schedule.schedule_end,
+            // startDatetime: schedule.schedule_start,
+            // endDatetime: schedule.schedule_end,
+            startDatetime: `${schedule.schedule_start}T${schedule.schedule_start_time}`,
+            endDatetime: `${schedule.schedule_end}T${schedule.schedule_end_time}`,
             project_color: schedule.project_color            ,
           };
           // setMeetings 함수를 사용하여 기존 meetings 배열에 새 일정을 추가한다
