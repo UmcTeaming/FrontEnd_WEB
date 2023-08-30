@@ -30,7 +30,7 @@ export const Homebanner = () => {
   const [nickName, setNickName] = useRecoilState(nickNameState);
   const [memberId, setMemberId] = useRecoilState(memberIdState);
   const [recentlyProjects, setRecentlyProjects] = useState([]);
-
+  
   useEffect(() => {
     // 여기서 외부 데이터를 가져오고 recentlyProjects 상태를 설정하세요
     axios
@@ -52,6 +52,12 @@ export const Homebanner = () => {
     <div className="BannerApp">
       {recentlyProjects?.length === 0 ? (
         <div className="Bannerempty">
+          <div className="notworkingicon empty_left">
+            <FontAwesomeIcon
+              icon={faChevronLeft}
+              style={{ color: "#ffffff", pointerEvents: "none" }}
+            />
+          </div>
           <div className="emptycontent">
             <div className="emptytitle">
               <span className="emptytitlelineone">아직 생성된</span>
@@ -62,6 +68,12 @@ export const Homebanner = () => {
             <div className="emptysubtitle">
               프로젝트를 생성하고 티밍을 이용해보세요!{" "}
             </div>
+          </div>
+          <div className="notworkingicon empty_right">
+            <FontAwesomeIcon
+              icon={faChevronRight}
+              style={{ color: "#ffffff", pointerEvents: "none" }}
+            />
           </div>
         </div>
       ) : (
@@ -77,10 +89,10 @@ export const Homebanner = () => {
             <Swiper
               className="swiper_container"
               effect={"coverflow"}
-              initialSlide={1}
               grabCursor={true}
               centeredSlides={true}
               slidesPerView={3}
+              initialSlide={1}
               coverflowEffect={{
                 rotate: 0,
                 stretch: 0,
@@ -93,7 +105,8 @@ export const Homebanner = () => {
                 prevEl: ".swiper-button-prev",
                 clickable: true,
               }}
-              loop={true}
+              // loop={true}
+              loopedSlides={recentlyProjects.length} // 이 부분을 설정해보세요
               modules={[EffectCoverflow, Pagination, Navigation]}
               spaceBetween={-50}
             >
@@ -135,17 +148,23 @@ export const Homebanner = () => {
                   </div>
                 </SwiperSlide>
               ))}
-
-              <div className="slider-controler">
-                <div className="swiper-button-prev slider-arrow">
-                  <ion-icon name="arrow-back-outline"></ion-icon>
-                </div>
-                <div className="swiper-button-next slider-arrow">
-                  <ion-icon name="arrow-forward-outline"></ion-icon>
-                </div>
-                <div className="swiper-pagination"></div>
-              </div>
             </Swiper>
+
+            <div className="slider-controler">
+              <div className="swiper-button-prev slider-arrow workingicon">
+                <FontAwesomeIcon
+                  icon={faChevronLeft}
+                  style={{ color: "#ffffff" }}
+                />
+              </div>
+              <div className="swiper-button-next slider-arrow workingicon">
+                <FontAwesomeIcon
+                  icon={faChevronRight}
+                  style={{ color: "#ffffff" }}
+                />
+              </div>
+              <div className="swiper-pagination"></div>
+            </div>
           </div>
         </div>
       )}
