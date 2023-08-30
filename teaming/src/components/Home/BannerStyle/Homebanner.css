@@ -17,6 +17,23 @@
   border-radius: 10px;
 }
 
+.Bannerempty {
+  display: flex;
+}
+
+.Bannerempty .notworkingicon {
+  font-size: 20px;
+  margin-top: 200px;
+}
+
+.Bannerempty .empty_left {
+  padding-right: 200px;
+}
+
+.Bannerempty .empty_right {
+  padding-left: 200px;
+}
+
 .Bannerempty .emptycontent {
   padding-top: 30px;
   padding-left: 20px;
@@ -73,11 +90,11 @@
 
 .swiper_container {
   /* width: 100%; */
+  width: 800px;
   display: flex;
   justify-content: center; /* 수평 중앙 정렬 */
   align-items: center; /* 수직 중앙 정렬 */
 }
-
 
 .swiper-wrapper {
   display: flex;
@@ -86,6 +103,7 @@
 
 .swiper-slide {
   display: flex;
+  width: 100%;
   /* flex 컨테이너로 설정 */
   justify-content: center;
   /* 가로 가운데 정렬 */
@@ -103,42 +121,79 @@
   filter: blur(2px);
 }
 
+.Bannernotempty .swiper-slide-prev:only-child,
+.Bannernotempty .swiper-slide-next:only-child {
+  filter: none;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  display: none;
+}
+
+.workingicon {
+  font-size: 20px;
+}
+
+.swiper-button-prev{
+  padding-left: 2px;
+}
 
 
 .BannerContent {
-  height: 300px;
-  width: 800px;
+  /* height: 300px;
+  width: 800px; */
+  margin-top: 20px;
   border-radius: 10px;
   font-size: 24px;
   color: #333;
-}
+  display: flex;
+  overflow: hidden; /* 넘치는 콘텐츠 숨김 */
 
+  position: relative; /* 추가 */
+}
 
 .swiper-slide {
   width: 37rem;
   height: 42rem;
   position: relative;
+
+  display: flex; /* 추가 */
+  align-items: center; /* 추가 */
+  justify-content: center; /* 추가 */
 }
 
-.slider-controler {
+/* .slider-controler {
   position: relative;
   bottom: 12rem;
   display: flex;
-}
+} */
 
-.slider-controler .swiper-button-next {
+/* .slider-controler .swiper-button-next {
   left: 98% !important;
   transform: translateX(-58%) !important;
-}
-.slider-controler .slider-arrow {
+} */
+
+/* .slider-controler .slider-arrow {
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 50%;
   left: 2%;
   transform: translateX(-42%);
   filter: drop-shadow(0px 8px 24px rgba(18, 28, 53, 0.1));
-}
+} */
 
+.slider-arrow {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  left: 2%;
+  transform: translateX(-42%);
+  filter: drop-shadow(0px 8px 24px rgba(18, 28, 53, 0.1));
+  position: absolute; /* 변경 */
+  top: 50%; /* 추가 */
+  transform: translateY(-50%); /* 추가 */
+}
 
 .swiper-pagination {
   position: relative;
@@ -159,8 +214,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0 10px;
 }
-
 
 .BannerContent .content {
   margin-top: 10px;
@@ -204,7 +259,6 @@
   object-fit: cover;
 }
 
-
 .BannerContent .content .contenttitle {
   text-align: left;
   margin-left: 30px;
@@ -233,6 +287,5 @@
   margin-top: 10px;
   font-size: 12px;
   color: #808080;
-  line-height: .5;
+  line-height: 0.5;
 }
-
