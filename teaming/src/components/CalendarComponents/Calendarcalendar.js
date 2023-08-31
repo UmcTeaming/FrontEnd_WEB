@@ -7,6 +7,8 @@ import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { CalendarIcon } from "@heroicons/react/solid";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
+import { BiHome } from "react-icons/bi";
+import { GoChevronRight } from "react-icons/go";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { Menu, Transition } from "@headlessui/react";
 import { DotsVerticalIcon } from "@heroicons/react/outline";
@@ -35,6 +37,11 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { memberIdState } from "../atom";
 import { id } from "date-fns/locale";
+// 경로 설명 부분
+import { useQuery } from "react-query";
+import { getProject } from "../../api";
+import { useRecoilValue } from "recoil";
+import { tokenState } from "../../components/atom";
 
 // className함수는 여러 개의 클래스 이름들을 받아들이고, 조건에 따라 필터링하여 결합한 문자열을 반환함
 function classNames(...classes) {
@@ -46,6 +53,10 @@ export const Calendarcalendar = () => {
   const { projectId } = useParams();
   const [dateList, setDateList] = useState();
   const [daymeetings, setDayMeetings] = useState();
+  const accessToken = useRecoilValue(tokenState);
+  const { data: project } = useQuery(["project"], () =>
+  getProject(memberId.toString(), projectId.toString(), accessToken)
+);
 
   // 일정 데이터를 받는 부분_해당 내용들은 예시
   const [meetings, setMeetings] = useState([
@@ -170,6 +181,11 @@ export const Calendarcalendar = () => {
 
   // 일정 삭제
   const ScheduleDelete = (scheduleId) => {
+    if(
+      window.confirm(
+        "삭제한 일정은 되돌릴 수 없습니다. 그래도 삭제하시겠습니까?"
+      )
+    ){
     axios
       .delete(
         `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/${scheduleId}`
@@ -185,6 +201,7 @@ export const Calendarcalendar = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
+    }
   };
 
   let today = startOfToday();
@@ -327,12 +344,14 @@ export const Calendarcalendar = () => {
 
   return (
     <div className="SchedulecalendarApp pt-10">
-      <div className="Calendartxt">
+      <div className="Path">
         <Link to="/">
-          <FontAwesomeIcon icon={faHouse} />
-          <FontAwesomeIcon icon={faChevronRight} />
-          진행 중인 프로젝트
+          <BiHome size="13" />
         </Link>
+        <GoChevronRight size="13" />
+        <Link to="/ongoingProject">진행 중인 프로젝트</Link>
+        <GoChevronRight size="13" />
+        <span>{project?.name}</span>
       </div>
 
       <div className="mx-auto md:max-w-4xl mt-10">
