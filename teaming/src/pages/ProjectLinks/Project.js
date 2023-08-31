@@ -69,6 +69,7 @@ const Tab = styled.div`
   justify-content: center;
   text-align: center;
   font-size: 11px;
+  font-weight: 600;
   width: 130px;
   height: 22px;
   margin: 0 3px;

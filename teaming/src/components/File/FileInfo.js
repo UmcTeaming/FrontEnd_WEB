@@ -39,14 +39,25 @@ const FileType = styled.span`
 `;
 
 const Details = styled.div`
+  padding-top: 10px;
   display: flex;
   flex-direction: column;
+  width: 480px;
+  height: 217px;
 `;
 
 const Title = styled.h1`
   font-size: 20px;
   font-weight: 700;
-  margin-bottom: 31px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-height: 25px;
+  height: 50px;
 `;
 
 const Uploader = styled.span`
@@ -63,7 +74,7 @@ const Description = styled.p`
 
 const Col = styled.div`
   display: flex;
-  gap: 300px;
+  justify-content: space-between;
 `;
 
 const Format = styled.div`
@@ -95,13 +106,18 @@ const Download = styled.button`
 
 function FileInfo({ url }) {
   const downloadURL = url;
+  const currentUrl = window.location.href;
   const memberId = useRecoilValue(memberIdState);
   const accessToken = useRecoilValue(tokenState);
   const { projectId, fileId } = useParams();
   const { data: project } = useQuery(["project"], () =>
     getProject(memberId.toString(), projectId.toString(), accessToken)
   );
-  const { data: file } = useQuery(["file"], () =>
+  const {
+    data: file,
+    isLoading,
+    isSuccess,
+  } = useQuery(["file"], () =>
     getFile(
       memberId.toString(),
       projectId.toString(),
@@ -118,51 +134,53 @@ function FileInfo({ url }) {
       link.click();
     }
   };
-  return (
-    <Wrapper>
-      <ImgContainer>
-        <Img
-          src={
-            project?.projectStatus === "ING"
-              ? "../../img/fileImg/project_file.png"
-              : project?.projectStatus === "END"
-              ? "../../img/fileImg/final_file.png"
-              : null
-          }
-        />
-        <FileType>{file?.file_type}</FileType>
-      </ImgContainer>
-      <Details>
-        <Title>{file?.file_name}</Title>
-        <Uploader>{file?.uploader}님이 업로드</Uploader>
-        <Description>
-          프로젝트 명: {project?.name} <br /> {formattedDate}
-        </Description>
-        <Col>
-          <Format>
-            <svg width="15px" height="15px">
-              <circle
-                cx="5"
-                cy="5"
-                r="5"
-                fill={
-                  project?.projectStatus === "ING"
-                    ? "#527FF5"
-                    : project?.projectStatus === "END"
-                    ? "#FFD008"
-                    : null
-                }
-              />
-            </svg>
-            {file?.file_type}
-          </Format>
-          <Download onClick={handleDownload}>
-            <MdUpload size="15" color="white" transform="rotate(180)" />
-            <span>파일 다운로드</span>
-          </Download>
-        </Col>
-      </Details>
-    </Wrapper>
-  );
+  if (isSuccess) {
+    return (
+      <Wrapper>
+        <ImgContainer>
+          <Img
+            src={
+              currentUrl.includes("project-files")
+                ? "../../img/fileImg/project_file.png"
+                : currentUrl.includes("final-files")
+                ? "../../img/fileImg/final_file.png"
+                : null
+            }
+          />
+          <FileType>{file?.file_type}</FileType>
+        </ImgContainer>
+        <Details>
+          <Title>{file?.file_name}</Title>
+          <Uploader>{file?.uploader}님이 업로드</Uploader>
+          <Description>
+            프로젝트 명: {project?.name} <br /> {formattedDate}
+          </Description>
+          <Col>
+            <Format>
+              <svg width="15px" height="15px">
+                <circle
+                  cx="5"
+                  cy="5"
+                  r="5"
+                  fill={
+                    project?.projectStatus === "ING"
+                      ? "#527FF5"
+                      : project?.projectStatus === "END"
+                      ? "#FFD008"
+                      : null
+                  }
+                />
+              </svg>
+              {file?.file_type}
+            </Format>
+            <Download onClick={handleDownload}>
+              <MdUpload size="15" color="white" transform="rotate(180)" />
+              <span>파일 다운로드</span>
+            </Download>
+          </Col>
+        </Details>
+      </Wrapper>
+    );
+  }
 }
 export default FileInfo;
