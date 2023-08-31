@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./Homeongoingproject.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
+import { GoChevronRight } from "react-icons/go";
 
 // datas > home.json데이터 가져와야 함
 // 데이터 적용 관련
@@ -35,7 +36,12 @@ export const Homeongoingproject = () => {
   return (
     <div className="OngoingProjApp">
       <div className="OngoingProjtitle">
-        <Link to="/ongoingProject">진행중인 프로젝트 &#62;</Link>
+        <Link to="/ongoingProject">
+          <p>진행 중인 프로젝트</p>
+        </Link>
+        <span className="ml-2">
+          <GoChevronRight size="27" />
+        </span>
       </div>
       <div className="OngoingProjsubtitle">
         프로젝트의 상태가 '진행중인' 프로젝트입니다

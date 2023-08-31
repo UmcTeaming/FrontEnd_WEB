@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./Homeportfolio.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
+import { GoChevronRight } from "react-icons/go";
 
 // datas > home.json데이터 가져와야 함
 // 데이터 적용 관련
@@ -35,7 +36,12 @@ export const Homeportfolio = () => {
   return (
     <div className="PortfolioApp">
       <div className="Portfoliotitle">
-        <Link to="/portfolio">포트폴리오 &#62;</Link>
+        <Link to="/portfolio">
+          <p>완료된 프로젝트</p>
+        </Link>
+        <span className="ml-2">
+          <GoChevronRight size="27" />
+        </span>
       </div>
       <div className="Portfoliosubtitle">
         {nickName}님의 프로젝트를 한눈에 모아보세요!
