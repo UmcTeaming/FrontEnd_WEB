@@ -3,16 +3,21 @@
   background-repeat: no-repeat;
   background-size: cover;
   flex-direction: column;
+  height: 1300px;
 }
 
 /* 달력 관련 스타일 */
-.SchedulecalendarApp .Calendartxt {
+.SchedulecalendarApp .Path {
+  display: flex;
   color: #fff;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin-left: 100px;
+  align-items: center;
+  justify-content: center;
+  margin-right: 710px;
+  margin-top: 30px;
 }
 
 .calendarblock {
@@ -85,9 +90,9 @@
 
 .newlisttxt {
   margin-left: 50px;
-  font-size: 15px;
+  font-size: 17px;
   color: #527ff5;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 .newlist .newlistcontent {
@@ -108,14 +113,14 @@
 }
 
 .newlist .newlistcontent .newlistbtn {
-  width: 48px;
+  width: 50px;
   height: 23px;
   border: solid;
   float: right;
   margin-right: 10px;
   border-color: #527ff5;
   background-color: #527ff5;
-  border-radius: 10px;
+  border-radius: 15px;
   color: #fff;
 }
 

@@ -7,13 +7,17 @@
 }
 
 /* 달력 관련 스타일 */
-.SchedulecalendarApp .Calendartxt {
+.SchedulecalendarApp .SchedulecalendarPath {
+  display: flex;
   color: #fff;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin-left: 100px;
+  align-items: center;
+  justify-content: center;
+  margin-right: 850px;
+  margin-top: 30px;
 }
 
 .calendarblock {

@@ -7,6 +7,8 @@ import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { CalendarIcon } from "@heroicons/react/solid";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
+import { BiHome } from "react-icons/bi";
+import { GoChevronRight } from "react-icons/go";
 import { Menu, Transition } from "@headlessui/react";
 import { DotsVerticalIcon } from "@heroicons/react/outline";
 import {
@@ -183,11 +185,12 @@ export const Schedulecalendarcomponents = () => {
 
   return (
     <div className="SchedulecalendarApp pt-10">
-      <div className="Calendartxt">
-        <Link to="/">
-          <FontAwesomeIcon icon={faHouse} />
-          &#62;일정 달력
+      <div className="SchedulecalendarPath">
+      <Link to="/">
+          <BiHome size="13" />
         </Link>
+        <GoChevronRight size="13" />
+        일정달력
       </div>
       <div className="mx-auto md:max-w-4xl mt-10">
         <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
