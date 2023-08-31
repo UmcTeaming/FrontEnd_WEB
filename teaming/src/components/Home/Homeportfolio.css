@@ -1,6 +1,7 @@
 
 /* 제목과 소제목 */
 .PortfolioApp .Portfoliotitle {
+  display: flex;
   font-size: 20px;
   font-weight: 700;
   margin-top: 50px;

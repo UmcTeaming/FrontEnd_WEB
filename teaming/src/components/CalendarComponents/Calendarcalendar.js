@@ -480,7 +480,8 @@ export const Calendarcalendar = () => {
         >
           <div>
             <div className="newlisttxt" onClick={ScheduleCreate}>
-              <FontAwesomeIcon icon={faCirclePlus} /> 새 일정 만들기
+              <FontAwesomeIcon icon={faCirclePlus} /> 
+              <p className="newlistbtntxt">새 일정 만들기</p>
             </div>
           </div>
           <div className="newlistcontent ">

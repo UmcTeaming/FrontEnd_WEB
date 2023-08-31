@@ -1,5 +1,6 @@
 /* 제목과 소제목  */
 .OngoingProjApp .OngoingProjtitle {
+  display: flex;
   font-size: 20px;
   font-weight: 700;
   margin-top: 40px;
