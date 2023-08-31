@@ -31,6 +31,19 @@ const FileName = styled.div`
   box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.1);
 `;
 
+const Loading = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 670px;
+  height: 941px;
+  align-items: center;
+  justify-content: center;
+  span {
+    font-weight: 700;
+  }
+  gap: 20px;
+`;
+
 const FileViewer = ({ url }) => {
   const types = [
     "bmp",
@@ -46,14 +59,12 @@ const FileViewer = ({ url }) => {
     "txt",
   ];
   const downloadURL = url;
+  const currentUrl = window.location.href;
   const [isLoad, setIsLoad] = useState(false);
   const [docs, setDocs] = useState([]);
   const memberId = useRecoilValue(memberIdState);
   const accessToken = useRecoilValue(tokenState);
   const { projectId, fileId } = useParams();
-  const { data: project } = useQuery(["project"], () =>
-    getProject(memberId.toString(), projectId.toString(), accessToken)
-  );
   const { data: file } = useQuery(["file"], () =>
     getFile(
       memberId.toString(),
@@ -88,9 +99,9 @@ const FileViewer = ({ url }) => {
             </FileName>
             <img
               src={
-                project?.projectStatus === "ING"
+                currentUrl.includes("project-files")
                   ? "../../img/viewerImg/project.jpg"
-                  : project?.projectStatus === "END"
+                  : currentUrl.includes("final-files")
                   ? "../../img/viewerImg/final.jpg"
                   : null
               }
@@ -98,7 +109,10 @@ const FileViewer = ({ url }) => {
           </Error>
         )
       ) : (
-        <p>Loading...</p>
+        <Loading>
+          <img src="../../img/viewerImg/loading.png" />
+          <span style={{ color: "#527ff5" }}>Loading</span>
+        </Loading>
       )}
     </Wrapper>
   );

@@ -22,12 +22,12 @@ const File = styled.div`
 `;
 
 const Delete = styled.button`
-  width: 18px;
-  height: 18px;
+  width: 15px;
+  height: 15px;
   background-color: transparent;
   border: none;
   margin-top: 3px;
-  margin-left: 143px;
+  margin-left: 145px;
   padding: 0;
   cursor: pointer;
 `;
@@ -47,8 +47,8 @@ const ImgContainer = styled.div`
 `;
 
 const FileImg = styled.img`
-  width: 117px;
-  height: 127px;
+  width: 122px;
+  height: 132px;
   margin-bottom: 12px;
 `;
 
@@ -65,18 +65,24 @@ const FileType = styled.span`
 const FileTitle = styled.span`
   display: block;
   width: 123px;
-  height: 40px;
   font-size: 14px;
+  font-weight: 500;
   margin-bottom: 3px;
   overflow: hidden;
+  overflow-wrap: break-word;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-height: 20px;
+  height: 40px;
 `;
 
 const Col = styled.div`
   display: flex;
   position: absolute;
   bottom: 10px;
-  gap: 57px;
+  gap: 67px;
 `;
 
 const Comment = styled.span`

@@ -40,7 +40,7 @@ const FileType = styled.span`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  margin-right: 110px;
+  margin-right: 115px;
 `;
 
 const FileTitle = styled.h1`
@@ -172,9 +172,6 @@ const ListFile = (data) => {
               viewBox="0 0 24 24"
               stroke-width="2"
               stroke="#bcbcbc"
-              class="w-6 h-6"
-              width="20px"
-              height="20px"
             >
               <path
                 stroke-linecap="round"
