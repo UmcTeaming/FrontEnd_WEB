@@ -135,3 +135,23 @@ export const getComments = async (memberId, fileId, accessToken) => {
   // const response = await axios.get("/datas/Comment-Search.json");
   // return response.data.data;
 };
+
+export const getView = async (memberId, projectId, fileId, accessToken) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/files/${memberId}/${projectId}/files/${fileId}/view`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data.data;
+  } catch (error) {
+    console.error("Fetch Member Page Error:", error);
+    throw error;
+  }
+
+  // const response = await axios.get("/datas/Comment-Search.json");
+  // return response.data.data;
+};

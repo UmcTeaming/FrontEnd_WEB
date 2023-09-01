@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import { useQuery } from "react-query";
-import { getFile, getProject } from "../../api";
+import { getFile, getProject, getView } from "../../api";
 import { memberIdState, tokenState } from "../atom";
 import { useRecoilValue } from "recoil";
 import { useParams } from "react-router-dom";
@@ -44,10 +44,13 @@ const Loading = styled.div`
   gap: 20px;
 `;
 
-const FileViewer = ({ url }) => {
+const FileViewer = () => {
   const types = [
     "bmp",
     "csv",
+    "odt",
+    "doc",
+    "docx",
     "gif",
     "htm",
     "html",
@@ -55,10 +58,13 @@ const FileViewer = ({ url }) => {
     "jpeg",
     "pdf",
     "png",
+    "ppt",
+    "pptx",
     "tiff",
     "txt",
+    "xls",
+    "xlsx",
   ];
-  const downloadURL = url;
   const currentUrl = window.location.href;
   const [isLoad, setIsLoad] = useState(false);
   const [docs, setDocs] = useState([]);
@@ -67,6 +73,14 @@ const FileViewer = ({ url }) => {
   const { projectId, fileId } = useParams();
   const { data: file } = useQuery(["file"], () =>
     getFile(
+      memberId.toString(),
+      projectId.toString(),
+      fileId.toString(),
+      accessToken
+    )
+  );
+  const { data: downloadURL } = useQuery(["view"], () =>
+    getView(
       memberId.toString(),
       projectId.toString(),
       fileId.toString(),
@@ -86,7 +100,7 @@ const FileViewer = ({ url }) => {
       setIsLoad(true);
     }
   }, [downloadURL, file]);
-
+  console.log(downloadURL);
   return (
     <Wrapper>
       {isLoad ? (

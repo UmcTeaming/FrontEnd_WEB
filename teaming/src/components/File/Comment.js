@@ -124,7 +124,7 @@ const Content = styled.div`
 `;
 
 const Date = styled.span`
-  padding-left: 195px;
+  padding-left: 200px;
   padding-bottom: 3px;
   font-size: 8px;
   color: rgba(0, 0, 0, 0.5);
