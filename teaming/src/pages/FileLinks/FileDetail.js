@@ -51,7 +51,7 @@ const Details = () => {
   const { data: project } = useQuery(["project"], () =>
     getProject(memberId.toString(), projectId.toString(), accessToken)
   );
-
+  console.log(accessToken);
   const [downloadURL, setDownloadUrl] = useState(null);
   useEffect(() => {
     if (downloadURL) {
@@ -102,7 +102,7 @@ const Details = () => {
         </InfoCotainer>
       </Main>
       <Col>
-        <FileViewer url={downloadURL ? downloadURL : null} />
+        <FileViewer />
         <Comment />
       </Col>
     </Wrapper>
