@@ -4,6 +4,14 @@
   background-size: cover; */
   background-image: linear-gradient(  rgba(3, 63, 255, 0.50),#fff);
   width: 100%; 
+  display: grid;
+  place-items: center;
+  justify-content: center;
+}
+
+.schedulepath{
+  display: flex;
+  margin-left: 120px;
 }
 
 /* 달력 관련 스타일 */
@@ -16,12 +24,8 @@
   line-height: normal;
   align-items: center;
   justify-content: center;
-  margin-right: 750px;
-  margin-top: 13px;
-}
-
-.custom-width{
-margin-left:100px;
+  margin-right: 850px;
+  margin-top: -617px;
 }
 
 .calendarblock {
