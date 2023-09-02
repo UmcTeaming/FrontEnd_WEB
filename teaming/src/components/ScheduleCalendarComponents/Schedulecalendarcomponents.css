@@ -15,7 +15,8 @@
 }
 
 /* 달력 관련 스타일 */
-.SchedulecalendarApp .SchedulecalendarPath {
+.SchedulecalendarApp .SchedulecalendarPath
+ {
   display: flex;
   color: #fff;
   font-size: 12px;
