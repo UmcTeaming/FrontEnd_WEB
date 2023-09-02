@@ -89,6 +89,7 @@
 /* newlist 영역 */
 
 .newlisttxt {
+  display: flex;
   margin-left: 50px;
   font-size: 17px;
   color: #527ff5;

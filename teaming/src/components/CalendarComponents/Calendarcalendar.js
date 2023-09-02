@@ -55,8 +55,8 @@ export const Calendarcalendar = () => {
   const [daymeetings, setDayMeetings] = useState();
   const accessToken = useRecoilValue(tokenState);
   const { data: project } = useQuery(["project"], () =>
-  getProject(memberId.toString(), projectId.toString(), accessToken)
-);
+    getProject(memberId.toString(), projectId.toString(), accessToken)
+  );
 
   // 일정 데이터를 받는 부분_해당 내용들은 예시
   const [meetings, setMeetings] = useState([
@@ -78,6 +78,21 @@ export const Calendarcalendar = () => {
     // },
   ]);
 
+  // 0903 일정 추가 관련 project_color
+  const [projectColor, setProjectColor] = useState("");
+
+  // 프로젝트 정보를 가져와서 projectColor 상태 업데이트
+  useEffect(() => {
+    getProject(memberId.toString(), projectId.toString(), accessToken)
+      .then((response) => {
+        const data = response.data;
+        setProjectColor(data.project_color);
+      })
+      .catch((error) => {
+        console.error("Error fetching project data:", error);
+      });
+  }, [memberId, projectId, accessToken]);
+
   // 프로젝트 전체 스케줄 확인
   useEffect(() => {
     axios
@@ -94,7 +109,7 @@ export const Calendarcalendar = () => {
           console.log("End Date:", schedule.schedule_end);
           console.log("Schedule Start Time:", schedule.schedule_start_time);
           console.log("Schedule End Time:", schedule.schedule_end_time);
-          console.log("Schedule Project Color:",schedule.project_color)
+          console.log("Schedule Project Color:", schedule.project_color);
 
           const newMeeting = {
             id: schedule.schedule_id,
@@ -144,6 +159,7 @@ export const Calendarcalendar = () => {
       schedule_end: format(selectedDate2, "yyyy-MM-dd"),
       schedule_start_time: `${selectedTime1}:00`,
       schedule_end_time: `${selectedTime2}:00`,
+      project_color: projectColor, // projectColor 상태에서 가져온 프로젝트 색상 사용
     };
 
     //Axios를 사용하여 서버에 POST 요청을 보낸다. 요청 URL에 requestData를 함께 보내어 새 일정을 생성한다
@@ -160,7 +176,9 @@ export const Calendarcalendar = () => {
           name: title,
           startDatetime: startDateTime,
           endDatetime: endDateTime,
+          project_color: projectColor, // projectColor 상태에서 가져온 프로젝트 색상 사용
         };
+        console.log(newMeeting);
 
         // setMeetings 함수를 사용하여 기존 meetings 배열에 새 일정을 추가한다
         setMeetings((prevMeetings) => [...prevMeetings, newMeeting]);
@@ -183,26 +201,26 @@ export const Calendarcalendar = () => {
 
   // 일정 삭제
   const ScheduleDelete = (scheduleId) => {
-    if(
+    if (
       window.confirm(
         "삭제한 일정은 되돌릴 수 없습니다. 그래도 삭제하시겠습니까?"
       )
-    ){
-    axios
-      .delete(
-        `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/${scheduleId}`
-      )
-      .then((response) => {
-        const data = response.data;
-        console.log(data);
-        const updatedMeetings = meetings.filter(
-          (meeting) => meeting.id !== scheduleId
-        );
-        setMeetings(updatedMeetings);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+    ) {
+      axios
+        .delete(
+          `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/${scheduleId}`
+        )
+        .then((response) => {
+          const data = response.data;
+          console.log(data);
+          const updatedMeetings = meetings.filter(
+            (meeting) => meeting.id !== scheduleId
+          );
+          setMeetings(updatedMeetings);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
     }
   };
 
@@ -273,7 +291,7 @@ export const Calendarcalendar = () => {
               <div className="contenttimeperiod" style={colorStyle}>
                 <div className="timeperiod">
                   <time dateTime={meeting.startDatetime}>
-                  {/* <time dateTime={format(startDateTime, "yyyy-MM-dd'T'HH:mm:ss")}> */}
+                    {/* <time dateTime={format(startDateTime, "yyyy-MM-dd'T'HH:mm:ss")}> */}
                     {format(startDateTime, "H:mm")}
                   </time>{" "}
                   -{" "}
@@ -482,7 +500,7 @@ export const Calendarcalendar = () => {
         >
           <div>
             <div className="newlisttxt" onClick={ScheduleCreate}>
-              <FontAwesomeIcon icon={faCirclePlus} /> 
+              <FontAwesomeIcon icon={faCirclePlus} />
               <p className="newlistbtntxt">새 일정 만들기</p>
             </div>
           </div>
