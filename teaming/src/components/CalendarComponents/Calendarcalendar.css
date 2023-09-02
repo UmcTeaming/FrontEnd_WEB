@@ -6,6 +6,11 @@
   height: 1300px;
 }
 
+.teamschedulepath{
+  display: flex;
+  margin-left: 120px;
+}
+
 /* 달력 관련 스타일 */
 .SchedulecalendarApp .Path {
   display: flex;
@@ -16,9 +21,11 @@
   line-height: normal;
   align-items: center;
   justify-content: center;
-  margin-right: 710px;
-  margin-top: 30px;
+  margin-right: 700px;
+  margin-top: -200px;
 }
+
+
 
 .calendarblock {
   border-radius: 5px;
@@ -93,12 +100,12 @@
   margin-left: 50px;
   font-size: 17px;
   color: #527ff5;
-  margin-top: 30px;
+  margin-top: -330px;
 }
 
 .newlist .newlistcontent {
   align-items: center;
-  margin-top: 15px;
+  margin-top: -270px;
   margin-left: 50px;
   margin-bottom: 30px;
   width: 980px;

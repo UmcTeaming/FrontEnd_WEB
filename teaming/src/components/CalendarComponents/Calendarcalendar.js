@@ -364,127 +364,133 @@ export const Calendarcalendar = () => {
 
   return (
     <div className="SchedulecalendarApp pt-10">
-      <div className="Path">
-        <Link to="/">
-          <BiHome size="13" />
-        </Link>
-        <GoChevronRight size="13" />
-        <Link to="/ongoingProject">진행 중인 프로젝트</Link>
-        <GoChevronRight size="13" />
-        <span>{project?.name}</span>
-      </div>
+      <div className="SchedulecalendarSection">
+        <div className="Path">
+          <div className="teamschedulepath">
+            <Link to="/">
+              <BiHome size="13" />
+            </Link>
+            <GoChevronRight size="13" />
+            <Link to="/ongoingProject">진행 중인 프로젝트</Link>
+            <GoChevronRight size="13" />
+            <span>{project?.name}</span>
+          </div>
+        </div>
 
-      <div className="mx-auto md:max-w-4xl mt-10">
-        <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
-          <div className="md:pr-8 border border-gray-300 calendarblock bg-white">
-            {/*  < 날짜 > 앞뒤로 이동하는 부분 */}
-            <div className="flex items-center justify-center mt-5 ml-10">
-              <button
-                type="button"
-                onClick={previousMonth}
-                className="-my-1.5 -mr-30 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
-              >
-                <span className="sr-only">Previous month</span>
-                <ChevronLeftIcon className="w-5 h-5" aria-hidden="true" />
-              </button>
-              <h2 className="font-semibold text-blue-900">
-                {format(firstDayCurrentMonth, "MMMM")}
-              </h2>
-              <button
-                onClick={nextMonth}
-                type="button"
-                className="-my-30 -mr-1.5  flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
-              >
-                <span className="sr-only">Next month</span>
-                <ChevronRightIcon className="w-5 h-5" aria-hidden="true" />
-              </button>
-            </div>
-
-            <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-blue-500 ml-10">
-              <div>SUN</div>
-              <div>MON</div>
-              <div>TUE</div>
-              <div>WED</div>
-              <div>THU</div>
-              <div>FRI</div>
-              <div>SAT</div>
-            </div>
-            <div className="grid grid-cols-7 mt-2 text-sm ml-10">
-              {days.map((day, dayIdx) => (
-                <div
-                  key={day.toString()}
-                  className={classNames(
-                    dayIdx === 0 && colStartClasses[getDay(day)],
-                    "py-1.5"
-                  )}
+        <div className="mx-auto md:max-w-4xl mt-10">
+          <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
+            <div className="md:pr-8 border border-gray-300 calendarblock bg-white">
+              {/*  < 날짜 > 앞뒤로 이동하는 부분 */}
+              <div className="flex items-center justify-center mt-5 ml-10">
+                <button
+                  type="button"
+                  onClick={previousMonth}
+                  className="-my-1.5 -mr-30 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
                 >
-                  <button
-                    type="button"
-                    onClick={() => setSelectedDay(day)}
+                  <span className="sr-only">Previous month</span>
+                  <ChevronLeftIcon className="w-5 h-5" aria-hidden="true" />
+                </button>
+                <h2 className="font-semibold text-blue-900">
+                  {format(firstDayCurrentMonth, "MMMM")}
+                </h2>
+                <button
+                  onClick={nextMonth}
+                  type="button"
+                  className="-my-30 -mr-1.5  flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+                >
+                  <span className="sr-only">Next month</span>
+                  <ChevronRightIcon className="w-5 h-5" aria-hidden="true" />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-blue-500 ml-10">
+                <div>SUN</div>
+                <div>MON</div>
+                <div>TUE</div>
+                <div>WED</div>
+                <div>THU</div>
+                <div>FRI</div>
+                <div>SAT</div>
+              </div>
+              <div className="grid grid-cols-7 mt-2 text-sm ml-10">
+                {days.map((day, dayIdx) => (
+                  <div
+                    key={day.toString()}
                     className={classNames(
-                      isEqual(day, selectedDay) && "text-white bg-blue-500",
-                      !isEqual(day, selectedDay) &&
-                        isToday(day) &&
-                        "text-red-500",
-                      !isEqual(day, selectedDay) &&
-                        !isToday(day) &&
-                        isSameMonth(day, firstDayCurrentMonth) &&
-                        "text-blue-900",
-                      !isEqual(day, selectedDay) &&
-                        !isToday(day) &&
-                        !isSameMonth(day, firstDayCurrentMonth) &&
-                        "text-gray-400",
-                      isEqual(day, selectedDay) && isToday(day) && "bg-red-500",
-                      isEqual(day, selectedDay) &&
-                        !isToday(day) &&
-                        "bg-gray-900",
-                      !isEqual(day, selectedDay) && "hover:bg-gray-200",
-                      (isEqual(day, selectedDay) || isToday(day)) &&
-                        "font-semibold",
-                      "mx-auto flex h-8 w-8 items-center justify-center rounded-full"
+                      dayIdx === 0 && colStartClasses[getDay(day)],
+                      "py-1.5"
                     )}
                   >
-                    <time dateTime={format(day, "yyyy-MM-dd")}>
-                      {format(day, "d")}
-                    </time>
-                  </button>
-                  <div className="w-1 h-1 mx-auto mt-1">
-                    {/* 날짜 별로 일정이 있는 부분에 점을 찍도록 함 */}
-                    {meetings.some((meeting) =>
-                      daysBetween(
-                        parseISO(meeting.startDatetime),
-                        parseISO(meeting.endDatetime)
-                      ).some((d) => isSameDay(d, day))
-                    ) && (
-                      <div className="w-1 h-1 rounded-full bg-sky-500"></div>
-                    )}
+                    <button
+                      type="button"
+                      onClick={() => setSelectedDay(day)}
+                      className={classNames(
+                        isEqual(day, selectedDay) && "text-white bg-blue-500",
+                        !isEqual(day, selectedDay) &&
+                          isToday(day) &&
+                          "text-red-500",
+                        !isEqual(day, selectedDay) &&
+                          !isToday(day) &&
+                          isSameMonth(day, firstDayCurrentMonth) &&
+                          "text-blue-900",
+                        !isEqual(day, selectedDay) &&
+                          !isToday(day) &&
+                          !isSameMonth(day, firstDayCurrentMonth) &&
+                          "text-gray-400",
+                        isEqual(day, selectedDay) &&
+                          isToday(day) &&
+                          "bg-red-500",
+                        isEqual(day, selectedDay) &&
+                          !isToday(day) &&
+                          "bg-gray-900",
+                        !isEqual(day, selectedDay) && "hover:bg-gray-200",
+                        (isEqual(day, selectedDay) || isToday(day)) &&
+                          "font-semibold",
+                        "mx-auto flex h-8 w-8 items-center justify-center rounded-full"
+                      )}
+                    >
+                      <time dateTime={format(day, "yyyy-MM-dd")}>
+                        {format(day, "d")}
+                      </time>
+                    </button>
+                    <div className="w-1 h-1 mx-auto mt-1">
+                      {/* 날짜 별로 일정이 있는 부분에 점을 찍도록 함 */}
+                      {meetings.some((meeting) =>
+                        daysBetween(
+                          parseISO(meeting.startDatetime),
+                          parseISO(meeting.endDatetime)
+                        ).some((d) => isSameDay(d, day))
+                      ) && (
+                        <div className="w-1 h-1 rounded-full bg-sky-500"></div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
+            <section className="mt-12 md:mt-0 md:pl-10 ">
+              <h2 className="font-semibold scheduletitle mt-5">
+                {" "}
+                <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
+                  {format(selectedDay, "yyy.MM.dd")}
+                </time>
+              </h2>
+              {/* 일정 리스트 */}
+              <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500 max-h-80 overflow-y-auto">
+                {selectedDayMeetings.length > 0 ? (
+                  selectedDayMeetings.map((meeting) => (
+                    <Meeting
+                      meeting={meeting}
+                      key={meeting.id}
+                      onDelete={ScheduleDelete}
+                    />
+                  ))
+                ) : (
+                  <p>등록된 일정이 없습니다</p>
+                )}
+              </ol>
+            </section>
           </div>
-          <section className="mt-12 md:mt-0 md:pl-10 ">
-            <h2 className="font-semibold scheduletitle mt-5">
-              {" "}
-              <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
-                {format(selectedDay, "yyy.MM.dd")}
-              </time>
-            </h2>
-            {/* 일정 리스트 */}
-            <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500 max-h-80 overflow-y-auto">
-              {selectedDayMeetings.length > 0 ? (
-                selectedDayMeetings.map((meeting) => (
-                  <Meeting
-                    meeting={meeting}
-                    key={meeting.id}
-                    onDelete={ScheduleDelete}
-                  />
-                ))
-              ) : (
-                <p>등록된 일정이 없습니다</p>
-              )}
-            </ol>
-          </section>
         </div>
       </div>
 
