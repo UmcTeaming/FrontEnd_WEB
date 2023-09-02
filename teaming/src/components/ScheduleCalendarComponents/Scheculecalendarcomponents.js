@@ -193,7 +193,7 @@ export const Schedulecalendarcomponents = () => {
         일정달력
       </div>
       <div className="mx-auto md:max-w-4xl mt-10">
-        <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
+        <div className="calsection md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
           <div className="md:pr-8 border border-gray-300 calendarblock bg-white">
             {/*  < 날짜 > 앞뒤로 이동하는 부분 */}
             <div className="flex items-center justify-center mt-5 ml-10">

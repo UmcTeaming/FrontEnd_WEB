@@ -94,6 +94,7 @@ export const Calendarcalendar = () => {
           console.log("End Date:", schedule.schedule_end);
           console.log("Schedule Start Time:", schedule.schedule_start_time);
           console.log("Schedule End Time:", schedule.schedule_end_time);
+          console.log("Schedule Project Color:",schedule.project_color)
 
           const newMeeting = {
             id: schedule.schedule_id,
@@ -102,6 +103,7 @@ export const Calendarcalendar = () => {
             // endDatetime: schedule.schedule_end,
             startDatetime: `${schedule.schedule_start}T${schedule.schedule_start_time}`,
             endDatetime: `${schedule.schedule_end}T${schedule.schedule_end_time}`,
+            project_color: schedule.project_color,
           };
           // setMeetings 함수를 사용하여 기존 meetings 배열에 새 일정을 추가한다
           setMeetings((prevMeetings) => [...prevMeetings, newMeeting]);
