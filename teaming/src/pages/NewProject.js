@@ -332,20 +332,20 @@ const NewProject = () => {
           </div>
         </div>
         <div className="mt-10 space-y-3">
-          <div className="">
-            <div className="flex flex-col ">
+          <div className=" mb-10">
+            <div className="flex flex-col mb-4">
               <Span>날짜</Span>
               <span className="text-gray-400 opacity-50">
                 프로젝트의 예상 진행 날짜를 입력해주세요.
               </span>
             </div>
             <div className="space-y-2">
-              <div className="flex justify-center items-center text-mainMoreDeepColor space-x-3">
-                <div className="w-40 text-center py-1 border border-mainColor rounded-md text-sm">
+              <div className="flex justify-center items-center text-mainMoreDeepColor space-x-3 mb-5 mx-2">
+                <div className=" px-8 text-center py-2 border border-mainColor rounded-md text-sm">
                   {selectedDay1.format("YYYY-MM-DD")}
                 </div>
                 <div className="font-bold text-mainDeepColor">~</div>
-                <div className="w-40 text-center py-1 border border-mainColor rounded-md text-sm">
+                <div className=" px-8 text-center py-2 border border-mainColor rounded-md text-sm">
                   {selectedDay2.format("YYYY-MM-DD")}
                 </div>
               </div>
@@ -355,8 +355,8 @@ const NewProject = () => {
               </div>
             </div>
           </div>
-          <div className="bg-mainColor flex justify-center rounded-full mx-10 hover:bg-white hover:text-mainColor transition-all text-white border-mainColor border-[1px]">
-            <button className="  pt-2 pb-1  w-full">프로젝트 생성하기</button>
+          <div className=" bg-mainColor flex justify-center rounded-full mx-10 hover:bg-white hover:text-mainColor transition-all text-white border-mainColor border-[1px]">
+            <button className="py-2  w-full">프로젝트 생성하기</button>
           </div>
         </div>
       </form>
