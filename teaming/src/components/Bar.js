@@ -45,7 +45,7 @@ const Bar = () => {
             <img className="h-7" src="/img/logo/teamingLogo.png" />
           </Link>
           {isLogin ? (
-            <div className="pl-20 space-x-7 text-xs text-gray-400">
+            <div className="space-x-7 text-xs text-gray-400">
               <Link to={isLogin ? "/ongoingProject" : null}>
                 <span
                   className={cls(
@@ -81,7 +81,7 @@ const Bar = () => {
         </div>
         {isLogin ? (
           <div className="flex items-center space-x-3 text-xs pr-6">
-            <div onClick={onClickLogout}>
+            <div onClick={onClickLogout} className="cursor-pointer">
               <span className="text-gray-400">로그아웃</span>
             </div>
             <Link to={isLogin ? "/mypage" : null}>
