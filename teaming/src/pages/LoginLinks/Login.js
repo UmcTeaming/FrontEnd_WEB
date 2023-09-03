@@ -13,7 +13,7 @@ import {
 } from "../../components/atom";
 
 const Input = tw.input`
-h-12 w-96  outline-none placeholder:text-mainDeepColor p-2 bg-[#e9eefe] rounded-xl
+h-12 w-96  outline-none placeholder:text-mainMoreDeepColor p-2 bg-[#e9eefe] rounded-xl
 `;
 const FormSpan = tw.span`
 px-2
@@ -65,8 +65,8 @@ const Login = () => {
           {...register("password")}
         />
         <div>
-          <div className="text-center text-mainDeepColor mt-4 mb-8 text-sm ">
-            <FormSpan className="border-r border-mainDeepColor">
+          <div className="text-center text-mainMoreDeepColor mt-4 mb-8 text-sm ">
+            <FormSpan className="border-r border-mainMoreDeepColor">
               <Link to="/findPW">비밀번호 찾기</Link>
             </FormSpan>
             <FormSpan>
