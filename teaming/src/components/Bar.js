@@ -22,7 +22,7 @@ const Bar = () => {
 
   const onClickLogout = () => {
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/auth/${memberId}/logout`, {
+      .delete(`${process.env.REACT_APP_API_URL}/member/${memberId}/logout`, {
         grantType: "Bearer",
         memberId: memberId,
         accessToken: localStorage.getItem("token"),
@@ -39,8 +39,8 @@ const Bar = () => {
 
   return (
     <div className="flex flex-col ">
-      <div className="pl-1 py-1">
-        <div className=" flex justify-between items-center space-x-7  ml-20">
+      <div className=" flex justify-between pl-1 py-1">
+        <div className=" flex  items-center space-x-7  ml-16">
           <Link to="/">
             <img className="h-7" src="/img/logo/teamingLogo.png" />
           </Link>
