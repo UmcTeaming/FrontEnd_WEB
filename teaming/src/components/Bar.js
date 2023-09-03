@@ -63,7 +63,7 @@ const Bar = () => {
                     pathname === "/portfolio" ? "text-mainColor" : ""
                   )}
                 >
-                  포트폴리오
+                  완료된 프로젝트
                 </span>
               </Link>
               <Link to={isLogin ? "/schedulecalendar" : null}>
