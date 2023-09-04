@@ -30,7 +30,7 @@ export const Homebanner = () => {
   const [nickName, setNickName] = useRecoilState(nickNameState);
   const [memberId, setMemberId] = useRecoilState(memberIdState);
   const [recentlyProjects, setRecentlyProjects] = useState([]);
-  
+
   useEffect(() => {
     // 여기서 외부 데이터를 가져오고 recentlyProjects 상태를 설정하세요
     axios
@@ -105,8 +105,10 @@ export const Homebanner = () => {
                 prevEl: ".swiper-button-prev",
                 clickable: true,
               }}
-              // loop={true}
-              loopedSlides={recentlyProjects.length} // 이 부분을 설정해보세요
+              loop={true}
+              // loopedSlides={recentlyProjects.length} 
+              // 이 부분을 설정해보세요
+              loopedSlides={recentlyProjects.length <= 3 ? recentlyProjects.length : 3} // 동적으로 설정
               modules={[EffectCoverflow, Pagination, Navigation]}
               spaceBetween={-50}
             >
