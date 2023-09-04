@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { HiOutlineUser } from "react-icons/hi";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import tw from "tailwind-styled-components";
 import { cls } from "../libs/utils";
 import { useRecoilState } from "recoil";
 import { loginState, memberIdState } from "./atom";
 import axios from "axios";
+import { useCookies } from "react-cookie";
+import { getCookie } from "./Cookie";
 
 const BarItem = tw.div`
 flex space-x-6 items-center cursor-pointer
@@ -15,6 +17,10 @@ const Bar = () => {
   const [memberId, setMemberId] = useRecoilState(memberIdState);
 
   const [isLogin, setIsLogin] = useRecoilState(loginState);
+
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const onClick = () => {
     setIsClick((prev) => !prev);
@@ -25,13 +31,17 @@ const Bar = () => {
       .delete(`${process.env.REACT_APP_API_URL}/member/${memberId}/logout`, {
         grantType: "Bearer",
         memberId: memberId,
-        accessToken: localStorage.getItem("token"),
-        refreshToken: localStorage.getItem("token"),
+        accessToken: getCookie("token"),
+        refreshToken: getCookie("token"),
       })
       .then((res) => {
         console.log(res);
         alert("로그아웃 되었습니다");
-        localStorage.removeItem("token");
+        navigate("/");
+
+        //localStorage.removeItem("token");
+
+        removeCookie("token");
         setIsLogin(false);
       })
       .catch((err) => console.log(err));

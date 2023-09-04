@@ -11,6 +11,8 @@ import {
   nickNameState,
   tokenState,
 } from "../../components/atom";
+import { useCookies } from "react-cookie";
+import { setCookie } from "../../components/Cookie";
 
 const Input = tw.input`
 h-12 w-96  outline-none placeholder:text-mainMoreDeepColor p-2 bg-[#e9eefe] rounded-xl
@@ -25,6 +27,8 @@ const Login = () => {
   const [memberId, setMemberId] = useRecoilState(memberIdState);
   const [nickName, setNickName] = useRecoilState(nickNameState);
 
+  const [cookies, setCookies] = useCookies(["token"]);
+
   const onValid = (data) => {
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
@@ -33,7 +37,8 @@ const Login = () => {
       })
       .then((res) => {
         console.log(res);
-        localStorage.setItem("token", res.data.data.jwtToken.accessToken);
+        /* localStorage.setItem("token", res.data.data.jwtToken.accessToken); */
+        setCookie("token", res.data.data.jwtToken.accessToken);
         setMemberId(res.data.data.jwtToken.memberId);
         setNickName(res.data.data.name);
         setIsLogin(true);
