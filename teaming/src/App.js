@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import Login from "./pages/LoginLinks/Login";
 import Bar from "./components/Bar";
@@ -20,55 +20,63 @@ import { loginState, tokenState } from "./components/atom";
 import axios from "axios";
 import { Calendar } from "./pages/Calendar/Calendar";
 import { Schedulecalendar } from "./pages/Schedulecalendar/Schedulecalendar";
+import { useCookies } from "react-cookie";
+import { useEffect } from "react";
+import { getCookie } from "./components/Cookie";
 
 axios.interceptors.request.use(
   function (config) {
-    const token = localStorage.getItem("token");
-    config.headers.Authorization = `Bearer ${token}`;
+    //const token = localStorage.getItem("token");
+    const token = getCookie("token");
+    config.headers["Content-Type"] = "application/json";
+    config.headers["Authorization"] = `Bearer ${token}`;
+    //setIsLogin(true);
     return config;
   },
   function (error) {
+    //setIsLogin(false);
+    //navigate("/");
     return Promise.reject(error);
   }
 );
 
 function App() {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
+
+  const navigate = useNavigate();
+
   return (
     <div>
-      <BrowserRouter>
-        <Bar />
+      <Bar />
+      <Routes>
+        <Route path="/" element={isLogin ? <Home /> : <Login />} />
 
-        <Routes>
-          <Route path="/" element={isLogin ? <Home /> : <Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/findPW" element={<FindPW />} />
+        <Route path="/newProject" element={<NewProject />} />
+        {isLogin ? <Route path="/mypage" element={<Mypage />} /> : null}
+        {isLogin ? <Route path="/mypage/*" element={<ChangePw />} /> : null}
 
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/findPW" element={<FindPW />} />
-          <Route path="/newProject" element={<NewProject />} />
-          {isLogin ? <Route path="/mypage" element={<Mypage />} /> : null}
-          {isLogin ? <Route path="/mypage/*" element={<ChangePw />} /> : null}
+        <Route path="/cleanhome" element={<CleanHome />} />
 
-          <Route path="/cleanhome" element={<CleanHome />} />
-
-          <Route path="/:projectId/calendar" element={<Calendar />} />
-          <Route path="/schedulecalendar" element={<Schedulecalendar />} />
-          <Route path="/ongoingProject" element={<OngoingProject />} />
-          {/* 포트폴리오 */}
-          <Route path="/portfolio" element={<PortfolioList />} />
-          <Route path="/:projectId/project-files" element={<Project />} />
-          <Route path="/:projectId/final-files" element={<Project />} />
-          <Route path="/:projectId/edit" element={<EditProject />} />
-          <Route
-            path="/:projectId/project-files/:fileId"
-            element={<FileDetail />}
-          />
-          <Route
-            path="/:projectId/final-files/:fileId"
-            element={<FileDetail />}
-          />
-          <Route path="/:projectId/End" element={<End />} />
-        </Routes>
-      </BrowserRouter>
+        <Route path="/:projectId/calendar" element={<Calendar />} />
+        <Route path="/schedulecalendar" element={<Schedulecalendar />} />
+        <Route path="/ongoingProject" element={<OngoingProject />} />
+        {/* 포트폴리오 */}
+        <Route path="/portfolio" element={<PortfolioList />} />
+        <Route path="/:projectId/project-files" element={<Project />} />
+        <Route path="/:projectId/final-files" element={<Project />} />
+        <Route path="/:projectId/edit" element={<EditProject />} />
+        <Route
+          path="/:projectId/project-files/:fileId"
+          element={<FileDetail />}
+        />
+        <Route
+          path="/:projectId/final-files/:fileId"
+          element={<FileDetail />}
+        />
+        <Route path="/:projectId/End" element={<End />} />
+      </Routes>
     </div>
   );
 }

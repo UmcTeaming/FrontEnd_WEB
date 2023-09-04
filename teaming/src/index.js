@@ -6,6 +6,8 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { RecoilRoot } from "recoil";
 import { QueryClientProvider, QueryClient } from "react-query";
+import { CookiesProvider } from "react-cookie";
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -13,9 +15,13 @@ const client = new QueryClient();
 
 root.render(
   <QueryClientProvider client={client}>
-    <RecoilRoot>
-      <App />
-    </RecoilRoot>
+    <CookiesProvider>
+      <BrowserRouter>
+        <RecoilRoot>
+          <App />
+        </RecoilRoot>
+      </BrowserRouter>
+    </CookiesProvider>
   </QueryClientProvider>
 );
 

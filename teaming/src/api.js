@@ -1,15 +1,16 @@
 import axios from "axios";
+import { getCookie } from "./components/Cookie";
 
-axios.interceptors.request.use(
+/* axios.interceptors.request.use(
   function (config) {
-    const token = localStorage.getItem("token");
+    const token = getCookie("token");
     config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
   function (error) {
     return Promise.reject(error);
   }
-);
+); */
 
 export const getProfile = async (memberId, accessToken) => {
   try {
