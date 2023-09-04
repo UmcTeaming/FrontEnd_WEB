@@ -53,10 +53,16 @@ export const Calendarcalendar = () => {
   const { projectId } = useParams();
   const [dateList, setDateList] = useState();
   const [daymeetings, setDayMeetings] = useState();
-  const accessToken = useRecoilValue(tokenState);
+
+  // const accessToken = useRecoilValue(tokenState);
+  // const { data: project } = useQuery(["project"], () =>
+  //   getProject(memberId.toString(), projectId.toString(), accessToken)
+  // );
+  // 아래는 accesstoken 제거버전
   const { data: project } = useQuery(["project"], () =>
-    getProject(memberId.toString(), projectId.toString(), accessToken)
+    getProject(memberId.toString(), projectId.toString())
   );
+
 
   // 일정 데이터를 받는 부분_해당 내용들은 예시
   const [meetings, setMeetings] = useState([
@@ -82,8 +88,19 @@ export const Calendarcalendar = () => {
   const [projectColor, setProjectColor] = useState("");
 
   // 프로젝트 정보를 가져와서 projectColor 상태 업데이트
+  // useEffect(() => {
+  //   getProject(memberId.toString(), projectId.toString(), accessToken)
+  //     .then((response) => {
+  //       const data = response.data;
+  //       setProjectColor(data.project_color);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching project data:", error);
+  //     });
+  // }, [memberId, projectId, accessToken]);
+  // 아래는 accesstoken 제거 버전
   useEffect(() => {
-    getProject(memberId.toString(), projectId.toString(), accessToken)
+    getProject(memberId.toString(), projectId.toString())
       .then((response) => {
         const data = response.data;
         setProjectColor(data.project_color);
@@ -91,7 +108,7 @@ export const Calendarcalendar = () => {
       .catch((error) => {
         console.error("Error fetching project data:", error);
       });
-  }, [memberId, projectId, accessToken]);
+  }, [memberId, projectId]);
 
   // 프로젝트 전체 스케줄 확인
   useEffect(() => {
@@ -427,25 +444,25 @@ export const Calendarcalendar = () => {
                       className={classNames(
                         isEqual(day, selectedDay) && "text-white bg-blue-500",
                         !isEqual(day, selectedDay) &&
-                          isToday(day) &&
-                          "text-red-500",
+                        isToday(day) &&
+                        "text-red-500",
                         !isEqual(day, selectedDay) &&
-                          !isToday(day) &&
-                          isSameMonth(day, firstDayCurrentMonth) &&
-                          "text-blue-900",
+                        !isToday(day) &&
+                        isSameMonth(day, firstDayCurrentMonth) &&
+                        "text-blue-900",
                         !isEqual(day, selectedDay) &&
-                          !isToday(day) &&
-                          !isSameMonth(day, firstDayCurrentMonth) &&
-                          "text-gray-400",
+                        !isToday(day) &&
+                        !isSameMonth(day, firstDayCurrentMonth) &&
+                        "text-gray-400",
                         isEqual(day, selectedDay) &&
-                          isToday(day) &&
-                          "bg-red-500",
+                        isToday(day) &&
+                        "bg-red-500",
                         isEqual(day, selectedDay) &&
-                          !isToday(day) &&
-                          "bg-gray-900",
+                        !isToday(day) &&
+                        "bg-gray-900",
                         !isEqual(day, selectedDay) && "hover:bg-gray-200",
                         (isEqual(day, selectedDay) || isToday(day)) &&
-                          "font-semibold",
+                        "font-semibold",
                         "mx-auto flex h-8 w-8 items-center justify-center rounded-full"
                       )}
                     >
@@ -461,8 +478,8 @@ export const Calendarcalendar = () => {
                           parseISO(meeting.endDatetime)
                         ).some((d) => isSameDay(d, day))
                       ) && (
-                        <div className="w-1 h-1 rounded-full bg-sky-500"></div>
-                      )}
+                          <div className="w-1 h-1 rounded-full bg-sky-500"></div>
+                        )}
                     </div>
                   </div>
                 ))}
