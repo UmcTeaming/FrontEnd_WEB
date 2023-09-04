@@ -46,15 +46,18 @@ const ProjectFiles = (props) => {
   const memberId = useRecoilValue(memberIdState);
   const accessToken = useRecoilValue(tokenState);
   const { projectId } = useParams();
-  const { data: projectFiles } = useQuery(["project-files"], () =>
-    getProjectFiles(memberId.toString(), projectId.toString(), accessToken)
+  const { data: projectFiles } = useQuery(
+    ["project-files"],
+    () =>
+      getProjectFiles(memberId.toString(), projectId.toString(), accessToken),
+    {
+      initialData: null,
+    }
   );
   const { currentView } = props;
 
   const formatDate = (date) => {
-    if (date === undefined) {
-      return "";
-    } else {
+    if (date !== undefined) {
       return date.split("T")[0].replace(/-/g, ".");
     }
   };
