@@ -46,7 +46,7 @@ const PortfolioList = () => {
     const nickName = useRecoilState(nickNameState);
     const { data: portfolioData, refetch } = useQuery(
         ["portfolio", memberId],
-        () => fetchPortfolioData(memberId),console.log("useQuery 실행"),
+        () => fetchPortfolioData(memberId),
         {
           enabled: true
         }
@@ -59,11 +59,9 @@ const PortfolioList = () => {
             // if (portfolioData.length < response.length) 
             if (portfolioData && portfolioData.length < response.length) 
             {
-                console.log("새로운 데이터가 추가");        
                 refetch(); // 데이터를 다시 불러옴
             }
         }
-        console.log("데이터를 비동기적으로 불러옴");
         fetchData(); //데이터를 비동기적으로 불러옴
     }, [memberId]);
     
