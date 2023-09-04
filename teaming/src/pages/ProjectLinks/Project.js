@@ -9,7 +9,7 @@ import FinalFiles from "./FinalFiles";
 import { useRecoilValue } from "recoil";
 import { useQuery } from "react-query";
 import { getProject } from "../../api";
-import { memberIdState, tokenState } from "../../components/atom";
+import { memberIdState } from "../../components/atom";
 
 const Wrapper = styled.div`
   font-family: "GmarketSans";
@@ -121,14 +121,13 @@ const Container = styled.div`
 
 const Project = () => {
   const memberId = useRecoilValue(memberIdState);
-  const accessToken = useRecoilValue(tokenState);
   const { projectId } = useParams();
   const matchProjectTab = useMatch("/:projectId/project-files");
   const matchFinalTab = useMatch("/:projectId/final-files");
   const [currentView, setCurrentView] = useState("grid");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: project } = useQuery(["project"], () =>
-    getProject(memberId.toString(), projectId.toString(), accessToken)
+    getProject(memberId.toString(), projectId.toString())
   );
 
   const openModal = () => {

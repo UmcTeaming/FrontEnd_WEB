@@ -4,7 +4,7 @@ import ListFile from "../../components/Project/ListFile";
 import { useQuery } from "react-query";
 import { getFinalFiles } from "../../api";
 import { useRecoilValue } from "recoil";
-import { memberIdState, tokenState } from "../../components/atom";
+import { memberIdState } from "../../components/atom";
 import { useParams } from "react-router-dom";
 
 const Wrapper = styled.div`
@@ -43,10 +43,9 @@ const CardFiles = styled.div`
 `;
 function FinalFiles(props) {
   const memberId = useRecoilValue(memberIdState);
-  const accessToken = useRecoilValue(tokenState);
   const { projectId } = useParams();
   const { data: finalFiles } = useQuery(["final-files"], () =>
-    getFinalFiles(memberId.toString(), projectId.toString(), accessToken)
+    getFinalFiles(memberId.toString(), projectId.toString())
   );
   const { currentView } = props;
 

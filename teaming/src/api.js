@@ -12,15 +12,10 @@ import { getCookie } from "./components/Cookie";
   }
 ); */
 
-export const getProfile = async (memberId, accessToken) => {
+export const getProfile = async (memberId) => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/member/${memberId}/mypage`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
+      `${process.env.REACT_APP_API_URL}/member/${memberId}/mypage`
     );
 
     return response.data.data;
@@ -33,15 +28,10 @@ export const getProfile = async (memberId, accessToken) => {
   // return response.data.data;
 };
 
-export const getProject = async (memberId, projectId, accessToken) => {
+export const getProject = async (memberId, projectId) => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
+      `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}`
     );
 
     return response.data.data;
@@ -54,15 +44,10 @@ export const getProject = async (memberId, projectId, accessToken) => {
   // return response.data.data;
 };
 
-export const getProjectFiles = async (memberId, projectId, accessToken) => {
+export const getProjectFiles = async (memberId, projectId) => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/files`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
+      `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/files`
     );
 
     return response.data.data;
@@ -74,15 +59,10 @@ export const getProjectFiles = async (memberId, projectId, accessToken) => {
   // return response.data.data;
 };
 
-export const getFinalFiles = async (memberId, projectId, accessToken) => {
+export const getFinalFiles = async (memberId, projectId) => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/final-files`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
+      `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/final-files`
     );
 
     return response.data.data;
@@ -95,15 +75,10 @@ export const getFinalFiles = async (memberId, projectId, accessToken) => {
   // return response.data.data;
 };
 
-export const getFile = async (memberId, projectId, fileId, accessToken) => {
+export const getFile = async (memberId, projectId, fileId) => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/files/${fileId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
+      `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/files/${fileId}`
     );
 
     return response.data.data;
@@ -116,15 +91,10 @@ export const getFile = async (memberId, projectId, fileId, accessToken) => {
   // return response.data.data;
 };
 
-export const getComments = async (memberId, fileId, accessToken) => {
+export const getComments = async (memberId, fileId) => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/files/${memberId}/${fileId}/comments`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
+      `${process.env.REACT_APP_API_URL}/files/${memberId}/${fileId}/comments`
     );
 
     return response.data.data;
@@ -137,15 +107,10 @@ export const getComments = async (memberId, fileId, accessToken) => {
   // return response.data.data;
 };
 
-export const getView = async (memberId, projectId, fileId, accessToken) => {
+export const getView = async (memberId, projectId, fileId) => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/files/${memberId}/${projectId}/files/${fileId}/view`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
+      `${process.env.REACT_APP_API_URL}/files/${memberId}/${projectId}/files/${fileId}/view`
     );
     return response.data.data;
   } catch (error) {

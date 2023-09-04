@@ -2,7 +2,7 @@ import styled from "styled-components";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import { useQuery } from "react-query";
 import { getFile, getProject, getView } from "../../api";
-import { memberIdState, tokenState } from "../atom";
+import { memberIdState } from "../atom";
 import { useRecoilValue } from "recoil";
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
@@ -69,23 +69,12 @@ const FileViewer = () => {
   const [isLoad, setIsLoad] = useState(false);
   const [docs, setDocs] = useState([]);
   const memberId = useRecoilValue(memberIdState);
-  const accessToken = useRecoilValue(tokenState);
   const { projectId, fileId } = useParams();
   const { data: file } = useQuery(["file"], () =>
-    getFile(
-      memberId.toString(),
-      projectId.toString(),
-      fileId.toString(),
-      accessToken
-    )
+    getFile(memberId.toString(), projectId.toString(), fileId.toString())
   );
   const { data: downloadURL } = useQuery(["view"], () =>
-    getView(
-      memberId.toString(),
-      projectId.toString(),
-      fileId.toString(),
-      accessToken
-    )
+    getView(memberId.toString(), projectId.toString(), fileId.toString())
   );
 
   useEffect(() => {

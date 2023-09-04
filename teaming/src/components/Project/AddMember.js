@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { getProject } from "../../api";
 import axios from "axios";
 import { useQuery, useQueryClient } from "react-query";
-import { memberIdState, tokenState } from "../atom";
+import { memberIdState } from "../atom";
 import { useRecoilValue } from "recoil";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
@@ -109,10 +109,9 @@ const Error = styled.div`
 const AddMember = ({ onClose }) => {
   const [invalidEmail, setInvalidEmail] = useState(false);
   const memberId = useRecoilValue(memberIdState);
-  const accessToken = useRecoilValue(tokenState);
   const { projectId } = useParams();
   const { data: project } = useQuery(["project"], () =>
-    getProject(memberId.toString(), projectId.toString(), accessToken)
+    getProject(memberId.toString(), projectId.toString())
   );
   const queryClient = useQueryClient();
 

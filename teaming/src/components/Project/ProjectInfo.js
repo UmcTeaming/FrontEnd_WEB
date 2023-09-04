@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { getProject } from "../../api";
 import { useQuery } from "react-query";
-import { memberIdState, tokenState } from "../atom";
+import { memberIdState } from "../atom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -165,14 +165,13 @@ const Setting = styled.div`
 
 const ProjectInfo = ({ onOpen }) => {
   const memberId = useRecoilValue(memberIdState);
-  const accessToken = useRecoilValue(tokenState);
   const { projectId } = useParams();
   const {
     data: project,
     isLoading,
     isSuccess,
   } = useQuery(["project"], () =>
-    getProject(memberId.toString(), projectId.toString(), accessToken)
+    getProject(memberId.toString(), projectId.toString())
   );
 
   const formatDate = (date) => {

@@ -6,7 +6,7 @@ import { getProject } from "../../api";
 import "react-calendar/dist/Calendar.css";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
-import { memberIdState, tokenState } from "../../components/atom";
+import { memberIdState } from "../../components/atom";
 
 const Wrapper = styled.div`
   font-family: "GmarketSans";
@@ -155,10 +155,9 @@ const Button = styled.button`
 
 const End = () => {
   const memberId = useRecoilValue(memberIdState);
-  const accessToken = useRecoilValue(tokenState);
   const { projectId } = useParams();
   const { data: project } = useQuery(["project"], () =>
-    getProject(memberId.toString(), projectId.toString(), accessToken)
+    getProject(memberId.toString(), projectId.toString())
   );
 
   const formatDate = (date) => {

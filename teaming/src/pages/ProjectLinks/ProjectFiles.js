@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import { getProjectFiles } from "../../api";
 import { useRecoilValue } from "recoil";
 import { useParams } from "react-router-dom";
-import { memberIdState, tokenState } from "../../components/atom";
+import { memberIdState } from "../../components/atom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -44,15 +44,9 @@ const CardFiles = styled.div`
 
 const ProjectFiles = (props) => {
   const memberId = useRecoilValue(memberIdState);
-  const accessToken = useRecoilValue(tokenState);
   const { projectId } = useParams();
-  const { data: projectFiles } = useQuery(
-    ["project-files"],
-    () =>
-      getProjectFiles(memberId.toString(), projectId.toString(), accessToken),
-    {
-      initialData: null,
-    }
+  const { data: projectFiles } = useQuery(["project-files"], () =>
+    getProjectFiles(memberId.toString(), projectId.toString())
   );
   const { currentView } = props;
 

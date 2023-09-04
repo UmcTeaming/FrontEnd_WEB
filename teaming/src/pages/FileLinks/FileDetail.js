@@ -6,7 +6,7 @@ import Comment from "../../components/File/Comment";
 import { getProject } from "../../api";
 import { useQuery } from "react-query";
 import { useRecoilValue } from "recoil";
-import { memberIdState, tokenState } from "../../components/atom";
+import { memberIdState } from "../../components/atom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -46,12 +46,10 @@ const Col = styled.div`
 
 const Details = () => {
   const memberId = useRecoilValue(memberIdState);
-  const accessToken = useRecoilValue(tokenState);
   const { projectId, fileId } = useParams();
   const { data: project } = useQuery(["project"], () =>
-    getProject(memberId.toString(), projectId.toString(), accessToken)
+    getProject(memberId.toString(), projectId.toString())
   );
-  console.log(accessToken);
   const [downloadURL, setDownloadUrl] = useState(null);
   useEffect(() => {
     if (downloadURL) {

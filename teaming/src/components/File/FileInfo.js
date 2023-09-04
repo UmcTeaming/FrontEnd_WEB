@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 import { getFile, getProject } from "../../api";
 import { MdUpload } from "react-icons/md";
-import { memberIdState, tokenState } from "../atom";
+import { memberIdState } from "../atom";
 import { useRecoilValue } from "recoil";
 import { useParams } from "react-router-dom";
 import React from "react";
@@ -108,22 +108,16 @@ function FileInfo({ url }) {
   const downloadURL = url;
   const currentUrl = window.location.href;
   const memberId = useRecoilValue(memberIdState);
-  const accessToken = useRecoilValue(tokenState);
   const { projectId, fileId } = useParams();
   const { data: project } = useQuery(["project"], () =>
-    getProject(memberId.toString(), projectId.toString(), accessToken)
+    getProject(memberId.toString(), projectId.toString())
   );
   const {
     data: file,
     isLoading,
     isSuccess,
   } = useQuery(["file"], () =>
-    getFile(
-      memberId.toString(),
-      projectId.toString(),
-      fileId.toString(),
-      accessToken
-    )
+    getFile(memberId.toString(), projectId.toString(), fileId.toString())
   );
   const formattedDate = file?.upload_date.split(" ")[0].replace(/-/g, ".");
   const handleDownload = () => {
