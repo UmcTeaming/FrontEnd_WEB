@@ -25,7 +25,6 @@ const OPjBox = ({ project }) => {
 
   const onDelete = (e) => {
       e.preventDefault();
-      
       if (
         window.confirm(
           "삭제한 프로젝트는 되돌릴 수 없습니다. 그래도 삭제하시겠습니까? "
@@ -39,8 +38,6 @@ const OPjBox = ({ project }) => {
           console.log(response);
           if (matchProgressProjects) {
             console.log(matchProgressProjects);
-            console.log ("삭제되었습니다");
-            queryClient.removeQueries("ongoingProject");
             queryClient.invalidateQueries("ongoingProject");
           }
         })
