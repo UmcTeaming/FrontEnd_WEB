@@ -6,7 +6,6 @@ import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
-//import OpjBox from "../../components/OngoingProjectComponents/OngoingProjectBoxType/opjBox";
 import OpjBoxes from "../../components/OngoingProjectComponents/OngoingProjectBoxType/opjBoxes";
 import OpjLines from "../../components/OngoingProjectComponents/OngoingProjectLineType/opjLines";
 
@@ -15,9 +14,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { memberIdState, nickNameState } from "../../components/atom";
-
+import { useQuery, useQueryClient } from 'react-query';
 import { BiHome } from 'react-icons/bi';
 import { GoChevronRight } from 'react-icons/go';
+import { fetchOngoingProjectData } from "../PortfolioLinks/usePortfolio.js"
 
 import "../PortfolioLinks/portfolioList.css";
 
@@ -45,31 +45,26 @@ const ListBtn = styled.div`
 
 export const OngoingProject = () => {
   const [viewBox, setViewBox] = useState(true);
+  const [memberId] = useRecoilState(memberIdState);
+  const [nickName] = useRecoilState(nickNameState);
 
-  const [memberId, setMemberId] = useRecoilState(memberIdState);
-  const [nickName, setNickName] = useRecoilState(nickNameState);
-
-  const [projects, setProjects] = useState();
+  const { data: onGoingProjectData, refetch } = useQuery({
+    queryKey: ["ongoingProject", memberId],
+    queryFn: () => fetchOngoingProjectData(memberId),
+    enabled: !!memberId,
+  });
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/member/${memberId}/progressProjects`)
-      .then((res) => {
-        // API 응답에서 프로젝트 데이터 확인
-        const responseData = res.data.data;
-  
-        if (responseData && responseData.progressProjects) {
-          // 프로젝트 데이터가 있는 경우 정렬하고 상태 업데이트
-          const sortedProjects = responseData.progressProjects.sort((a, b) => {
-            return new Date(a.projectStartDate) - new Date(b.projectStartDate);
-          });
-          setProjects(sortedProjects);
-        } else {
-          // 프로젝트 데이터가 없는 경우 빈 배열 설정
-          setProjects([]);
+    async function fetchData() {
+        const response = await fetchOngoingProjectData(memberId);
+        console.log(response); // response로부터 데이터 확인
+        if (onGoingProjectData && onGoingProjectData.length < response.length) 
+        {
+          console.log("진행중 프젝 불러오기");
+          refetch(); // 데이터를 다시 불러옴
         }
-      })
-      .catch((err) => console.log(err));
+    }
+    fetchData(); //데이터를 비동기적으로 불러옴
   }, [memberId]);
 
   return (
@@ -141,31 +136,19 @@ export const OngoingProject = () => {
                   </CardBtn>
                 </button>
               </div>
-                {projects ? (
+                {onGoingProjectData ? (
                   viewBox ? 
                   <div className="line">
-                    <OpjBoxes projects={projects} />
+                    <OpjBoxes projects={onGoingProjectData} />
                   </div>
                      : 
                   <div className="elementLineView">
-                    <OpjLines projects={projects} />
+                    <OpjLines projects={onGoingProjectData} />
                   </div>) 
                      : 
                   (
                       <div>데이터를 확인할 수 없습니다.</div>
                   )}
-                  {/* {viewBox ? (
-                    <div className="line">
-                      {projects?.map((project) => (
-                        <OpjBox key={project.projectId} project={project} />
-                      ))} 
-                      <OpjBoxes projects={projects} />
-                    </div>
-                  ) : (
-                    <div className="elementLineView">
-                      <OpjLines projects={projects} />
-                    </div>
-                  )} */}
             </div>
           </div>
         </div>

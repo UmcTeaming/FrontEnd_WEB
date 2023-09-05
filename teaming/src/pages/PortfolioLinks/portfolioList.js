@@ -44,22 +44,20 @@ const PortfolioList = () => {
     const [viewBox, setViewBox] = useState(true);
     const [memberId] = useRecoilState(memberIdState);
     const nickName = useRecoilState(nickNameState);
-    const { data: portfolioData, refetch } = useQuery(
-        ["portfolio", memberId],
-        () => fetchPortfolioData(memberId),
-        {
-          enabled: true
-        }
-      );
+
+    const { data: portfolioData, refetch } = useQuery({
+        queryKey: ["portfolio", memberId],
+        queryFn: () => fetchPortfolioData(memberId.toString()),
+        enabled: !!memberId,
+    });
       
     useEffect(() => {
         async function fetchData() {
             const response = await fetchPortfolioData(memberId);
             console.log(response); // response로부터 데이터 확인
-            // if (portfolioData.length < response.length) 
             if (portfolioData && portfolioData.length < response.length) 
             {
-                console.log("데이터 불러오기")
+                console.log("프젝 데이터 불러오기")
                 refetch(); // 데이터를 다시 불러옴
             }
         }
