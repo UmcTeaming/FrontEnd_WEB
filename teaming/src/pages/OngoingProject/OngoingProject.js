@@ -1,9 +1,6 @@
 import React, { useEffect } from "react";
 import "./OngoingProject.css";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse } from "@fortawesome/free-solid-svg-icons";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 import OpjBoxes from "../../components/OngoingProjectComponents/OngoingProjectBoxType/opjBoxes";
@@ -11,13 +8,12 @@ import OpjLines from "../../components/OngoingProjectComponents/OngoingProjectLi
 
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { useRecoilState } from "recoil";
 import { memberIdState, nickNameState } from "../../components/atom";
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 import { BiHome } from 'react-icons/bi';
 import { GoChevronRight } from 'react-icons/go';
-import { fetchOngoingProjectData } from "../PortfolioLinks/usePortfolio.js"
+import { fetchOngoingProjectData } from "../PortfolioLinks/projectApi.js"
 
 import "../PortfolioLinks/portfolioList.css";
 

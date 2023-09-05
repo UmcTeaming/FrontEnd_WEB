@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import "./portfolioList.css";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse } from "@fortawesome/free-solid-svg-icons";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 import PjBoxes from '../../components/portfolioComponents/portfolioListBoxType/pjBoxes.js';
 import PjLines from '../../components/portfolioComponents/portfolioListLineType/pjLines.js';
 
 import styled from "styled-components";
-import axios from 'axios';
 import { useRecoilState } from "recoil";
 import { memberIdState, nickNameState } from "../../components/atom";
-import { useQuery, useQueryClient } from 'react-query';
-import { fetchPortfolioData  } from "./usePortfolio";
+import { useQuery } from 'react-query';
+import { fetchPortfolioData  } from "./projectApi";
 import { BiHome } from 'react-icons/bi';
 import { GoChevronRight } from 'react-icons/go';
 
