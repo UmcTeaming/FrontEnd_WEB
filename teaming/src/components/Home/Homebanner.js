@@ -19,6 +19,11 @@ import "swiper/css/navigation";
 
 import { EffectCoverflow, Pagination, Navigation } from "swiper";
 
+// 추가
+// import 'swiper/css/swiper.min.css';
+import 'swiper/swiper-bundle.min.css';
+
+
 // 데이터 적용 관련
 import axios from "axios";
 import { useRecoilState } from "recoil";
@@ -88,29 +93,55 @@ export const Homebanner = () => {
           <div className="BannerContent container">
             <Swiper
               className="swiper_container"
-              effect={"coverflow"}
+              effect={'coverflow'} // 3D 효과 사용
               grabCursor={true}
-              centeredSlides={true}
+              centeredSlides={true} // 중앙 정렬
               slidesPerView={3}
-              initialSlide={1}
+              initialSlide={recentlyProjects.length}
+              loop={true} // 무한 루프
+              spaceBetween={-50} // 슬라이드 사이 간격
               coverflowEffect={{
-                rotate: 0,
-                stretch: 0,
-                depth: 100,
-                modifier: 2.5,
+                rotate: 0, // 슬라이드 회전 각도
+                stretch: 0, // 슬라이드 사이 간격
+                depth: 100, // 3D 효과 깊이
+                modifier: 2.5, // 효과 강도
+                slideShadows: true, // 슬라이드 그림자 표시 여부
               }}
-              pagination={{ el: "swiper-pagination", clickable: true }}
+              // pagination={{ el: "swiper-pagination", clickable: true }}
               navigation={{
                 nextEl: ".swiper-button-next",
                 prevEl: ".swiper-button-prev",
                 clickable: true,
               }}
-              loop={true}
-              // loopedSlides={recentlyProjects.length} 
-              // 이 부분을 설정해보세요
-              loopedSlides={recentlyProjects.length <= 3 ? recentlyProjects.length : 3} // 동적으로 설정
-              modules={[EffectCoverflow, Pagination, Navigation]}
-              spaceBetween={-50}
+              modules={[EffectCoverflow, Navigation]}
+            // modules={[EffectCoverflow, Pagination, Navigation]}
+
+
+            //   className="swiper_container"
+            //   effect={"coverflow"}
+            //   grabCursor={true}
+            //   centeredSlides={true}
+            //   slidesPerView={3}
+            //   initialSlide={1}
+            //   coverflowEffect={{
+            //     rotate: 0,
+            //     stretch: 0,
+            //     depth: 100,
+            //     modifier: 2.5,
+            //   }}
+            //   pagination={{ el: "swiper-pagination", clickable: true }}
+            //   navigation={{
+            //     nextEl: ".swiper-button-next",
+            //     prevEl: ".swiper-button-prev",
+            //     clickable: true,
+            //   }}
+            //   loop={true}
+            //   // loopedSlides={recentlyProjects.length} 
+            //   // 이 부분을 설정해보세요
+            //   loopedSlides={recentlyProjects.length <= 3 ? recentlyProjects.length : 3} // 동적으로 설정
+            //   loopAdditionalSlides={1}
+            //   modules={[EffectCoverflow, Pagination, Navigation]}
+            //   spaceBetween={-50}
             >
               {recentlyProjects?.map((item, index) => (
                 <SwiperSlide key={index}>
@@ -165,11 +196,12 @@ export const Homebanner = () => {
                   style={{ color: "#ffffff" }}
                 />
               </div>
-              <div className="swiper-pagination"></div>
+              {/* <div className="swiper-pagination"></div> */}
             </div>
           </div>
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 };

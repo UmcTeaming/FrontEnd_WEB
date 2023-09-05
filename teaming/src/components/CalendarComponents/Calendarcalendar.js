@@ -51,64 +51,63 @@ function classNames(...classes) {
 export const Calendarcalendar = () => {
   const [memberId, setMemebrId] = useRecoilState(memberIdState);
   const { projectId } = useParams();
+  // 일정 데이터를 받는 부분_해당 내용들은 예시
+  const [meetings, setMeetings] = useState([]);
   const [dateList, setDateList] = useState();
   const [daymeetings, setDayMeetings] = useState();
+  // const [projectColor, setProjectColor] = useState();
+  // let projectColor;
+  let today = startOfToday();
+  let [selectedDay, setSelectedDay] = useState(today); //selectDay상태와 setCount 함수를 선언
+  let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
 
-  // const accessToken = useRecoilValue(tokenState);
-  // const { data: project } = useQuery(["project"], () =>
-  //   getProject(memberId.toString(), projectId.toString(), accessToken)
-  // );
+  // 현재 월의 첫 번째 날을 가져옴
+  let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
+
+  // 현재 월의 일 수를 계산하여 날짜 배열을 생성
+  let days = eachDayOfInterval({
+    start: firstDayCurrentMonth,
+    end: endOfMonth(firstDayCurrentMonth),
+  });
+
+  // 시작과 끝 일정 사이에 관련된 코드로 주어진 startDate와 endDate 사이의 날짜 배열을 반환하는 함수
+  const daysBetween = (startDate, endDate) => {
+    const days = [];
+    let currentDate = startDate;
+    while (currentDate <= endDate) {
+      days.push(currentDate);
+      currentDate = add(currentDate, { days: 1 });
+    }
+    return days;
+  };
+
+  function previousMonth() {
+    let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
+    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
+  }
+
+  function nextMonth() {
+    let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
+    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
+  }
+
   // 아래는 accesstoken 제거버전
   const { data: project } = useQuery(["project"], () =>
     getProject(memberId.toString(), projectId.toString())
   );
 
-
-  // 일정 데이터를 받는 부분_해당 내용들은 예시
-  const [meetings, setMeetings] = useState([
-    // {
-    //   schedule_id: 22,
-    //   schedule_name: "티밍 기획서 이다다",
-    // schedule_start: "2023-07-07",
-    // schedule_start_time: "10:30:00",
-    // schedule_end: "2023-07-07",
-    // schedule_end_time: "14:30:00",
-    // },
-    // {
-    // id: 1,
-    // name: "티밍 전체 대면 회의1 - 중구 퇴계로",
-    // project_name: "00교양 조별 과제",
-    // startDatetime: "2023-08-11T13:00",
-    // endDatetime: "2023-08-13T14:30",
-    // project_color: "#d79ac3",
-    // },
-  ]);
-
-  // 0903 일정 추가 관련 project_color
-  const [projectColor, setProjectColor] = useState("");
-
-  // 프로젝트 정보를 가져와서 projectColor 상태 업데이트
-  // useEffect(() => {
-  //   getProject(memberId.toString(), projectId.toString(), accessToken)
-  //     .then((response) => {
-  //       const data = response.data;
-  //       setProjectColor(data.project_color);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching project data:", error);
-  //     });
-  // }, [memberId, projectId, accessToken]);
   // 아래는 accesstoken 제거 버전
   useEffect(() => {
     getProject(memberId.toString(), projectId.toString())
       .then((response) => {
         const data = response.data;
-        setProjectColor(data.project_color);
+        // setProjectColor(data.project_color);
       })
       .catch((error) => {
         console.error("Error fetching project data:", error);
       });
   }, [memberId, projectId]);
+
 
   // 프로젝트 전체 스케줄 확인
   useEffect(() => {
@@ -128,11 +127,11 @@ export const Calendarcalendar = () => {
           console.log("Schedule End Time:", schedule.schedule_end_time);
           console.log("Schedule Project Color:", schedule.project_color);
 
+          // projectColor = schedule.project_color;
+
           const newMeeting = {
             id: schedule.schedule_id,
             name: schedule.schedule_name,
-            // startDatetime: schedule.schedule_start,
-            // endDatetime: schedule.schedule_end,
             startDatetime: `${schedule.schedule_start}T${schedule.schedule_start_time}`,
             endDatetime: `${schedule.schedule_end}T${schedule.schedule_end_time}`,
             project_color: schedule.project_color,
@@ -176,9 +175,8 @@ export const Calendarcalendar = () => {
       schedule_end: format(selectedDate2, "yyyy-MM-dd"),
       schedule_start_time: `${selectedTime1}:00`,
       schedule_end_time: `${selectedTime2}:00`,
-      project_color: projectColor, // projectColor 상태에서 가져온 프로젝트 색상 사용
+      // project_color: projectColor, // projectColor 상태에서 가져온 프로젝트 색상 사용
     };
-
     //Axios를 사용하여 서버에 POST 요청을 보낸다. 요청 URL에 requestData를 함께 보내어 새 일정을 생성한다
     axios
       .post(
@@ -188,17 +186,61 @@ export const Calendarcalendar = () => {
       .then((response) => {
         const data = response.data;
         console.log(data);
+
         const newMeeting = {
           id: response.data.data.scheduleId,
           name: title,
           startDatetime: startDateTime,
           endDatetime: endDateTime,
-          project_color: projectColor, // projectColor 상태에서 가져온 프로젝트 색상 사용
         };
         console.log(newMeeting);
 
+
+        // 새로운 일정을 생성한 다음에 배열을 비웁니다.
+        setMeetings([]);
+
+        axios
+          .get(
+            `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/schedule`
+          )
+          .then((response) => {
+            const data = response.data;
+            console.log(data);
+            // 배열 내의 각 스케줄 정보를 출력
+            data.data.forEach((schedule) => {
+              console.log("Schedule Name:", schedule.schedule_name);
+              console.log("Start Date:", schedule.schedule_start);
+              console.log("End Date:", schedule.schedule_end);
+              console.log("Schedule Start Time:", schedule.schedule_start_time);
+              console.log("Schedule End Time:", schedule.schedule_end_time);
+              console.log("Schedule Project Color:", schedule.project_color);
+
+              // projectColor = schedule.project_color;
+
+              const newMeeting = {
+                id: schedule.schedule_id,
+                name: schedule.schedule_name,
+                startDatetime: `${schedule.schedule_start}T${schedule.schedule_start_time}`,
+                endDatetime: `${schedule.schedule_end}T${schedule.schedule_end_time}`,
+                project_color: schedule.project_color,
+              };
+              // setMeetings 함수를 사용하여 기존 meetings 배열에 새 일정을 추가한다
+              setMeetings((prevMeetings) => [...prevMeetings, newMeeting]);
+            });
+
+            // 첫 번째 스케줄의 시작 날짜를 선택한 날짜로 설정
+            if (data.data.length > 0) {
+              const newDay = parseISO(data.data[0].schedule_start);
+              setSelectedDay(newDay);
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching schedule data:", error);
+
+          });
+
         // setMeetings 함수를 사용하여 기존 meetings 배열에 새 일정을 추가한다
-        setMeetings((prevMeetings) => [...prevMeetings, newMeeting]);
+        // setMeetings((prevMeetings) => [...prevMeetings, newMeeting]);
 
         // 다음 부분을 추가하여 해당 날짜에 생성된 일정을 보여줍니다.
         const newDay = parseISO(startDateTime);
@@ -213,7 +255,8 @@ export const Calendarcalendar = () => {
         setSelectedTime1("00:00");
         setSelectedTime2("00:00");
       })
-      .catch((err) => console.log(err));
+      .catch((error) => console.log(error));
+
   };
 
   // 일정 삭제
@@ -241,38 +284,6 @@ export const Calendarcalendar = () => {
     }
   };
 
-  let today = startOfToday();
-  let [selectedDay, setSelectedDay] = useState(today); //selectDay상태와 setCount 함수를 선언
-  let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
-  //useState 함수를 호출하여 초기 상태값을 설정, today변수에 저장된 현재 날짜를 초기 상태로 사용함
-  //currentMonth는 현재의 상태값을, setCurrentMonth는 상태값을 업데이트하는 함수를 가리킨다
-  let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
-
-  let days = eachDayOfInterval({
-    start: firstDayCurrentMonth,
-    end: endOfMonth(firstDayCurrentMonth),
-  });
-
-  // 시작과 끝 일정 사이에 관련된 코드로 주어진 startDate와 endDate 사이의 날짜 배열을 반환하는 함수
-  const daysBetween = (startDate, endDate) => {
-    const days = [];
-    let currentDate = startDate;
-    while (currentDate <= endDate) {
-      days.push(currentDate);
-      currentDate = add(currentDate, { days: 1 });
-    }
-    return days;
-  };
-
-  function previousMonth() {
-    let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
-    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
-  }
-
-  function nextMonth() {
-    let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
-    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
-  }
 
   function Meeting({ meeting, onDelete }) {
     let startDateTime = parseISO(meeting.startDatetime);
