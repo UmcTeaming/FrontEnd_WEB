@@ -6,7 +6,6 @@ import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
-//import OpjBox from "../../components/OngoingProjectComponents/OngoingProjectBoxType/opjBox";
 import OpjBoxes from "../../components/OngoingProjectComponents/OngoingProjectBoxType/opjBoxes";
 import OpjLines from "../../components/OngoingProjectComponents/OngoingProjectLineType/opjLines";
 
@@ -51,7 +50,7 @@ export const OngoingProject = () => {
 
   const { data: onGoingProjectData, refetch } = useQuery({
     queryKey: ["ongoingProject", memberId],
-    queryFn: () => fetchOngoingProjectData(memberId.toString()),
+    queryFn: () => fetchOngoingProjectData(memberId),
     enabled: !!memberId,
   });
 
@@ -150,18 +149,6 @@ export const OngoingProject = () => {
                   (
                       <div>데이터를 확인할 수 없습니다.</div>
                   )}
-                  {/* {viewBox ? (
-                    <div className="line">
-                      {projects?.map((project) => (
-                        <OpjBox key={project.projectId} project={project} />
-                      ))} 
-                      <OpjBoxes projects={projects} />
-                    </div>
-                  ) : (
-                    <div className="elementLineView">
-                      <OpjLines projects={projects} />
-                    </div>
-                  )} */}
             </div>
           </div>
         </div>

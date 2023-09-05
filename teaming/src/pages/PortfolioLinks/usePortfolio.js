@@ -20,6 +20,7 @@ export async function fetchPortfolioData(memberId) {
 
 export async function fetchOngoingProjectData(memberId) {
   try {
+    console.log(memberId);
     const response = await axios.get(`${process.env.REACT_APP_API_URL}/member/${memberId}/progressProjects`);
     if (response.data && response.data.data && response.data.data.progressProjects) {
       // 진행중 데이터가 있는 경우 정렬
