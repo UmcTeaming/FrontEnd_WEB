@@ -37,7 +37,6 @@ const OPjBox = ({ project }) => {
         .then((response) => {
           console.log(response);
           if (matchProgressProjects) {
-            console.log(matchProgressProjects);
             queryClient.invalidateQueries("ongoingProject");
           }
         })
@@ -47,6 +46,10 @@ const OPjBox = ({ project }) => {
       }
     };
 
+    const handleImageError = (e) => {
+      e.target.src = defaultImage; 
+    };
+
 
   return (
     <Link to={`/${project.projectId}/project-files`}>
@@ -54,8 +57,9 @@ const OPjBox = ({ project }) => {
         <div className="thumbNail">
           <img
             className="thumbNailPic"
-            src={project.projectImage || defaultImage} // 이미지가 null일 때 기본 이미지 사용
+            src={project.projectImage || defaultImage}
             alt={project.projectName}
+            onError={handleImageError}
           />
           <span className="progressing">
             <span className="circle ">

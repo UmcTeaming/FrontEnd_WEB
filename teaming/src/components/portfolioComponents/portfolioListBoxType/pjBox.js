@@ -50,6 +50,10 @@ const PjBox = ({ project }) => {
       }
     };
 
+    const handleImageError = (e) => {
+      e.target.src = defaultImage;
+    };
+
     return (
         <Link to={`/${project.projectId}/final-files`}>
             <div className="box">
@@ -58,6 +62,7 @@ const PjBox = ({ project }) => {
                         className="thumbNailPic"
                         src={project.projectImage || defaultImage} // 이미지가 null일 때 기본 이미지 사용
                         alt={project.projectName}
+                        onError={handleImageError}
                     />
                     <span className="progressing">
                         <span className="circle"><FontAwesomeIcon icon={faCircle} /></span>
