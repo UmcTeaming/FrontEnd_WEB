@@ -84,9 +84,6 @@ button {
     .route {
       >span{
         display: flex;
-        >p{
-          margin-top: -2px;
-        }
       }
       display: flex;
       padding: 30px;
