@@ -59,6 +59,7 @@ const PortfolioList = () => {
             // if (portfolioData.length < response.length) 
             if (portfolioData && portfolioData.length < response.length) 
             {
+                console.log("데이터 불러오기")
                 refetch(); // 데이터를 다시 불러옴
             }
         }
