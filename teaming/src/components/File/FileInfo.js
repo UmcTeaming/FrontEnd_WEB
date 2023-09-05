@@ -109,16 +109,21 @@ function FileInfo({ url }) {
   const currentUrl = window.location.href;
   const memberId = useRecoilValue(memberIdState);
   const { projectId, fileId } = useParams();
-  const { data: project } = useQuery(["project"], () =>
-    getProject(memberId.toString(), projectId.toString())
-  );
+  const { data: project } = useQuery({
+    queryKey: ["project", memberId],
+    queryFn: () => getProject(memberId.toString(), projectId.toString()),
+    enabled: !!memberId,
+  });
   const {
     data: file,
     isLoading,
     isSuccess,
-  } = useQuery(["file"], () =>
-    getFile(memberId.toString(), projectId.toString(), fileId.toString())
-  );
+  } = useQuery({
+    queryKey: ["file", memberId],
+    queryFn: () =>
+      getFile(memberId.toString(), projectId.toString(), fileId.toString()),
+    enabled: !!memberId,
+  });
   const formattedDate = file?.upload_date.split(" ")[0].replace(/-/g, ".");
   const handleDownload = () => {
     if (downloadURL) {

@@ -156,9 +156,11 @@ const Button = styled.button`
 const End = () => {
   const memberId = useRecoilValue(memberIdState);
   const { projectId } = useParams();
-  const { data: project } = useQuery(["project"], () =>
-    getProject(memberId.toString(), projectId.toString())
-  );
+  const { data: project } = useQuery({
+    queryKey: ["project", memberId],
+    queryFn: () => getProject(memberId.toString(), projectId.toString()),
+    enabled: !!memberId,
+  });
 
   const formatDate = (date) => {
     if (date === undefined) {

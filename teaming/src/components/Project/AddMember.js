@@ -110,9 +110,11 @@ const AddMember = ({ onClose }) => {
   const [invalidEmail, setInvalidEmail] = useState(false);
   const memberId = useRecoilValue(memberIdState);
   const { projectId } = useParams();
-  const { data: project } = useQuery(["project"], () =>
-    getProject(memberId.toString(), projectId.toString())
-  );
+  const { data: project } = useQuery({
+    queryKey: ["project", memberId],
+    queryFn: () => getProject(memberId.toString(), projectId.toString()),
+    enabled: !!memberId,
+  });
   const queryClient = useQueryClient();
 
   const {

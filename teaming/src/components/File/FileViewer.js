@@ -70,12 +70,18 @@ const FileViewer = () => {
   const [docs, setDocs] = useState([]);
   const memberId = useRecoilValue(memberIdState);
   const { projectId, fileId } = useParams();
-  const { data: file } = useQuery(["file"], () =>
-    getFile(memberId.toString(), projectId.toString(), fileId.toString())
-  );
-  const { data: downloadURL } = useQuery(["view"], () =>
-    getView(memberId.toString(), projectId.toString(), fileId.toString())
-  );
+  const { data: file } = useQuery({
+    queryKey: ["file", memberId],
+    queryFn: () =>
+      getFile(memberId.toString(), projectId.toString(), fileId.toString()),
+    enabled: !!memberId,
+  });
+  const { data: downloadURL } = useQuery({
+    queryKey: ["view", memberId],
+    queryFn: () =>
+      getView(memberId.toString(), projectId.toString(), fileId.toString()),
+    enabled: !!memberId,
+  });
 
   useEffect(() => {
     if (downloadURL) {

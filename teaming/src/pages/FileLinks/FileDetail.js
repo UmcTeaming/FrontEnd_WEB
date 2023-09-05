@@ -47,9 +47,11 @@ const Col = styled.div`
 const Details = () => {
   const memberId = useRecoilValue(memberIdState);
   const { projectId, fileId } = useParams();
-  const { data: project } = useQuery(["project"], () =>
-    getProject(memberId.toString(), projectId.toString())
-  );
+  const { data: project } = useQuery({
+    queryKey: ["project", memberId],
+    queryFn: () => getProject(memberId.toString(), projectId.toString()),
+    enabled: !!memberId,
+  });
   const [downloadURL, setDownloadUrl] = useState(null);
   useEffect(() => {
     if (downloadURL) {

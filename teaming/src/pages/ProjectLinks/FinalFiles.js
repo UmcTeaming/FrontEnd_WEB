@@ -44,9 +44,11 @@ const CardFiles = styled.div`
 function FinalFiles(props) {
   const memberId = useRecoilValue(memberIdState);
   const { projectId } = useParams();
-  const { data: finalFiles } = useQuery(["final-files"], () =>
-    getFinalFiles(memberId.toString(), projectId.toString())
-  );
+  const { data: finalFiles } = useQuery({
+    queryKey: ["final-files", memberId],
+    queryFn: () => getFinalFiles(memberId.toString(), projectId.toString()),
+    enabled: !!memberId,
+  });
   const { currentView } = props;
 
   const formatDate = (date) => {
