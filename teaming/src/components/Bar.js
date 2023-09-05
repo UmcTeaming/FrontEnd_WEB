@@ -27,7 +27,16 @@ const Bar = () => {
   };
 
   const onClickLogout = () => {
-    axios
+    removeCookie("token");
+    setIsLogin(false);
+    alert("로그아웃 되었습니다");
+    navigate("/");
+
+    localStorage.removeItem("memeberId");
+    localStorage.removeItem("nickName");
+    localStorage.removeItem("isLogin");
+
+    /* axios
       .delete(`${process.env.REACT_APP_API_URL}/member/${memberId}/logout`, {
         grantType: "Bearer",
         memberId: memberId,
@@ -37,14 +46,13 @@ const Bar = () => {
       .then((res) => {
         console.log(res);
         alert("로그아웃 되었습니다");
+        removeCookie("token");
+        setIsLogin(false);
         navigate("/");
 
         //localStorage.removeItem("token");
-
-        removeCookie("token");
-        setIsLogin(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err)); */
   };
 
   return (
@@ -103,13 +111,13 @@ const Bar = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="3"
+                  strokeWidth="3"
                   stroke="currentColor"
-                  class="w-4 h-4"
+                  className="w-4 h-4"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M12 6v12m6-6H6"
                   />
                 </svg>

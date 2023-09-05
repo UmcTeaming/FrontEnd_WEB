@@ -129,7 +129,7 @@ const Mypage = () => {
         setPreviewImg(res.data.data.profileImage);
       })
       .catch((err) => {
-        alert(err);
+        console.log(err, "여긴 마이페이지");
       });
   }, [nickName]);
   return (

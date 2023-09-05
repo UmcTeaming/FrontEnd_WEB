@@ -12,7 +12,7 @@ import {
   tokenState,
 } from "../../components/atom";
 import { useCookies } from "react-cookie";
-import { setCookie } from "../../components/Cookie";
+import { removeCookie, setCookie } from "../../components/Cookie";
 
 const Input = tw.input`
 h-12 w-96  outline-none placeholder:text-mainMoreDeepColor p-2 bg-[#e9eefe] rounded-xl
@@ -27,7 +27,7 @@ const Login = () => {
   const [memberId, setMemberId] = useRecoilState(memberIdState);
   const [nickName, setNickName] = useRecoilState(nickNameState);
 
-  const [cookies, setCookies] = useCookies(["token"]);
+  const [cookies, setCookies] = useCookies(["token", "memberId"]);
 
   const onValid = (data) => {
     axios
@@ -37,11 +37,17 @@ const Login = () => {
       })
       .then((res) => {
         console.log(res);
-        /* localStorage.setItem("token", res.data.data.jwtToken.accessToken); */
         setCookie("token", res.data.data.jwtToken.accessToken);
+
         setMemberId(res.data.data.jwtToken.memberId);
         setNickName(res.data.data.name);
         setIsLogin(true);
+        setCookie("memberId", res.data.data.jwtToken.memberId);
+
+        localStorage.setItem("nickName", res.data.data.name);
+        if (data.checkBox) {
+          localStorage.setItem("checkLogin", true);
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -69,8 +75,9 @@ const Login = () => {
           type="password"
           {...register("password")}
         />
+
         <div>
-          <div className="text-center text-mainMoreDeepColor mt-4 mb-8 text-sm ">
+          <div className="text-center text-mainMoreDeepColor mt-4 mb-4 text-sm ">
             <FormSpan className="border-r border-mainMoreDeepColor">
               <Link to="/findPW">비밀번호 찾기</Link>
             </FormSpan>
@@ -78,7 +85,21 @@ const Login = () => {
               <Link to="/signup">회원가입</Link>
             </FormSpan>
           </div>
+          <div class="flex items-center mb-4 justify-center">
+            <input
+              {...register("checkBox")}
+              type="checkbox"
+              class="w-4 h-4 text-mainColor bg-gray-100 border-[#D9D9D9] rounded dark:focus:ring-mainColor dark:ring-offset-[#D9D9D9] dark:bg-[#D9D9D9] dark:border-[#D9D9D9]  outline-none"
+            />
+            <label
+              for="default-checkbox"
+              class="ml-2 text-sm font-medium text-[#D9D9D9] dark:text-gray-300"
+            >
+              자동로그인
+            </label>
+          </div>
         </div>
+
         <button className="bg-mainColor w-full text-white py-3 rounded-full font-bold text-lg focus:bg-mainColor">
           로그인
         </button>

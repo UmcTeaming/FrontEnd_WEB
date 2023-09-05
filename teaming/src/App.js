@@ -16,13 +16,18 @@ import FindPW from "./pages/LoginLinks/FindPW";
 import CleanHome from "./pages/CleanHome/CleanHome";
 import { OngoingProject } from "./pages/OngoingProject/OngoingProject";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { loginState, tokenState } from "./components/atom";
+import {
+  loginState,
+  memberIdState,
+  nickNameState,
+  tokenState,
+} from "./components/atom";
 import axios from "axios";
 import { Calendar } from "./pages/Calendar/Calendar";
 import { Schedulecalendar } from "./pages/Schedulecalendar/Schedulecalendar";
 import { useCookies } from "react-cookie";
 import { useEffect } from "react";
-import { getCookie } from "./components/Cookie";
+import { getCookie, removeCookie } from "./components/Cookie";
 
 axios.interceptors.request.use(
   function (config) {
@@ -36,14 +41,40 @@ axios.interceptors.request.use(
   function (error) {
     //setIsLogin(false);
     //navigate("/");
+    console.log(error, "dkfklns");
     return Promise.reject(error);
   }
 );
 
 function App() {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
+  //const isLogin = localStorage.getItem("isLogin");
 
+  const [memberId, setMemberId] = useRecoilState(memberIdState);
+  const [nickName, setNickName] = useRecoilState(nickNameState);
+  const localMemebrId = localStorage.getItem("memberId");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/member/${getCookie(
+          "memberId"
+        )}/mypage`
+      )
+      .then((res) => {
+        //console.log(res);
+        setIsLogin(true);
+        setMemberId(getCookie("memberId"));
+        setNickName(localStorage.getItem("nickName"));
+      })
+      .catch((err) => {
+        removeCookie("token");
+        setIsLogin(false);
+        alert("로그인 후 이용해주세요!");
+        navigate("/");
+      });
+  }, []);
 
   return (
     <div>
