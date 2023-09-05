@@ -53,6 +53,7 @@ export const OngoingProject = () => {
     queryFn: () => fetchOngoingProjectData(memberId),
     enabled: !!memberId,
   });
+  console.log(memberId);
 
   useEffect(() => {
     async function fetchData() {
