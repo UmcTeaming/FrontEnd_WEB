@@ -170,10 +170,12 @@ const ProjectInfo = ({ onOpen }) => {
     data: project,
     isLoading,
     isSuccess,
-  } = useQuery(["project"], () =>
-    getProject(memberId.toString(), projectId.toString())
-  );
-
+  } = useQuery({
+    queryKey: ["project", memberId],
+    queryFn: () => getProject(memberId.toString(), projectId.toString()),
+    enabled: !!memberId,
+  });
+  console.log(memberId);
   const formatDate = (date) => {
     if (date === undefined) {
       return "";

@@ -45,9 +45,11 @@ const CardFiles = styled.div`
 const ProjectFiles = (props) => {
   const memberId = useRecoilValue(memberIdState);
   const { projectId } = useParams();
-  const { data: projectFiles } = useQuery(["project-files"], () =>
-    getProjectFiles(memberId.toString(), projectId.toString())
-  );
+  const { data: projectFiles } = useQuery({
+    queryKey: ["project-files", memberId],
+    queryFn: () => getProjectFiles(memberId.toString(), projectId.toString()),
+    enabled: !!memberId,
+  });
   const { currentView } = props;
 
   const formatDate = (date) => {

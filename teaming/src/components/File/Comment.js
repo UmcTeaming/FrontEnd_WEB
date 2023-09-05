@@ -141,12 +141,16 @@ const Comment = () => {
   const memberId = useRecoilValue(memberIdState);
   const { fileId } = useParams();
   const [value, setValue] = useState("");
-  const { data: comments } = useQuery(["comments"], () =>
-    getComments(memberId.toString(), fileId.toString())
-  );
-  const { data: profile } = useQuery(["profile"], () =>
-    getProfile(memberId.toString())
-  );
+  const { data: comments } = useQuery({
+    queryKey: ["comments", memberId],
+    queryFn: () => getComments(memberId.toString(), fileId.toString()),
+    enabled: !!memberId,
+  });
+  const { data: profile } = useQuery({
+    queryKey: ["profile", memberId],
+    queryFn: () => getProfile(memberId.toString()),
+    enabled: !!memberId,
+  });
   const queryClient = useQueryClient();
 
   const onChange = (e) => {

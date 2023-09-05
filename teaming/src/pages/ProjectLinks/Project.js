@@ -126,9 +126,11 @@ const Project = () => {
   const matchFinalTab = useMatch("/:projectId/final-files");
   const [currentView, setCurrentView] = useState("grid");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { data: project } = useQuery(["project"], () =>
-    getProject(memberId.toString(), projectId.toString())
-  );
+  const { data: project } = useQuery({
+    queryKey: ["project", memberId],
+    queryFn: () => getProject(memberId.toString(), projectId.toString()),
+    enabled: !!memberId,
+  });
 
   const openModal = () => {
     setIsModalOpen(true);
