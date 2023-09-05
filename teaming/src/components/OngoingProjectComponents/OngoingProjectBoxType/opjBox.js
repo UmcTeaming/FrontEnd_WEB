@@ -21,7 +21,7 @@ const OPjBox = ({ project }) => {
   const defaultImage = "/img/projectImg/project_img.jpg"; // 기본 이미지 경로 설정
   const matchProgressProjects = useMatch("/ongoingProject");
   const [memberId] = useRecoilState(memberIdState);
-  const queryClient = useQueryClient();
+  const queryClient = new useQueryClient();
 
   const onDelete = (e) => {
       e.preventDefault();
@@ -40,6 +40,7 @@ const OPjBox = ({ project }) => {
           if (matchProgressProjects) {
             console.log(matchProgressProjects);
             console.log ("삭제되었습니다");
+            queryClient.removeQueries("ongoingProject");
             queryClient.invalidateQueries("ongoingProject");
           }
         })

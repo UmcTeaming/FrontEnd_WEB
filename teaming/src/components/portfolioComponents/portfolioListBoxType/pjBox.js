@@ -66,12 +66,12 @@ const PjBox = ({ project }) => {
                 <div className="projectInfo">
                     <p className='h4'>{project.projectName}</p>
                     <br />
-                    <p className='p'>{project.projectStartDate}~{project.projectEndDate}
-                    <Delete onClick={onDelete}>
-                      <FiTrash2 size="19" className="delete-button" />
-                    </Delete>
+                    <p className='p'>
+                      {project.projectStartDate}~{project.projectEndDate}
+                      <Delete onClick={onDelete}>
+                        <FiTrash2 size="19" className="delete-button" />
+                      </Delete>
                     </p>
-                    
                 </div>
             </div>
         </Link>

@@ -134,8 +134,7 @@ const PortfolioList = () => {
                                     <PjLines projects={portfolioData} />) 
                                     : 
                                 (
-                                    // 데이터가 없는 경우에 대한 처리
-                                    <div>Loading...</div>
+                                    <div>데이터를 확인할 수 없습니다.</div>
                                 )}
                             </div>
                     </div>
