@@ -97,7 +97,7 @@ export const Homebanner = () => {
               grabCursor={true}
               centeredSlides={true} // 중앙 정렬
               slidesPerView={3}
-              initialSlide={recentlyProjects.length}
+              initialSlide={0}
               loop={true} // 무한 루프
               spaceBetween={-50} // 슬라이드 사이 간격
               coverflowEffect={{
@@ -107,41 +107,17 @@ export const Homebanner = () => {
                 modifier: 2.5, // 효과 강도
                 slideShadows: true, // 슬라이드 그림자 표시 여부
               }}
-              // pagination={{ el: "swiper-pagination", clickable: true }}
+              pagination={{ el: "swiper-pagination", clickable: true }}
               navigation={{
                 nextEl: ".swiper-button-next",
                 prevEl: ".swiper-button-prev",
                 clickable: true,
               }}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
               modules={[EffectCoverflow, Navigation]}
-            // modules={[EffectCoverflow, Pagination, Navigation]}
-
-
-            //   className="swiper_container"
-            //   effect={"coverflow"}
-            //   grabCursor={true}
-            //   centeredSlides={true}
-            //   slidesPerView={3}
-            //   initialSlide={1}
-            //   coverflowEffect={{
-            //     rotate: 0,
-            //     stretch: 0,
-            //     depth: 100,
-            //     modifier: 2.5,
-            //   }}
-            //   pagination={{ el: "swiper-pagination", clickable: true }}
-            //   navigation={{
-            //     nextEl: ".swiper-button-next",
-            //     prevEl: ".swiper-button-prev",
-            //     clickable: true,
-            //   }}
-            //   loop={true}
-            //   // loopedSlides={recentlyProjects.length} 
-            //   // 이 부분을 설정해보세요
-            //   loopedSlides={recentlyProjects.length <= 3 ? recentlyProjects.length : 3} // 동적으로 설정
-            //   loopAdditionalSlides={1}
-            //   modules={[EffectCoverflow, Pagination, Navigation]}
-            //   spaceBetween={-50}
             >
               {recentlyProjects?.map((item, index) => (
                 <SwiperSlide key={index}>
@@ -181,19 +157,60 @@ export const Homebanner = () => {
                   </div>
                 </SwiperSlide>
               ))}
+              {/* 슬라이드 복제 */}
+              {recentlyProjects?.length > 2 ? (
+                recentlyProjects?.map((item, index) => (
+                  <SwiperSlide key={`duplicate-${index}`}>
+                    <div className="contentdisplay_inline">
+                      <div className="content">
+                        <Link to={`/${item.projectId}/project-files`}>
+                          {item.projectStatus === "ING" ? (
+                            <span className="contentprogress2">
+                              진행중{" "}
+                              <FontAwesomeIcon icon={faCircle} color="#527FF5" />
+                            </span>
+                          ) : (
+                            <span className="contentprogress2">
+                              마감{" "}
+                              <FontAwesomeIcon
+                                icon={faCircle}
+                                style={{ color: "yellow" }}
+                              />
+                            </span>
+                          )}
+                          <div className="contentimgs">
+                            {item.projectImage && (
+                              <img
+                                src={item.projectImage}
+                                alt={item.projectName}
+                              />
+                            )}
+                          </div>
+                          <div className="contenttitle">{item.projectName}</div>
+
+                          <div className="contentdescription">
+                            {item.projectCreatedDate}
+                          </div>
+                          <div className="contentmember">{item.member_name}</div>
+                        </Link>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                ))
+              ) : null}
             </Swiper>
 
             <div className="slider-controler">
               <div className="swiper-button-prev slider-arrow workingicon">
                 <FontAwesomeIcon
                   icon={faChevronLeft}
-                  style={{ color: "#ffffff" }}
+                  style={{ color: "#000" }}
                 />
               </div>
               <div className="swiper-button-next slider-arrow workingicon">
                 <FontAwesomeIcon
                   icon={faChevronRight}
-                  style={{ color: "#ffffff" }}
+                  style={{ color: "#000" }}
                 />
               </div>
               {/* <div className="swiper-pagination"></div> */}

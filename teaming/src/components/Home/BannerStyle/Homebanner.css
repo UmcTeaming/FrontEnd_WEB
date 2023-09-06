@@ -99,8 +99,7 @@
 }
 
 .swiper-wrapper {
-  display: flex;
-  align-items: center;
+
   /* 수직 중앙 정렬 */
 }
 
@@ -135,7 +134,7 @@
 }
 
 .workingicon {
-  font-size: 20px;
+  font-size: 30px;
 }
 
 .swiper-button-prev {
@@ -144,14 +143,11 @@
 
 
 .BannerContent {
-  /* height: 300px;
-  width: 800px; */
   margin-top: 20px;
   border-radius: 10px;
   font-size: 24px;
   color: #333;
-  display: flex;
-  overflow: hidden;
+  /* display: flex; */
   /* 넘치는 콘텐츠 숨김 */
 
   position: relative;
@@ -210,7 +206,7 @@
   position: relative;
   width: 15rem !important;
   bottom: 20rem;
-  margin-right: 180px;
+  margin-right: 10px;
 }
 
 .swiper-pagination .swiper-pagination-bullet {
