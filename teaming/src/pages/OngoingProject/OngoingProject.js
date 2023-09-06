@@ -14,6 +14,7 @@ import { useQuery } from 'react-query';
 import { BiHome } from 'react-icons/bi';
 import { GoChevronRight } from 'react-icons/go';
 import { fetchOngoingProjectData } from "../PortfolioLinks/projectApi.js"
+import { getCookie } from '../../components/Cookie'
 
 import "../PortfolioLinks/portfolioList.css";
 
@@ -49,11 +50,11 @@ export const OngoingProject = () => {
     queryFn: () => fetchOngoingProjectData(memberId),
     enabled: !!memberId,
   });
-  console.log(memberId);
 
   useEffect(() => {
     async function fetchData() {
-        const response = await fetchOngoingProjectData(memberId);
+        const response = await fetchOngoingProjectData(getCookie("memberId"));
+        console.log(getCookie("memberId"));
         console.log(response); // response로부터 데이터 확인
         if (onGoingProjectData && onGoingProjectData.length < response.length) 
         {
@@ -62,7 +63,7 @@ export const OngoingProject = () => {
         }
     }
     fetchData(); //데이터를 비동기적으로 불러옴
-  }, [memberId]);
+  }, [getCookie("memberId")]);
 
   return (
     <>

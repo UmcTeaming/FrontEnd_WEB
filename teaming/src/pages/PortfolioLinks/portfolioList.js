@@ -13,6 +13,7 @@ import { useQuery } from 'react-query';
 import { fetchPortfolioData  } from "./projectApi";
 import { BiHome } from 'react-icons/bi';
 import { GoChevronRight } from 'react-icons/go';
+import { getCookie } from '../../components/Cookie'
 
 const CardBtn = styled.div`
   border: none;
@@ -43,13 +44,13 @@ const PortfolioList = () => {
 
     const { data: portfolioData, refetch } = useQuery({
         queryKey: ["portfolio", memberId],
-        queryFn: () => fetchPortfolioData(memberId.toString()),
+        queryFn: () => fetchPortfolioData(memberId),
         enabled: !!memberId,
     });
       
     useEffect(() => {
         async function fetchData() {
-            const response = await fetchPortfolioData(memberId);
+            const response = await fetchPortfolioData(getCookie("memberId"));
             console.log(response); // response로부터 데이터 확인
             if (portfolioData && portfolioData.length < response.length) 
             {
@@ -58,7 +59,7 @@ const PortfolioList = () => {
             }
         }
         fetchData(); //데이터를 비동기적으로 불러옴
-    }, [memberId]);
+    }, [getCookie("memberId")]);
     
     return (
         <>
