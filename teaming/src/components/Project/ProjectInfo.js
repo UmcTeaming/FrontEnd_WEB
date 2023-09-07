@@ -175,7 +175,7 @@ const ProjectInfo = ({ onOpen }) => {
     queryFn: () => getProject(memberId.toString(), projectId.toString()),
     enabled: !!memberId,
   });
-  console.log(memberId);
+
   const formatDate = (date) => {
     if (date === undefined) {
       return "";
