@@ -37,60 +37,106 @@ function classNames(...classes) {
 export const Schedulecalendarcomponents = () => {
   const [memberId, setMemberId] = useRecoilState(memberIdState);
   const { projectId } = useParams();
-  const [meetings, setMeetings] = useState([
-    //   {
-    //     "schedule_name": "티밍 입니다다",
-    //     "schedule_start": "2023-07-08",
-    //     "schedule_start_time": "10:30:00",
-    //     "schedule_end": "2023-07-10",
-    //     "schedule_end_time": "14:30:00",
-    //     "project_color": "#d79ac3"
-    // },
-    // {
-    //   id: 1,
-    //   name: "티밍 전체 대면 회의1 - 중구 퇴계로",
-    //   project_name: "00교양 조별 과제",
-    //   startDatetime: "2023-08-11T13:00",
-    //   endDatetime: "2023-08-13T14:30",
-    //   project_color: "#d79ac3",
-    // },
-  ]);
+  const [meetings, setMeetings] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
+  // 수정 중
   useEffect(() => {
     const requestData = {
-      schedule_start: selectedDate,
+      date_request: format(selectedDate, "yyyy-MM-dd"), // selectedDate를 yyyy-MM-dd 형식으로 변환하여 요청
     };
 
     axios
       .post(
-        `${process.env.REACT_APP_API_URL}/member/${memberId}/schedule_start`,
+        `${process.env.REACT_APP_API_URL}/member/${memberId}/date_list`,
         requestData
       )
       .then((response) => {
-        const data = response.data;
-        console.log(response);
-        console.log("일단 절반 성공");
+        const data = response.data.data;
         console.log(data);
-        data.data.forEach((schedule) => {
-          console.log("Schedule Name:", schedule.schedule_name);
-          console.log("Start Date:", schedule.schedule_start);
-          console.log("End Date:", schedule.schedule_end);
 
-          const newMeeting = {
-            id: schedule.schedule_id,
-            name: schedule.schedule_name,
-            startDatetime: `${schedule.schedule_start}T${schedule.schedule_start_time}`,
-            endDatetime: `${schedule.schedule_end}T${schedule.schedule_end_time}`,
-            project_color: schedule.project_color,
+        // date_list 값을 출력
+        data.forEach((item) => {
+          console.log("Data List:", item.date_list);
+        })
+
+        // 각 date_list 값을 처리하고 개별 요청을 보내기
+        data.forEach((dateListItem) => {
+          const scheduleStartData = {
+            schedule_start: dateListItem.date_list,
           };
-          // setMeetings 함수를 사용하여 기존 meetings 배열에 새 일정을 추가한다
-          setMeetings((prevMeetings) => [...prevMeetings, newMeeting]);
+
+          // "schedule_start" 데이터를 이용하여 일정을 가져오는 요청
+          axios
+            .post(
+              `${process.env.REACT_APP_API_URL}/member/${memberId}/schedule_start`,
+              scheduleStartData
+            )
+            .then((scheduleResponse) => {
+              const scheduleData = scheduleResponse.data;
+              console.log("일단 절반 성공");
+              console.log(scheduleData);
+
+              // data -> scheduleData로 수정
+              scheduleData.data.forEach((schedule) => {
+                console.log("Schedule Name:", schedule.schedule_name);
+                console.log("Start Date:", schedule.schedule_start);
+                console.log("End Date:", schedule.schedule_end);
+
+                const newMeeting = {
+                  id: schedule.schedule_id,
+                  name: schedule.schedule_name,
+                  startDatetime: `${schedule.schedule_start}T${schedule.schedule_start_time}`,
+                  endDatetime: `${schedule.schedule_end}T${schedule.schedule_end_time}`,
+                  project_color: schedule.project_color,
+                };
+                // setMeetings 함수를 사용하여 기존 meetings 배열에 새 일정을 추가한다
+                setMeetings((prevMeetings) => [...prevMeetings, newMeeting]);
+              });
+              // setMeetings(res.data.data);
+              // scheduleData를 활용하여 일정을 처리하고 state를 업데이트하세요.
+            })
+            .catch((err) => console.log(err));
         });
-        // setMeetings(res.data.data);
       })
       .catch((err) => console.log(err));
   }, []);
+
+  // useEffect(() => {
+  // const requestData = {
+  //   schedule_start: selectedDate,
+  // };
+
+
+  // axios
+  //   .post(
+  //     `${process.env.REACT_APP_API_URL}/member/${memberId}/schedule_start`,
+  //     requestData
+  //   )
+  //   .then((response) => {
+  //     const data = response.data;
+  //     console.log(response);
+  //     console.log("일단 절반 성공");
+  //     console.log(data);
+  //     data.data.forEach((schedule) => {
+  //       console.log("Schedule Name:", schedule.schedule_name);
+  //       console.log("Start Date:", schedule.schedule_start);
+  //       console.log("End Date:", schedule.schedule_end);
+
+  //       const newMeeting = {
+  //         id: schedule.schedule_id,
+  //         name: schedule.schedule_name,
+  //         startDatetime: `${schedule.schedule_start}T${schedule.schedule_start_time}`,
+  //         endDatetime: `${schedule.schedule_end}T${schedule.schedule_end_time}`,
+  //         project_color: schedule.project_color,
+  //       };
+  //       // setMeetings 함수를 사용하여 기존 meetings 배열에 새 일정을 추가한다
+  //       setMeetings((prevMeetings) => [...prevMeetings, newMeeting]);
+  //     });
+  //     // setMeetings(res.data.data);
+  //   })
+  //   .catch((err) => console.log(err));
+  // }, []);
 
   let today = startOfToday();
   let [selectedDay, setSelectedDay] = useState(today); //selectDay상태와 setCount 함수를 선언
@@ -246,25 +292,25 @@ export const Schedulecalendarcomponents = () => {
                       className={classNames(
                         isEqual(day, selectedDay) && "text-white bg-blue-500",
                         !isEqual(day, selectedDay) &&
-                          isToday(day) &&
-                          "text-red-500",
+                        isToday(day) &&
+                        "text-red-500",
                         !isEqual(day, selectedDay) &&
-                          !isToday(day) &&
-                          isSameMonth(day, firstDayCurrentMonth) &&
-                          "text-blue-900",
+                        !isToday(day) &&
+                        isSameMonth(day, firstDayCurrentMonth) &&
+                        "text-blue-900",
                         !isEqual(day, selectedDay) &&
-                          !isToday(day) &&
-                          !isSameMonth(day, firstDayCurrentMonth) &&
-                          "text-gray-400",
+                        !isToday(day) &&
+                        !isSameMonth(day, firstDayCurrentMonth) &&
+                        "text-gray-400",
                         isEqual(day, selectedDay) &&
-                          isToday(day) &&
-                          "bg-red-500",
+                        isToday(day) &&
+                        "bg-red-500",
                         isEqual(day, selectedDay) &&
-                          !isToday(day) &&
-                          "bg-gray-900",
+                        !isToday(day) &&
+                        "bg-gray-900",
                         !isEqual(day, selectedDay) && "hover:bg-gray-200",
                         (isEqual(day, selectedDay) || isToday(day)) &&
-                          "font-semibold",
+                        "font-semibold",
                         "mx-auto flex h-8 w-8 items-center justify-center rounded-full"
                       )}
                     >
@@ -281,8 +327,8 @@ export const Schedulecalendarcomponents = () => {
                           parseISO(meeting.endDatetime)
                         ).some((d) => isSameDay(d, day))
                       ) && (
-                        <div className="w-1 h-1 rounded-full bg-sky-500"></div>
-                      )}
+                          <div className="w-1 h-1 rounded-full bg-sky-500"></div>
+                        )}
                     </div>
                   </div>
                 ))}
