@@ -78,7 +78,7 @@ export const Schedulecalendarcomponents = () => {
             .then((scheduleResponse) => {
               const scheduleData = scheduleResponse.data;
               console.log("일단 절반 성공");
-              // console.log(scheduleData);
+              console.log(scheduleData);
 
               // data -> scheduleData로 수정
               scheduleData.data.forEach((schedule) => {
@@ -206,6 +206,13 @@ export const Schedulecalendarcomponents = () => {
           parseISO(meeting.startDatetime),
           parseISO(filteredMeeting.startDatetime)
         )
+        &&
+        isSameDay(
+          parseISO(meeting.endDatetime),
+          parseISO(filteredMeeting.endDatetime)
+        )
+        &&
+        meeting.name === filteredMeeting.name
       );
     });
 
