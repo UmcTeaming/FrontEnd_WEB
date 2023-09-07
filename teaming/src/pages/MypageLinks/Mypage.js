@@ -229,51 +229,9 @@ const Mypage = () => {
               문의 사항은 test@gmail.com 으로 보내주시면 감사하겠습니다
             </span>
             <div className="flex flex-col">
-              <Link>
-                <LinkDiv>
-                  <span>자주 묻는 질문</span>
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="3"
-                      stroke="currentColor"
-                      className="w-4 h-4 text-gray-400"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                      />
-                    </svg>
-                  </span>
-                </LinkDiv>
-              </Link>
               <Link to="changePW">
                 <LinkDiv>
                   <span>비밀번호 변경</span>
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="3"
-                      stroke="currentColor"
-                      className="w-4 h-4 text-gray-400"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                      />
-                    </svg>
-                  </span>
-                </LinkDiv>
-              </Link>
-              <Link>
-                <LinkDiv>
-                  <span>이용약관</span>
                   <span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
