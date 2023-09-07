@@ -46,6 +46,9 @@ export const Schedulecalendarcomponents = () => {
       date_request: format(selectedDate, "yyyy-MM-dd"), // selectedDate를 yyyy-MM-dd 형식으로 변환하여 요청
     };
 
+    // meetings 배열을 초기화합니다.
+    setMeetings([]);
+
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/member/${memberId}/date_list`,
@@ -56,9 +59,9 @@ export const Schedulecalendarcomponents = () => {
         console.log(data);
 
         // date_list 값을 출력
-        data.forEach((item) => {
-          console.log("Data List:", item.date_list);
-        })
+        // data.forEach((item) => {
+        //   console.log("Data List:", item.date_list);
+        // })
 
         // 각 date_list 값을 처리하고 개별 요청을 보내기
         data.forEach((dateListItem) => {
@@ -75,13 +78,13 @@ export const Schedulecalendarcomponents = () => {
             .then((scheduleResponse) => {
               const scheduleData = scheduleResponse.data;
               console.log("일단 절반 성공");
-              console.log(scheduleData);
+              // console.log(scheduleData);
 
               // data -> scheduleData로 수정
               scheduleData.data.forEach((schedule) => {
-                console.log("Schedule Name:", schedule.schedule_name);
-                console.log("Start Date:", schedule.schedule_start);
-                console.log("End Date:", schedule.schedule_end);
+                // console.log("Schedule Name:", schedule.schedule_name);
+                // console.log("Start Date:", schedule.schedule_start);
+                // console.log("End Date:", schedule.schedule_end);
 
                 const newMeeting = {
                   id: schedule.schedule_id,
@@ -101,42 +104,6 @@ export const Schedulecalendarcomponents = () => {
       })
       .catch((err) => console.log(err));
   }, []);
-
-  // useEffect(() => {
-  // const requestData = {
-  //   schedule_start: selectedDate,
-  // };
-
-
-  // axios
-  //   .post(
-  //     `${process.env.REACT_APP_API_URL}/member/${memberId}/schedule_start`,
-  //     requestData
-  //   )
-  //   .then((response) => {
-  //     const data = response.data;
-  //     console.log(response);
-  //     console.log("일단 절반 성공");
-  //     console.log(data);
-  //     data.data.forEach((schedule) => {
-  //       console.log("Schedule Name:", schedule.schedule_name);
-  //       console.log("Start Date:", schedule.schedule_start);
-  //       console.log("End Date:", schedule.schedule_end);
-
-  //       const newMeeting = {
-  //         id: schedule.schedule_id,
-  //         name: schedule.schedule_name,
-  //         startDatetime: `${schedule.schedule_start}T${schedule.schedule_start_time}`,
-  //         endDatetime: `${schedule.schedule_end}T${schedule.schedule_end_time}`,
-  //         project_color: schedule.project_color,
-  //       };
-  //       // setMeetings 함수를 사용하여 기존 meetings 배열에 새 일정을 추가한다
-  //       setMeetings((prevMeetings) => [...prevMeetings, newMeeting]);
-  //     });
-  //     // setMeetings(res.data.data);
-  //   })
-  //   .catch((err) => console.log(err));
-  // }, []);
 
   let today = startOfToday();
   let [selectedDay, setSelectedDay] = useState(today); //selectDay상태와 setCount 함수를 선언
@@ -228,6 +195,28 @@ export const Schedulecalendarcomponents = () => {
       parseISO(meeting.endDatetime)
     ).some((d) => isSameDay(d, selectedDay))
   );
+
+  // 같은 날 같은 일정이 중복되지 않도록 필터링합니다.
+  const filteredMeetings = [];
+  selectedDayMeetings.forEach((meeting) => {
+    const isDuplicate = filteredMeetings.some((filteredMeeting) => {
+      return (
+        meeting.id === filteredMeeting.id &&
+        isSameDay(
+          parseISO(meeting.startDatetime),
+          parseISO(filteredMeeting.startDatetime)
+        )
+      );
+    });
+
+    if (!isDuplicate) {
+      filteredMeetings.push(meeting);
+    }
+  });
+
+  selectedDayMeetings = filteredMeetings;
+
+
 
   return (
     <div className="SchedulecalendarApp pt-10">
