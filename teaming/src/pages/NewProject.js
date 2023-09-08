@@ -312,7 +312,7 @@ const NewProject = () => {
                     className={"h-5 w-5 rounded-full "}
                     style={{ backgroundColor: colorCode[logoNum] }}
                   ></div>
-                  <span className="pt-1">해당 색상으로 선택하시겟습니까?</span>
+                  <span className="pt-1">해당 색상으로 선택하시겠습니까?</span>
                 </div>
                 <div className="grid grid-cols-5 gap-5 ">
                   {[5, 6, 7, 8, 9, 0, 1, 2, 3, 4].map((n, i) => (
