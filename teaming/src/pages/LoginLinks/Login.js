@@ -49,7 +49,11 @@ const Login = () => {
           localStorage.setItem("checkLogin", true);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        if (err.response.data.status === 400)
+          alert("비밀번호가 일치하지 않습니다");
+      });
   };
 
   return (
