@@ -67,6 +67,9 @@ const Upload = () => {
           "Content-Type": "multipart/form-data",
         },
         data: formData,
+        transformRequest: (data, headers) => {
+          return data;
+        },
       })
         .then((response) => {
           console.log(response.data);
