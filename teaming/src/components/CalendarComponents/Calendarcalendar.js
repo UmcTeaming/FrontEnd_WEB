@@ -48,15 +48,19 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+// ==========================================================
+// 프로젝트를 생성 한 뒤 해당 프로젝트에 대한 세부 일정을 추가, 삭제할 수 있는 컴포넌트
+// 따라서 등록되는 모든 일정의 프로젝트 색상이 동일함
+// 페이지의 상단 메뉴에 있는 "일정 관리"가 아님
+
 export const Calendarcalendar = () => {
   const [memberId, setMemebrId] = useRecoilState(memberIdState);
   const { projectId } = useParams();
-  // 일정 데이터를 받는 부분_해당 내용들은 예시
+  // 회원 데이터 및 다른 상태들을 useState로 관리
   const [meetings, setMeetings] = useState([]);
   const [dateList, setDateList] = useState();
   const [daymeetings, setDayMeetings] = useState();
-  // const [projectColor, setProjectColor] = useState();
-  // let projectColor;
+
   let today = startOfToday();
   let [selectedDay, setSelectedDay] = useState(today); //selectDay상태와 setCount 함수를 선언
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
@@ -91,13 +95,13 @@ export const Calendarcalendar = () => {
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
 
-  // 아래는 accesstoken 제거버전
+  // 프로젝트 정보 가져오기
   const { data: project } = useQuery(["project"], () =>
     getProject(memberId.toString(), projectId.toString())
   );
 
-  // 아래는 accesstoken 제거 버전
   useEffect(() => {
+    // 프로젝트 데이터 가져오기
     getProject(memberId.toString(), projectId.toString())
       .then((response) => {
         const data = response.data;
@@ -111,6 +115,7 @@ export const Calendarcalendar = () => {
 
   // 프로젝트 전체 스케줄 확인
   useEffect(() => {
+    // API를 통해 프로젝트 스케줄 데이터 가져오기
     axios
       .get(
         `${process.env.REACT_APP_API_URL}/projects/${memberId}/${projectId}/schedule`
@@ -130,6 +135,7 @@ export const Calendarcalendar = () => {
           // projectColor = schedule.project_color;
 
           const newMeeting = {
+            // 새로운 회의 정보
             id: schedule.schedule_id,
             name: schedule.schedule_name,
             startDatetime: `${schedule.schedule_start}T${schedule.schedule_start_time}`,
