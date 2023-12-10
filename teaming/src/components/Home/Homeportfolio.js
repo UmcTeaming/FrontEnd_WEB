@@ -11,9 +11,15 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { memberIdState, nickNameState } from "../../components/atom";
 
+//========================================================================
+// 메인 페이지의 완료된 프로젝트 관련 컴포넌트
+// 진행 주인 프로젝트 컴포넌트와 코드 유사함
+
 export const Homeportfolio = () => {
+  // Recoil을 이용한 닉네임 및 회원 정보 상태 관리
   const [nickName, setNickName] = useRecoilState(nickNameState);
   const [memberId, setMemberId] = useRecoilState(memberIdState);
+  // 완료된 프로젝트 정보를 저장하는 상태
   const [portfolio, setportfolio] = useState([]);
 
   useEffect(() => {
@@ -23,7 +29,7 @@ export const Homeportfolio = () => {
       .then((response) => {
         const data = response.data.data;
 
-        // setMemberId(data.memberId);
+        // 가져온 데이터로 완료된 프로젝트 상태 설정
         if (data.portfolio !== null) setportfolio(data.portfolio);
       })
       .catch((error) => {
@@ -48,7 +54,7 @@ export const Homeportfolio = () => {
       </div>
 
       {portfolio.length === 0 ? (
-        // 진행 중인 프로젝트가 없을 때
+        // 완료된 프로젝트가 없을 때
         <div className="Portfolioempty">
           <div className="Portfolioemptycontent">
             <div className="emptytitle">
@@ -65,7 +71,7 @@ export const Homeportfolio = () => {
           </div>
         </div>
       ) : (
-        // 진행 중인 프로젝트가 있을 때
+        // 완료된 프로젝트가 있을 때
         <div className="Portfoliocontent">
           <div className="grid-container">
             {portfolio.slice(0, maxItemsToShow).map((item, index) => (

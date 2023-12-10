@@ -1,6 +1,9 @@
 import React from 'react'
 import './Homecalendar.css'
 
+// =======================================
+// Homecalendar.js와 Homecalendar.css는 지금은 삭제된 기능 관련 코드로 무시할 것
+
 
 export const Homecalendar = () => {
   return (

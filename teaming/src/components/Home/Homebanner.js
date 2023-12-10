@@ -8,42 +8,39 @@ import {
   faChevronLeft,
   faCircle,
 } from "@fortawesome/free-solid-svg-icons";
-
 // 배너 슬라이더 관련
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-
 import { EffectCoverflow, Pagination, Navigation } from "swiper";
-
-// 추가
-// import 'swiper/css/swiper.min.css';
 import 'swiper/swiper-bundle.min.css';
-
-
 // 데이터 적용 관련
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { memberIdState, nickNameState } from "../../components/atom";
 
-// datas > home.json데이터 가져와야 함
+//========================================================================
+// 메인 페이지의 배너 관련 컴포넌트
+// slider 3d coverflow는 사용하여 배너 코드를 작성
 
+
+// datas > home.json데이터 가져와야 함
 export const Homebanner = () => {
+  // 회원 정보 및 최근 프로젝트 관련 상태를 선언
   const [nickName, setNickName] = useRecoilState(nickNameState);
   const [memberId, setMemberId] = useRecoilState(memberIdState);
   const [recentlyProjects, setRecentlyProjects] = useState([]);
 
   useEffect(() => {
-    // 여기서 외부 데이터를 가져오고 recentlyProjects 상태를 설정하세요
+    // 여기서 외부 데이터를 가져오고 recentlyProjects 상태를 설정
     axios
       .get(`${process.env.REACT_APP_API_URL}/member/${memberId}/home`)
       .then((response) => {
         const data = response.data.data;
 
-        // setMemberId(data.memberId);
+        // 최근 프로젝트가 있으면 상태를 업데이트
         if (data.recentlyProject !== null)
           setRecentlyProjects(data.recentlyProject);
       })
@@ -55,6 +52,7 @@ export const Homebanner = () => {
   console.log(recentlyProjects);
   return (
     <div className="BannerApp">
+      {/* 최근 프로젝트가 없는 경우 */}
       {recentlyProjects?.length === 0 ? (
         <div className="Bannerempty">
           <div className="notworkingicon empty_left">
@@ -83,6 +81,7 @@ export const Homebanner = () => {
         </div>
       ) : (
         <div className="Bannernotempty">
+          {/* 최근 프로젝트가 있는 경우 */}
           <div className="Bannertxt">
             <div className="Bannertitle">가장 최근 프로젝트</div>
             <div className="Bannersubtitle">
@@ -158,6 +157,7 @@ export const Homebanner = () => {
                 </SwiperSlide>
               ))}
               {/* 슬라이드 복제 */}
+              {/* 수정해야 할 사항 - 3d coverflow에서 무한루프가 적용되려면 슬라이드의 갯수가 최소 5개가 되어야 하기 때문에 등록된 프로젝트가 3개일 경우, 슬라이드를 복제하여 임의로 6개가 되도록 했다  */}
               {recentlyProjects?.length > 2 ? (
                 recentlyProjects?.map((item, index) => (
                   <SwiperSlide key={`duplicate-${index}`}>
