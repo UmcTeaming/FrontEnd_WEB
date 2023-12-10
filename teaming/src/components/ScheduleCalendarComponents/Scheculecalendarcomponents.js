@@ -29,18 +29,24 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { memberIdState } from "../atom";
 
+// =======================================================
+// 상단의 메뉴 "일정 달력"클릭 시 나타나는 컴포넌트
+// 모든 프로젝트의 일정들을 통합해서 보여준다
+// CalendarComponents의 Calendarcalendar.js 코드와 일부 유사함
+
 // className함수는 여러 개의 클래스 이름들을 받아들이고, 조건에 따라 필터링하여 결합한 문자열을 반환함
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export const Schedulecalendarcomponents = () => {
+  // 상태변수들 선언
   const [memberId, setMemberId] = useRecoilState(memberIdState);
   const { projectId } = useParams();
   const [meetings, setMeetings] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  // 수정 중
+  // 일정 데이터들을 가져옴
   useEffect(() => {
     const requestData = {
       date_request: format(selectedDate, "yyyy-MM-dd"), // selectedDate를 yyyy-MM-dd 형식으로 변환하여 요청
@@ -57,11 +63,6 @@ export const Schedulecalendarcomponents = () => {
       .then((response) => {
         const data = response.data.data;
         console.log(data);
-
-        // date_list 값을 출력
-        // data.forEach((item) => {
-        //   console.log("Data List:", item.date_list);
-        // })
 
         // 각 date_list 값을 처리하고 개별 요청을 보내기
         data.forEach((dateListItem) => {
@@ -139,6 +140,7 @@ export const Schedulecalendarcomponents = () => {
     return days;
   };
 
+  // Meeting 컴포넌트 - 일정을 화면에 보여주는 기능을 담당
   function Meeting({ meeting }) {
     let startDateTime = parseISO(meeting.startDatetime);
     let endDateTime = parseISO(meeting.endDatetime);
@@ -187,9 +189,8 @@ export const Schedulecalendarcomponents = () => {
     );
   }
 
-  // 1차 수정
+  // 선택된 날짜에 해당하는 일정 필터링
   let selectedDayMeetings = meetings.filter((meeting) =>
-    // isSameDay(parseISO(meeting.startDatetime), selectedDay)
     daysBetween(
       parseISO(meeting.startDatetime),
       parseISO(meeting.endDatetime)
@@ -216,6 +217,7 @@ export const Schedulecalendarcomponents = () => {
       );
     });
 
+    // 중복되지 않은 경우에만 추가
     if (!isDuplicate) {
       filteredMeetings.push(meeting);
     }
