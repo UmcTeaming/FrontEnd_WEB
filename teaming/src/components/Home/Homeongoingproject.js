@@ -11,8 +11,13 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { memberIdState } from "../../components/atom";
 
+//========================================================================
+// 메인 페이지의 진행 중인 프로젝트 관련 컴포넌트
+
 export const Homeongoingproject = () => {
+  // Recoil을 이용한 회원 정보 상태 관리
   const [memberId, setMemberId] = useRecoilState(memberIdState);
+  // 진행 중인 프로젝트 정보를 저장하는 상태 
   const [progressProject, setprogressProject] = useState([]);
 
   useEffect(() => {
@@ -22,7 +27,7 @@ export const Homeongoingproject = () => {
       .then((response) => {
         const data = response.data.data;
 
-        // setMemberId(data.memberId);
+        // 가져온 데이터로 진행 중인 프로젝트 상태 설정
         if (data.progressProject !== null)
           setprogressProject(data.progressProject);
       })
@@ -35,6 +40,7 @@ export const Homeongoingproject = () => {
 
   return (
     <div className="OngoingProjApp">
+      {/* 진행 중인 프로젝트 타이틀과 "진행중인프로젝트"페이지 링크 */}
       <div className="OngoingProjtitle">
         <Link to="/ongoingProject">
           <p>진행 중인 프로젝트</p>
@@ -71,6 +77,7 @@ export const Homeongoingproject = () => {
             {progressProject.slice(0, maxItemsToShow).map((item, index) => (
               <div key={index} className="content">
                 <Link to={`/${item.projectId}/project-files`}>
+                  {/* 프로젝트의 상태(진행중 or 마감)와 아이콘을 표시 */}
                   {item.projectStatus === "ING" ? (
                     <span className="contentprogress">
                       진행중 <FontAwesomeIcon icon={faCircle} color="#527FF5" />
